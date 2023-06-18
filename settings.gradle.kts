@@ -3,6 +3,7 @@ rootProject.name = "Logistics"
 include(":androidApp")
 include(":shared")
 include(":desktop")
+include(":domain")
 
 pluginManagement {
     repositories {
@@ -24,6 +25,8 @@ pluginManagement {
         id("com.android.library").version(agpVersion)
 
         id("org.jetbrains.compose").version(composeVersion)
+
+        kotlin("plugin.serialization").version(extra["kotlin.version"] as String)
     }
 }
 
@@ -34,3 +37,4 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
+
