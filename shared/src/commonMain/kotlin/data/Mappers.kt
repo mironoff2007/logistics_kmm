@@ -4,7 +4,6 @@ import data.CityEntity
 import data.ParcelEntity
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
-import kotlin.jvm.Throws
 
 
 fun CityEntity.toCity(): City {
@@ -14,7 +13,6 @@ fun CityEntity.toCity(): City {
     )
 }
 
-@Throws
 fun ParcelEntity.toParcel(cities: List<City>): Parcel {
     return Parcel(
         parcelId = this.parcelId,

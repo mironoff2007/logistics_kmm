@@ -2,10 +2,11 @@ package ru.mironov.common.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
-import androidx.compose.ui.res.painterResource
+import org.jetbrains.compose.resources.ExperimentalResourceApi
+import org.jetbrains.compose.resources.painterResource
 import ru.mironov.common.res.ImageRes
-import java.util.Locale
 
+@OptIn(ExperimentalResourceApi::class)
 @Composable
 actual fun getPainterResource(imageRes: ImageRes): Painter {
     val id = when(imageRes) {
@@ -25,5 +26,5 @@ actual fun getPainterResource(imageRes: ImageRes): Painter {
 
 @Composable
 actual fun getLocale(): String {
-    return Locale.getDefault().language
+    return "en"
 }
