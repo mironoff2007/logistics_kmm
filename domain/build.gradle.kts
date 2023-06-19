@@ -10,11 +10,16 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-
+    val serializationVersion: String by project
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //put your multiplatform dependencies here
+                implementation(project(":localization"))
+
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
+
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
             }
         }
         val commonTest by getting {
