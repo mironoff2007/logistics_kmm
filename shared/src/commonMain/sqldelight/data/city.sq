@@ -1,0 +1,24 @@
+CREATE TABLE CityEntity (
+  cityId INTEGER PRIMARY KEY AUTOINCREMENT,
+  cityName TEXT NOT NULL
+);
+
+getById:
+SELECT * FROM CityEntity WHERE cityId = :id;
+
+selectAll:
+SELECT * FROM CityEntity;
+
+insert:
+INSERT INTO CityEntity
+VALUES (?, ?);
+
+replace:
+INSERT OR REPLACE INTO CityEntity
+VALUES (?, ?);
+
+deleteItem:
+DELETE FROM CityEntity WHERE cityId = ?;
+
+drop:
+DELETE FROM CityEntity;

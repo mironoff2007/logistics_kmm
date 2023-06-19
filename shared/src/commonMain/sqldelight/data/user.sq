@@ -1,0 +1,20 @@
+CREATE TABLE UserEntity (
+  name TEXT NOT NULL,
+  role TEXT NOT NULL,
+  id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+);
+
+insert:
+INSERT INTO UserEntity(name, role)
+VALUES (?, ?);
+
+update:
+INSERT OR REPLACE INTO UserEntity(name, role)
+VALUES (?, ?);
+
+selectAll:
+SELECT *
+FROM UserEntity;
+
+drop:
+DELETE FROM UserEntity;

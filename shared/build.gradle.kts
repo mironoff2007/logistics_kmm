@@ -113,3 +113,13 @@ android {
         jvmToolchain(11)
     }
 }
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/data/schema"))
+            migrationOutputDirectory.set(file("src/commonMain/sqldelight/migrations"))
+        }
+    }
+}

@@ -1,0 +1,36 @@
+CREATE TABLE ParcelEntity (
+  parcelId INTEGER PRIMARY KEY AUTOINCREMENT,
+  customerName TEXT DEFAULT NULL,
+  customerSecondName TEXT DEFAULT NULL,
+  address TEXT DEFAULT NULL,
+  senderName TEXT DEFAULT NULL,
+  senderSecondName TEXT DEFAULT NULL,
+  senderAddress TEXT DEFAULT NULL,
+  destinationCity TEXT DEFAULT NULL,
+  senderCity TEXT DEFAULT NULL,
+  currentCity TEXT DEFAULT NULL,
+  dateShow TEXT DEFAULT NULL,
+  date INTEGER DEFAULT NULL,
+  synced TEXT DEFAULT "false"
+);
+
+
+getById:
+SELECT * FROM ParcelEntity WHERE parcelId = :id;
+
+selectAll:
+SELECT * FROM ParcelEntity;
+
+selectNotSynced:
+SELECT * FROM ParcelEntity WHERE synced = "true";
+
+insert:
+INSERT INTO ParcelEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+replace:
+INSERT OR REPLACE INTO ParcelEntity
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+
+drop:
+DELETE FROM ParcelEntity;
