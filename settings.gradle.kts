@@ -4,6 +4,8 @@ include(":androidApp")
 include(":shared")
 include(":desktop")
 include(":domain")
+include (":localization")
+
 
 pluginManagement {
     repositories {
