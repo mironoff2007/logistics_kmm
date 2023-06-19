@@ -29,6 +29,8 @@ pluginManagement {
         id("org.jetbrains.compose").version(composeVersion)
 
         kotlin("plugin.serialization").version(extra["kotlin.version"] as String)
+
+        id("app.cash.sqldelight").version(extra["sqldelightVersion"] as String)
     }
 }
 
