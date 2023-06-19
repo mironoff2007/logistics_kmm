@@ -27,7 +27,7 @@ kotlin {
         extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
 
-    val ktorVersion = "2.3.0"
+    val ktorVersion: String by project
     val serializationVersion: String by project
     val sqldelightVersion: String by project
     sourceSets {
