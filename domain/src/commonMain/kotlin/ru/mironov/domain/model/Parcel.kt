@@ -1,7 +1,7 @@
 package ru.mironov.domain.model
 
+import kotlinx.datetime.Clock
 import kotlinx.serialization.Serializable
-import java.util.Date
 
 @Serializable
 data class Parcel(
@@ -15,8 +15,8 @@ data class Parcel(
     val destinationCity: City,
     val currentCity: City,
     val senderCity: City,
-    val dateShow: String = Date().toString(),
-    val date: Long = Date().time,
+    val dateShow: String = Clock.System.now().epochSeconds.toString(),
+    val date: Long = Clock.System.now().epochSeconds,
     val synced: Boolean = false
 ) {
     fun asSynced() = this.copy(synced = true)
