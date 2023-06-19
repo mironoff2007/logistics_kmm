@@ -46,13 +46,12 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
 
                 //Ktor
-                /*implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-client-websockets:$ktorVersion")
                 implementation("io.ktor:ktor-client-auth:$ktorVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")*/
+                implementation("io.ktor:ktor-client-logging:$ktorVersion")
 
             }
         }
@@ -64,7 +63,7 @@ kotlin {
 
                 implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
 
-                //implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
             }
         }
         val desktopMain by getting {
@@ -73,7 +72,7 @@ kotlin {
 
                 implementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
 
-                //implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
+                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
 
@@ -88,7 +87,7 @@ kotlin {
             dependencies {
                 implementation("app.cash.sqldelight:native-driver:$sqldelightVersion")
 
-                //implementation("io.ktor:ktor-client-darwin:$ktorVersion")
+                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
     }
