@@ -34,6 +34,8 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":domain"))
+                implementation(project(":localization"))
+                implementation(project(":server_contract"))
 
                 implementation(compose.runtime)
                 implementation(compose.foundation)

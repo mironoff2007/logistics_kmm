@@ -4,7 +4,8 @@ include(":androidApp")
 include(":shared")
 include(":desktop")
 include(":domain")
-include (":localization")
+include(":localization")
+include(":server_contract")
 
 
 pluginManagement {
@@ -41,4 +42,3 @@ dependencyResolutionManagement {
         maven("https://maven.pkg.jetbrains.space/public/p/compose/dev")
     }
 }
-
