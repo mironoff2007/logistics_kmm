@@ -1,3 +1,4 @@
+/*
 package ru.mironov.common.ui
 
 import androidx.compose.foundation.border
@@ -95,3 +96,4 @@ fun Spinner(
         }
     }
 }
+*/

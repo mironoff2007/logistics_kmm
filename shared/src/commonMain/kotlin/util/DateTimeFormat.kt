@@ -1,16 +1,17 @@
 package ru.mironov.common.util
 
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
 
-import java.text.SimpleDateFormat
-import java.util.Date
 
 object DateTimeFormat {
 
     fun format(time: Long, format: String): String? {
        return try {
-            val date = Date(time)
-            val dateFormat = SimpleDateFormat(format)
-            dateFormat.format(date)
+            val date = Instant.fromEpochMilliseconds(time)
+            val dateFormat = date.toLocalDateTime(TimeZone.UTC)
+            dateFormat.toString() // todo
         }
         catch (e:Exception) {
             null
