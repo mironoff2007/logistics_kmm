@@ -13,12 +13,11 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
-import org.jetbrains.compose.resources.painterResource
 import ru.mironov.common.res.ImageRes
-import ru.mironov.common.ui.getPainterResource
 import ru.mironov.logistics.ui.theme.LogisticsTheme
+import ui.getPainterResource
 
-@OptIn(ExperimentalResourceApi::class)
+
 @Composable
 fun App() {
     LogisticsTheme {

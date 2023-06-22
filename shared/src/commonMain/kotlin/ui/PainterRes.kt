@@ -1,10 +1,11 @@
-package ru.mironov.common.ui
+package ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.painter.Painter
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
 import ru.mironov.common.res.ImageRes
+
 @OptIn(ExperimentalResourceApi::class)
 @Composable
 fun getPainterResource(imageRes: ImageRes): Painter
@@ -24,6 +25,3 @@ fun getPainterResource(imageRes: ImageRes): Painter
     }
     return painterResource("drawable/$id")
 }
-
-@Composable
-expect fun getLocale(): String
