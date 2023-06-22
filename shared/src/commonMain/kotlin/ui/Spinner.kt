@@ -84,7 +84,14 @@ fun Spinner(
                         mExpanded = false
                     } ,
                     text = {
-
+                        Text(
+                            text = AnnotatedString(menuItem),
+                            style = TextStyle(
+                                fontFamily = MaterialTheme.typography.h4.fontFamily,
+                                fontSize = textSize,
+                                color = MaterialTheme.colors.onSurface
+                            )
+                        )
                     }
                 )
             }
