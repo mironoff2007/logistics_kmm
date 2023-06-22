@@ -4,11 +4,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material3.MenuDefaults
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpOffset
-import ru.mironov.logistics.ui.theme.LogisticsTheme
 
 @Composable
 public expect fun ExpectDropdownMenu(
@@ -27,7 +25,7 @@ public expect fun ExpectDropdownMenuItem(
     modifier: Modifier = Modifier,
     leadingIcon: @Composable() (() -> Unit)? = null,
     trailingIcon: @Composable() (() -> Unit)? = null,
-    enabled: Boolean = false,
+    enabled: Boolean = true,
     contentPadding: PaddingValues = MenuDefaults.DropdownMenuItemContentPadding,
     interactionSource: MutableInteractionSource = MutableInteractionSource()
 )
