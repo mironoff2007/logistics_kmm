@@ -4,6 +4,7 @@ include(":androidApp")
 include(":shared")
 include(":desktop")
 include(":domain")
+include(":database")
 include(":localization")
 include(":server_contract")
 
