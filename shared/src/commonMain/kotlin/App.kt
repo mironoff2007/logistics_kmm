@@ -14,6 +14,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import org.jetbrains.compose.resources.ExperimentalResourceApi
 import org.jetbrains.compose.resources.painterResource
+import ru.mironov.common.res.ImageRes
+import ru.mironov.common.ui.getPainterResource
 import ru.mironov.logistics.ui.theme.LogisticsTheme
 
 @OptIn(ExperimentalResourceApi::class)
@@ -31,7 +33,7 @@ fun App() {
             }
             AnimatedVisibility(showImage) {
                 Image(
-                    painterResource("compose-multiplatform.xml"),
+                    getPainterResource(ImageRes.Compose),
                     null
                 )
             }
