@@ -10,6 +10,8 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":shared"))
+                implementation(project(":database"))
+                implementation(project(":logging"))
 
                 implementation ("androidx.activity:activity-compose:1.5.0")
                 implementation ("com.google.accompanist:accompanist-systemuicontroller:0.17.0")

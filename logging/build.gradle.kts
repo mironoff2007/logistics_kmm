@@ -1,8 +1,3 @@
-repositories {
-    google()
-    mavenCentral()
-}
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.jvm") apply false
@@ -17,9 +12,10 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":shared"))
-                implementation(project(":domain"))
-                implementation(project(":logging"))
+                implementation (project(":shared"))
+                implementation (project(":domain"))
+
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
             }
         }
     }

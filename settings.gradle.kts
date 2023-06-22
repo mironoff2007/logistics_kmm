@@ -5,6 +5,7 @@ include(":shared")
 include(":desktop")
 include(":domain")
 include(":database")
+include(":logging")
 include(":localization")
 include(":server_contract")
 
