@@ -6,6 +6,7 @@ include(":desktop")
 include(":domain")
 include(":database")
 include(":logging")
+include(":di")
 include(":localization")
 include(":server_contract")
 
@@ -21,7 +22,9 @@ pluginManagement {
         val kotlinVersion = extra["kotlin.version"] as String
         val agpVersion = extra["agp.version"] as String
         val composeVersion = extra["compose.version"] as String
+        val kspVersion = extra["kspVersion"] as String
 
+        id("com.google.devtools.ksp").version(kspVersion)
         kotlin("jvm").version(kotlinVersion)
         kotlin("multiplatform").version(kotlinVersion)
         kotlin("android").version(kotlinVersion)
