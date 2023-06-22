@@ -1,4 +1,4 @@
-/*
+
 package ru.mironov.common.ui
 
 import androidx.compose.foundation.border
@@ -10,8 +10,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.DropdownMenu
-import androidx.compose.material.DropdownMenuItem
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -30,6 +28,8 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
+import ui.ExpectDropdownMenu
+import ui.ExpectDropdownMenuItem
 
 
 @Composable
@@ -71,29 +71,26 @@ fun Spinner(
             )
             Icon(icon, "label", Modifier)
         }
-        DropdownMenu(
+        ExpectDropdownMenu(
             expanded = mExpanded,
             onDismissRequest = { mExpanded = false },
             modifier = Modifier.wrapContentSize()
         ) {
             list.forEach { menuItem ->
-                DropdownMenuItem(
+                ExpectDropdownMenuItem(
                     onClick = {
                         onValueChange.invoke(menuItem)
                         selectedValue = menuItem
                         mExpanded = false
-                    }) {
-                    Text(
-                        text = AnnotatedString(menuItem),
-                        style = TextStyle(
-                            fontFamily = MaterialTheme.typography.h4.fontFamily,
-                            fontSize = textSize,
-                            color = MaterialTheme.colors.onSurface
-                        )
-                    )
-                }
+                    } ,
+                    text = {
+
+                    }
+                )
             }
         }
     }
 }
-*/
+
+
+

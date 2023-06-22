@@ -1,7 +1,10 @@
 package ui
 
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ColumnScope
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.material.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpOffset
@@ -20,4 +23,25 @@ actual fun ExpectDropdownMenu(
     modifier = modifier,
     offset = offset,
     content = content
+)
+
+@Composable
+actual fun ExpectDropdownMenuItem(
+    text: @Composable () -> Unit,
+    onClick: () -> Unit,
+    modifier: Modifier,
+    leadingIcon: @Composable() (() -> Unit)?,
+    trailingIcon: @Composable() (() -> Unit)?,
+    enabled: Boolean,
+    contentPadding: PaddingValues,
+    interactionSource: MutableInteractionSource
+) = DropdownMenuItem(
+    text = text,
+    onClick = onClick,
+    modifier = modifier,
+    leadingIcon = leadingIcon,
+    trailingIcon = trailingIcon,
+    enabled = enabled,
+    contentPadding = contentPadding,
+    interactionSource = interactionSource
 )
