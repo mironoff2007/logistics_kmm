@@ -7,7 +7,7 @@ actual class File {
 
     private var file: java.io.File? = null
     actual fun create(path: String, name: String): Result<Boolean> = try {
-        Files.createDirectory(Path(path))
+        if (!Files.exists(Path(path))) Files.createDirectory(Path(path))
         file = java.io.File("${path}/$name")
         Result.success(true)
     } catch (e: Exception) {

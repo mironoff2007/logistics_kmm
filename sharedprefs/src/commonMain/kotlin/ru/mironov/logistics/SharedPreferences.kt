@@ -21,7 +21,9 @@ class SharedPreferences {
         try {
             file.create(path,"$settingName.json")
         }
-        catch (e: Exception) { }
+        catch (e: Exception) {
+            println(e.stackTraceToString())
+        }
 
         return file
     }
