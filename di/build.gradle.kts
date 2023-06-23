@@ -17,13 +17,13 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                //implementation(project(":ui"))
+                implementation(project(":ui"))
                 implementation(project(":shared"))
                 implementation(project(":domain"))
                 implementation(project(":logging"))
-                //(project(":sharedprefs"))
+                implementation(project(":sharedprefs"))
                 implementation(project(":server_contract"))
-                //implementation(project(":repo"))
+                implementation(project(":repo"))
                 implementation(project(":database"))
 
                 runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:${findProperty("kotlin.version")}")

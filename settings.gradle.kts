@@ -9,6 +9,7 @@ include(":repo")
 include(":sharedprefs")
 include(":logging")
 include(":di")
+include(":ui")
 include(":localization")
 include(":server_contract")
 
