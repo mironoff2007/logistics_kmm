@@ -5,6 +5,10 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.Saver
 import androidx.compose.runtime.saveable.rememberSaveable
+import kotlinx.serialization.Serializable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.ui.navigation.Screens
 import ru.mironov.logistics.ui.navigation.ViewModelFactory
@@ -52,6 +56,7 @@ class NavController(
         }
     }
 
+    @Serializable
     data class NavControllerData(
         val root: String,
         val currentScreen: String,
@@ -82,14 +87,17 @@ class NavController(
 fun stateSaver(factory: ViewModelFactory) = Saver<MutableState<NavController>, Any>(
     save = { state ->
         val data = state.value.getData()
-        NavController.NavControllerData(
+        val dataToSave = NavController.NavControllerData(
             data.root,
             state.value.currentScreen.value,
             data.backStackScreens
         )
+        Json.encodeToString(dataToSave)
     },
     restore = { value ->
-        val data = value as? NavController.NavControllerData
+        val data = (value as? String)?.let {
+            Json.decodeFromString<NavController.NavControllerData>(it)
+        }
         mutableStateOf(
             NavController(
                 data?.root ?: "",
