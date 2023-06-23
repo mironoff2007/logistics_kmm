@@ -1,26 +1,24 @@
 package ru.mironov.logistics.logging
 
+import data.file.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
-import ru.mironov.common.data.DataConstants
-import ru.mironov.common.data.getFilesPath
-import ru.mironov.common.util.DateTimeFormat
-import ru.mironov.domain.di.Singleton
-import java.io.File
-import java.nio.file.Files
-import kotlin.io.path.Path
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
+import ru.mironov.common.data.DataConstants
+import ru.mironov.common.data.getFilesPath
 import ru.mironov.common.logging.consoleLog
+import ru.mironov.common.util.DateTimeFormat
+import ru.mironov.domain.di.Singleton
 
 @Singleton
 class LoggerImpl @Inject constructor(): Logger {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private lateinit var file: File
+    private var file: File? = null
 
     init {
         scope.launch {
@@ -42,17 +40,18 @@ class LoggerImpl @Inject constructor(): Logger {
 
     private fun createFile(): File {
         var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds)
+        val file = File()
 
         try {
             while (name.contains(" ")) name = name.replace(" ","_")
             while (name.contains(":")) name = name.replace(":","-")
-            Files.createDirectory(Path(getPath()))
+            file.create(getPath(),"$name.log" )
         }
         catch (e: Exception) {
             e.stackTraceToString()
         }
 
-        return File("${getPath()}/$name.log")
+        return file
     }
 
     override fun logD(tag: String, msg: String) {
@@ -83,14 +82,7 @@ class LoggerImpl @Inject constructor(): Logger {
     }
 
     private suspend fun save(text: String): Boolean {
-        return try {
-            file.bufferedWriter().use { out -> out.write(text) }
-            true
-        }
-        catch (e: Exception) {
-            println(e.stackTraceToString())
-            false
-        }
+        return file?.write(text)?.isSuccess == true
     }
 
     companion object {
