@@ -3,14 +3,13 @@ package ru.mironov.logistics.logging
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.datetime.Clock
 import ru.mironov.common.data.DataConstants
 import ru.mironov.common.data.getFilesPath
 import ru.mironov.common.util.DateTimeFormat
 import ru.mironov.domain.di.Singleton
 import java.io.File
 import java.nio.file.Files
-import java.util.Date
-
 import kotlin.io.path.Path
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
@@ -41,7 +40,7 @@ class LoggerImpl @Inject constructor(): Logger {
     private fun getPath() = "${getFilesPath()}/${DataConstants.APP_FOLDER_NAME}/${DataConstants.LOGS_FOLDER_NAME}/"
 
     private fun createFile(): File {
-        var name = DateTimeFormat.formatLog(Date().time) ?: Date().toString()
+        var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds)
 
         try {
             while (name.contains(" ")) name = name.replace(" ","_")
@@ -78,8 +77,8 @@ class LoggerImpl @Inject constructor(): Logger {
     }
 
     private fun getTime(): String {
-        val date = Date()
-        return DateTimeFormat.formatLog(date.time) ?: date.toString()
+        val date = Clock.System.now().epochSeconds
+        return DateTimeFormat.formatLog(date) ?: date.toString()
     }
 
     private suspend fun save(text: String): Boolean {

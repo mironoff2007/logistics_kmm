@@ -7,14 +7,14 @@ import kotlinx.datetime.toLocalDateTime
 
 object DateTimeFormat {
 
-    fun format(time: Long, format: String): String? {
+    fun format(time: Long, format: String): String {
+        val date = Instant.fromEpochMilliseconds(time)
+        val dateFormat = date.toLocalDateTime(TimeZone.currentSystemDefault())
        return try {
-            val date = Instant.fromEpochMilliseconds(time)
-            val dateFormat = date.toLocalDateTime(TimeZone.currentSystemDefault())
             dateFormat.toString() // todo
         }
         catch (e:Exception) {
-            null
+            dateFormat.toString()
         }
     }
 
