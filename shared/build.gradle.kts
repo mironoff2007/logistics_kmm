@@ -30,6 +30,7 @@ kotlin {
     val ktorVersion: String by project
     val serializationVersion: String by project
     val sqldelightVersion: String by project
+    val okioVersion = "3.3.0"
     sourceSets {
         val commonMain by getting {
             dependencies {
@@ -59,6 +60,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-auth:$ktorVersion")
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
+
+                implementation("com.squareup.okio:okio:$okioVersion")
 
             }
         }
