@@ -1,10 +1,10 @@
 package com.logistics
 
-import MainView
 import android.os.Bundle
 import androidx.activity.compose.setContent
 import androidx.appcompat.app.AppCompatActivity
 import ru.mironov.common.Logger
+import ru.mironov.logistics.MainScreen
 import ru.mironov.logistics.logging.LoggerImpl
 
 class MainActivity : AppCompatActivity() {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         logger.logD("activity", "create")
         setContent {
-            MainView()
+            MainScreen()
         }
     }
 }

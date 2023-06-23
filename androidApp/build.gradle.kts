@@ -10,6 +10,9 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 implementation(project(":shared"))
+                implementation(project(":ui"))
+                implementation(project(":di"))
+                implementation(project(":localization"))
                 implementation(project(":database"))
                 implementation(project(":logging"))
 

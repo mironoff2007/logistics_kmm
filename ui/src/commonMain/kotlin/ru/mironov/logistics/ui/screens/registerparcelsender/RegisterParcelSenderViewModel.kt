@@ -8,8 +8,6 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.common.data.DataBase.initCityTable
-import ru.mironov.common.data.DataBase.initParcelsTable
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
 import ru.mironov.common.Logger
@@ -40,13 +38,11 @@ class RegisterParcelSenderViewModel(
 
     fun onScreenOpened() {
         viewModelScope.launch {
-            initCityTable()
             getCities()
         }
     }
 
     private suspend fun getCities() {
-        initCityTable()
         _loading.emit(true)
         try {
             val cities = cityTable.fetchAll()
@@ -64,7 +60,6 @@ class RegisterParcelSenderViewModel(
         viewModelScope.launch {
             _loading.emit(true)
             try {
-                initParcelsTable()
                 val parcel = ParcelData(
                     personName = senderParcelData.personName,
                     personSecondName = senderParcelData.personSecondName,

@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.common.data.DataBase.initCityTable
+
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.common.Logger
@@ -50,7 +50,6 @@ class WarehouseViewModel(
         viewModelScope.launch(supervisor) {
             try {
                 _loading.emit(true)
-                initCityTable()
                 val cities = cityTable.fetchAll()
                 val citiesWithNull = mutableListOf<City?>()
                 citiesWithNull.add(null)
