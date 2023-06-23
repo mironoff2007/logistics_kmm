@@ -10,7 +10,7 @@ object DateTimeFormat {
     fun format(time: Long, format: String): String? {
        return try {
             val date = Instant.fromEpochMilliseconds(time)
-            val dateFormat = date.toLocalDateTime(TimeZone.UTC)
+            val dateFormat = date.toLocalDateTime(TimeZone.currentSystemDefault())
             dateFormat.toString() // todo
         }
         catch (e:Exception) {
