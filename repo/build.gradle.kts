@@ -12,15 +12,17 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation (project(":database"))
                 implementation (project(":shared"))
                 implementation (project(":domain"))
+                implementation (project(":logging"))
+                implementation (project(":server_contract"))
 
                 api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
-
             }
         }
     }

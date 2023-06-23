@@ -1,7 +1,8 @@
 package ru.mironov.logistics.logging
 
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.IO
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import ru.mironov.common.data.DataConstants
@@ -18,7 +19,7 @@ import ru.mironov.common.logging.consoleLog
 @Singleton
 class LoggerImpl @Inject constructor(): Logger {
 
-    private val scope = CoroutineScope(IO)
+    private val scope = CoroutineScope(Dispatchers.IO)
     private lateinit var file: File
 
     init {
