@@ -10,6 +10,7 @@ kotlin {
     iosSimulatorArm64()
 
     sourceSets {
+        val okioVersion = "3.3.0"
         val commonMain by getting {
             dependencies {
                 implementation (project(":shared"))
@@ -20,6 +21,8 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
+
+                implementation("com.squareup.okio:okio:$okioVersion")
 
             }
         }
