@@ -1,6 +1,5 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("native.cocoapods")
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization")
@@ -14,19 +13,6 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
-    cocoapods {
-        version = "1.0.0"
-        summary = "Some description for the Shared Module"
-        homepage = "Link to the Shared Module homepage"
-        ios.deploymentTarget = "14.1"
-        podfile = project.file("../iosApp/Podfile")
-        framework {
-            baseName = "shared"
-            isStatic = true
-        }
-        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
-    }
-
     val ktorVersion: String by project
     val serializationVersion: String by project
     val sqldelightVersion: String by project
@@ -35,7 +21,6 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":domain"))
-                implementation(project(":core"))
                 implementation(project(":localization"))
                 implementation(project(":server_contract"))
 
@@ -122,5 +107,15 @@ android {
     }
     kotlin {
         jvmToolchain(11)
+    }
+}
+
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("")
+            schemaOutputDirectory.set(file("src/commonMain/sqldelight/data/schema"))
+            migrationOutputDirectory.set(file("src/commonMain/sqldelight/migrations"))
+        }
     }
 }

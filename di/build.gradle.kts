@@ -18,7 +18,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":ui"))
-                implementation(project(":shared"))
+                implementation(project(":core"))
                 implementation(project(":domain"))
                 implementation(project(":logging"))
                 implementation(project(":sharedprefs"))

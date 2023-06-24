@@ -13,7 +13,7 @@ kotlin {
         val okioVersion = "3.3.0"
         val commonMain by getting {
             dependencies {
-                implementation (project(":shared"))
+                implementation (project(":core"))
                 implementation (project(":domain"))
 
                 api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")

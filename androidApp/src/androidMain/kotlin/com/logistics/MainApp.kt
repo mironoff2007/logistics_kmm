@@ -1,7 +1,6 @@
 package com.logistics
 
 import android.app.Application
-import ru.mironov.common.AppContext
 
 class MainApp : Application() {
 

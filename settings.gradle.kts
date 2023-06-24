@@ -2,6 +2,7 @@ rootProject.name = "Logistics"
 
 include(":androidApp")
 include(":shared")
+include(":core")
 include(":desktop")
 include(":domain")
 include(":database")
