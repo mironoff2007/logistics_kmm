@@ -4,14 +4,14 @@ import okio.FileHandle
 import okio.FileSystem
 import okio.Path.Companion.toPath
 
-actual class File actual constructor(val path: String, val name: String) {
+actual class File actual constructor(private val path: String, val name: String) {
 
     private var file: FileHandle? = null
     private var dir = path.toPath().normalized()
     private var filePath = ("$path/$name").toPath().normalized()
     private fun create() {
         try {
-            FileSystem.SYSTEM.createDirectory(dir, true)
+            FileSystem.SYSTEM.createDirectory(dir, false)
 
             file = FileSystem.SYSTEM.openReadWrite(
                 filePath,

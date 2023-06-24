@@ -3,7 +3,7 @@ package data.file
 import java.nio.file.Files
 import kotlin.io.path.Path
 
-actual class File actual constructor(val path: String, val name: String) {
+actual class File actual constructor(private val path: String, private val name: String) {
 
     private var file: java.io.File? = null
     private fun create() {
