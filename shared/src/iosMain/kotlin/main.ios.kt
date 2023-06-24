@@ -1,5 +1,9 @@
 import androidx.compose.ui.window.ComposeUIViewController
+import ru.mironov.logistics.ui.theme.LogisticsTheme
 
-actual fun getPlatformName(): String = "iOS"
 
-fun MainViewController() = ComposeUIViewController { App() }
+fun MainViewController() = ComposeUIViewController {
+    LogisticsTheme {
+        NavRoot(ApplicationComponent.getVmFactory()) {}
+    }
+}

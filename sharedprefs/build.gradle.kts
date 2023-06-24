@@ -13,7 +13,7 @@ kotlin {
         val commonMain by getting {
             val serializationVersion: String by project
             dependencies {
-                implementation(project(":shared"))
+                implementation(project(":core"))
                 implementation(project(":domain"))
                 implementation(project(":logging"))
 
