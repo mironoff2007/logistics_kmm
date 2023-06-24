@@ -14,25 +14,22 @@ class SharedPreferences {
 
     val path = getFilesPath() + "/" + DataConstants.APP_FOLDER_NAME + "/"
 
-    inline fun <reified T: BaseSettings> createFile(): File {
+    inline fun <reified T : BaseSettings> createFile(): File? {
         val kClass = T::class
         val settingName = kClass.simpleName
-        val file = File()
-        try {
-            file.create(path,"$settingName.json")
-        }
-        catch (e: Exception) {
+        return try {
+            File(path, "$settingName.json")
+        } catch (e: Exception) {
             println(e.stackTraceToString())
+            null
         }
-
-        return file
     }
 
     inline fun <reified T: BaseSettings> save(settings: T): Boolean {
         val file = createFile<T>()
         return try {
             val string = Json.encodeToString(settings)
-            file.write(string)
+            file?.write(string)
             true
         }
         catch (e: Exception) {
@@ -40,13 +37,13 @@ class SharedPreferences {
         }
     }
 
-    inline fun <reified T: BaseSettings> load(): T? {
+    inline fun <reified T : BaseSettings> load(): T? {
         val file = createFile<T>()
         return try {
-            val read = file.read()
-            var text = read.getOrThrow()
-            val obj = Json.decodeFromString<T>(text)
-            return obj
+            val read = file?.read()
+            var text = read?.getOrThrow()
+            return if (text.isNullOrBlank()) null
+            else Json.decodeFromString<T>(text)
         } catch (e: Exception) {
             println(e.stackTraceToString())
             null

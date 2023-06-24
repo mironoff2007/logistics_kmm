@@ -4,6 +4,7 @@ import data.file.File
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlinx.datetime.Clock
 import me.tatarka.inject.annotations.Inject
@@ -19,9 +20,10 @@ class LoggerImpl @Inject constructor(): Logger {
 
     private val scope = CoroutineScope(Dispatchers.IO)
     private var file: File? = null
+    private var createJob: Job? = null
 
     init {
-        scope.launch {
+        createJob = scope.launch {
             file = createFile()
         }
     }
@@ -38,20 +40,17 @@ class LoggerImpl @Inject constructor(): Logger {
 
     private fun getPath() = "${getFilesPath()}/${DataConstants.APP_FOLDER_NAME}/${DataConstants.LOGS_FOLDER_NAME}/"
 
-    private fun createFile(): File {
+    private fun createFile(): File? {
         var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds)
-        val file = File()
-
-        try {
+        return try {
             while (name.contains(" ")) name = name.replace(" ","_")
             while (name.contains(":")) name = name.replace(":","-")
-            file.create(getPath(),"$name.log" )
+            File(getPath(),"$name.log" )
         }
         catch (e: Exception) {
             e.stackTraceToString()
+            null
         }
-
-        return file
     }
 
     override fun logD(tag: String, msg: String) {
@@ -82,6 +81,7 @@ class LoggerImpl @Inject constructor(): Logger {
     }
 
     private suspend fun save(text: String): Boolean {
+        createJob?.join()
         return file?.write(text)?.isSuccess == true
     }
 

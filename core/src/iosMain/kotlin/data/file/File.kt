@@ -2,28 +2,32 @@ package data.file
 
 import okio.FileHandle
 import okio.FileSystem
-import okio.Path
 import okio.Path.Companion.toPath
 
-actual class File {
+actual class File actual constructor(val path: String, val name: String) {
 
     private var file: FileHandle? = null
-    private var path: Path? = null
-    actual fun create(path: String, name: String): Result<Boolean> = try {
-        FileSystem.SYSTEM.createDirectory(path.toPath(normalize = true), true)
-        this.path = (path + "/" + name).toPath(normalize = true)
-        file = FileSystem.SYSTEM.openReadWrite(
-            this.path!!,
-            true,
-            false
-        )
-        Result.success(true)
-    } catch (e: Exception) {
-        Result.failure(e)
+    private var dir = path.toPath().normalized()
+    private var filePath = ("$path/$name").toPath().normalized()
+    private fun create() {
+        try {
+            FileSystem.SYSTEM.createDirectory(dir, true)
+
+            file = FileSystem.SYSTEM.openReadWrite(
+                filePath,
+                true,
+                false
+            )
+            Result.success(true)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
     }
 
     actual fun write(text: String): Result<Boolean> = try {
-        FileSystem.SYSTEM.write(path!!, true) {
+        val exist = FileSystem.SYSTEM.exists(filePath)
+        if (!exist) create()
+        FileSystem.SYSTEM.write(filePath, false) {
             writeUtf8(text)
         }
         Result.success(true)
@@ -32,7 +36,9 @@ actual class File {
     }
 
     actual fun read(): Result<String> = try {
-        val text = FileSystem.SYSTEM.read(path!!) {
+        val exist = FileSystem.SYSTEM.exists(filePath)
+        if (!exist) create()
+        val text = FileSystem.SYSTEM.read(filePath) {
             readUtf8()
         }
         Result.success(text)
