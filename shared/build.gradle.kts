@@ -34,6 +34,7 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
+                implementation(project(":ui"))
                 implementation(project(":domain"))
                 implementation(project(":core"))
                 implementation(project(":localization"))
