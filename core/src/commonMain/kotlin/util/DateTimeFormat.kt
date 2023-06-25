@@ -17,7 +17,7 @@ object DateTimeFormat {
             result = result.replace("yyyy", dateFormat.year.toString())
             result = result.replaceIfContains("dd", dateFormat.dayOfMonth.formatWithZero())
             result = result.replaceIfContains("MM", dateFormat.monthNumber.formatWithZero())
-            result = result.replaceIfContains("HH", dateFormat.second.formatWithZero())
+            result = result.replaceIfContains("HH", dateFormat.hour.formatWithZero())
             result = result.replaceIfContains("mm", dateFormat.minute.formatWithZero())
             result = result.replaceIfContains("ss", dateFormat.second.formatWithZero())
             result = result.replaceIfContains("SSS", millis )
