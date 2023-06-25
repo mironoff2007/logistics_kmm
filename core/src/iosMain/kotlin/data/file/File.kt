@@ -4,17 +4,17 @@ import okio.FileHandle
 import okio.FileSystem
 import okio.Path.Companion.toPath
 
-actual class File actual constructor(private val path: String, val name: String) {
+actual class File actual constructor(path: String, name: String) {
 
-    private var file: FileHandle? = null
     private var dir = path.toPath().normalized()
-    private var filePath = ("$path/$name").toPath().normalized()
+    private var filePath = "$path$name"
+    private val path = filePath.toPath(true)
     private fun create() {
         try {
             FileSystem.SYSTEM.createDirectory(dir, false)
 
-            file = FileSystem.SYSTEM.openReadWrite(
-                filePath,
+            FileSystem.SYSTEM.openReadWrite(
+                path,
                 true,
                 false
             )
@@ -25,9 +25,8 @@ actual class File actual constructor(private val path: String, val name: String)
     }
 
     actual fun write(text: String): Result<Boolean> = try {
-        val exist = FileSystem.SYSTEM.exists(filePath)
-        if (!exist) create()
-        FileSystem.SYSTEM.write(filePath, false) {
+        val exist = FileSystem.SYSTEM.exists(path)
+        FileSystem.SYSTEM.write(file = path, mustCreate = !exist) {
             writeUtf8(text)
         }
         Result.success(true)
@@ -36,9 +35,9 @@ actual class File actual constructor(private val path: String, val name: String)
     }
 
     actual fun read(): Result<String> = try {
-        val exist = FileSystem.SYSTEM.exists(filePath)
+        val exist = FileSystem.SYSTEM.exists(path)
         if (!exist) create()
-        val text = FileSystem.SYSTEM.read(filePath) {
+        val text = FileSystem.SYSTEM.read(path) {
             readUtf8()
         }
         Result.success(text)
