@@ -48,7 +48,7 @@ import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.ImageRes
 import ru.mironov.common.res.localizedString
 import ui.getPainterResource
-import ru.mironov.common.util.DateTimeFormat
+import util.DateTimeFormat
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.common.ui.Spinner

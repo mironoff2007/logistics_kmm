@@ -1,4 +1,4 @@
-package ru.mironov.common.util
+package util
 
 import kotlinx.datetime.Instant
 import kotlinx.datetime.TimeZone
@@ -7,7 +7,7 @@ import kotlinx.datetime.toLocalDateTime
 
 object DateTimeFormat {
 
-    fun format(timeInMillis: Long, format: String): String {
+    private fun format(timeInMillis: Long, format: String): String {
         val date = Instant.fromEpochMilliseconds(timeInMillis)
         val dateFormat = date.toLocalDateTime(TimeZone.currentSystemDefault())
         var result = format
@@ -43,7 +43,4 @@ object DateTimeFormat {
     private const val DB_FORMAT = "dd.MM.yyyy_HH:mm:ss"
     private const val LOG_FORMAT = "dd.MM.yyyy-HH:mm:ss.SSS"
 
-    enum class DateFormat (val pattern: String){
-        Hour("HH")
-    }
 }

@@ -27,7 +27,7 @@ import com.mironov.localization.StringRes
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
-import ru.mironov.common.util.DateTimeFormat
+import util.DateTimeFormat
 import ru.mironov.domain.model.Parcel
 import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens

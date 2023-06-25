@@ -11,7 +11,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.util.DateTimeFormat
+import util.DateTimeFormat
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.domain.model.ParcelData
