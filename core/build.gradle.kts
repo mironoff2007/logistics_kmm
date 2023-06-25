@@ -49,6 +49,9 @@ kotlin {
 
                 implementation("com.squareup.okio:okio:$okioVersion")
 
+                implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
+
+
             }
         }
         val androidMain by getting {
