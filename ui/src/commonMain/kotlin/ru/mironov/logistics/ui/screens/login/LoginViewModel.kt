@@ -5,7 +5,7 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.domain.model.Res
 import ru.mironov.domain.model.web.ErrorCodes
-import ru.mironov.domain.settings.UserSettings
+import ru.mironov.domain.settings.UserData
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.SharedPreferences
@@ -28,8 +28,8 @@ class LoginViewModel(
             loginRepo.login(userName = login, password = password).let {
                 when (it) {
                     is Res.Success -> {
-                        val userSettings = prefs.load() ?: UserSettings()
-                        userSettings.add(UserSettings.UserName, login)
+                        val userSettings = prefs.load() ?: UserData()
+                        userSettings.add(UserData.UserName, login)
                         prefs.save(userSettings)
                         loginResult.postEvent(State.Success(true))
                     }
@@ -54,8 +54,8 @@ class LoginViewModel(
     fun onScreenComposed() {
         viewModelScope.launch {
             logger.logD("Login Screen", "Login screen opened")
-            val userSettings = prefs.load() ?: UserSettings()
-            val userName = userSettings.getString(UserSettings.UserName) ?: ""
+            val userSettings = prefs.load() ?: UserData()
+            val userName = userSettings.getString(UserData.UserName) ?: ""
             userNameLoaded.postEvent(userName)
         }
     }

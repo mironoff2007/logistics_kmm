@@ -72,7 +72,7 @@ class CommonSettings(): BaseSettings(){
 }
 
 @Serializable
-class UserSettings(): BaseSettings(){
+class UserData(): BaseSettings(){
     object UserName : Setting<String>("")
 }
 
