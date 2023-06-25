@@ -26,7 +26,7 @@ fun ParcelEntity.toParcel(cities: List<City>): Parcel {
         senderCity = cities.firstOrNull { it.name ==  this.senderCity }!!,
         currentCity =  cities.firstOrNull { it.name == this.currentCity }!!,
         dateShow = this.dateShow ?: "",
-        date = this.date ?: 0L,
+        dateMillis = this.date ?: 0L,
         synced = this.synced == "true"
     )
 }

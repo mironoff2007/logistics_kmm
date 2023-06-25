@@ -37,7 +37,7 @@ class LoginRepo(
     }
 
     suspend fun getOrRefreshToken(): Res<Token?> {
-        val time = Clock.System.now().epochSeconds
+        val time = Clock.System.now().toEpochMilliseconds()
         return if (token != null && (expireAt ?: 0) > time) {
             logger.logD(LOG_TAG, "login, token is actual")
             Res.Success(

@@ -15,8 +15,8 @@ data class Parcel(
     val destinationCity: City,
     val currentCity: City,
     val senderCity: City,
-    val dateShow: String = Clock.System.now().epochSeconds.toString(),
-    val date: Long = Clock.System.now().epochSeconds,
+    val dateShow: String,
+    val dateMillis: Long = Clock.System.now().toEpochMilliseconds(),
     val synced: Boolean = false
 ) {
     fun asSynced() = this.copy(synced = true)

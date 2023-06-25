@@ -39,7 +39,7 @@ class ParcelDb() {
             senderCity = parcel.senderCity.name,
             currentCity = parcel.currentCity.name,
             dateShow = parcel.dateShow,
-            date = parcel.date,
+            date = parcel.dateMillis,
             synced = parcel.synced.toString()
         )
     }

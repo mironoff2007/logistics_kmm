@@ -337,7 +337,7 @@ private fun ParcelViewItem(
                     color = MaterialTheme.colors.onSurface
                 ),
             )
-            val dateTime = AnnotatedString(DateTimeFormat.formatUI(parcel.date) ?: parcel.dateShow)
+            val dateTime = AnnotatedString(DateTimeFormat.formatUI(parcel.dateMillis) ?: parcel.dateShow)
             Text(
                 text = localizedString(StringRes.ParcelRegTime) + " : " + dateTime,
                 style = TextStyle(

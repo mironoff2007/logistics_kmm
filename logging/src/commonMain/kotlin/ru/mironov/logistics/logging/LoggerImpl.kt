@@ -41,7 +41,7 @@ class LoggerImpl @Inject constructor(): Logger {
     private fun getPath() = "${getFilesPath()}/${DataConstants.APP_FOLDER_NAME}/${DataConstants.LOGS_FOLDER_NAME}/"
 
     private fun createFile(): File? {
-        var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds)
+        var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds * 1000)
         return try {
             while (name.contains(" ")) name = name.replace(" ","_")
             while (name.contains(":")) name = name.replace(":","-")
@@ -76,7 +76,7 @@ class LoggerImpl @Inject constructor(): Logger {
     }
 
     private fun getTime(): String {
-        val date = Clock.System.now().epochSeconds
+        val date = Clock.System.now().toEpochMilliseconds()
         return DateTimeFormat.formatLog(date) ?: date.toString()
     }
 

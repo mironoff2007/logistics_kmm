@@ -65,7 +65,7 @@ class RegisterParcelDestinationViewModel(
         viewModelScope.launch {
             _loading.emit(true)
             try {
-                val time = Clock.System.now().epochSeconds
+                val time = Clock.System.now().toEpochMilliseconds()
                 parcelRecipientData = ParcelData(
                     personName = recipientData.personName,
                     personSecondName = recipientData.personSecondName,

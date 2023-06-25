@@ -14,7 +14,7 @@ object DateTimeFormat {
             dateFormat.toString() // todo
         }
         catch (e:Exception) {
-            dateFormat.toString()
+            dateFormat.year.toString()
         }
     }
 
