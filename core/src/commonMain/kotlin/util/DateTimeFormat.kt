@@ -15,12 +15,12 @@ object DateTimeFormat {
             var millis = timeInMillis.toString()
             millis = millis.substring(millis.length - 3, millis.length)
             result = result.replace("yyyy", dateFormat.year.toString())
-            if (result.contains("dd")) result = result.replace("dd", dateFormat.dayOfMonth.formatWithZero())
-            if (result.contains("MM")) result = result.replace("MM", dateFormat.monthNumber.formatWithZero())
-            if (result.contains("HH")) result = result.replace("HH", dateFormat.second.formatWithZero())
-            if (result.contains("mm")) result = result.replace("mm", dateFormat.minute.formatWithZero())
-            if (result.contains("ss")) result = result.replace("ss", dateFormat.second.formatWithZero())
-            if (result.contains("SSS")) result = result.replace("SSS", millis )
+            result = result.replaceIfContains("dd", dateFormat.dayOfMonth.formatWithZero())
+            result = result.replaceIfContains("MM", dateFormat.monthNumber.formatWithZero())
+            result = result.replaceIfContains("HH", dateFormat.second.formatWithZero())
+            result = result.replaceIfContains("mm", dateFormat.minute.formatWithZero())
+            result = result.replaceIfContains("ss", dateFormat.second.formatWithZero())
+            result = result.replaceIfContains("SSS", millis )
             result
         } catch (e: Exception) {
             dateFormat.toString()
@@ -32,6 +32,9 @@ object DateTimeFormat {
         return if (str.length  == 1) "0$str" else str
     }
 
+    private fun String.replaceIfContains(tag: String, value: String): String = if (this.contains(tag)) replace(tag, value ) else this
+
+
     fun formatUI(time: Long) = format(time, UI_FORMAT)
     fun formatDB(time: Long) = format(time, DB_FORMAT)
     fun formatLog(time: Long) = format(time, LOG_FORMAT)
@@ -39,4 +42,8 @@ object DateTimeFormat {
     private const val UI_FORMAT = "dd.MM.yyyy HH:mm"
     private const val DB_FORMAT = "dd.MM.yyyy_HH:mm:ss"
     private const val LOG_FORMAT = "dd.MM.yyyy-HH:mm:ss.SSS"
+
+    enum class DateFormat (val pattern: String){
+        Hour("HH")
+    }
 }
