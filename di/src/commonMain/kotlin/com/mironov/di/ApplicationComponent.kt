@@ -6,7 +6,7 @@ import ru.mironov.common.Logger
 import ru.mironov.domain.di.Singleton
 import ru.mironov.logistics.AuthApi
 import ru.mironov.logistics.CitiesApi
-import ru.mironov.logistics.ParcelsApi
+import ru.mironov.logistics.parcel.ParcelsApi
 import ru.mironov.common.ktor.source.CitiesSource
 import ru.mironov.common.ktor.auth.Auth
 import ru.mironov.common.ktor.source.ParcelsSource

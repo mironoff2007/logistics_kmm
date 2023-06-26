@@ -11,8 +11,8 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.logistics.ParcelsApi
 import ru.mironov.common.Logger
+import ru.mironov.logistics.parcel.ParcelsApi
 
 @Inject
 class ParcelsSynchronizer(
@@ -39,13 +39,13 @@ class ParcelsSynchronizer(
                 job?.join()
                 job = scope.launch {
                     try {
-                        val parcels = parcelsTable.fetchNotSynced()
+                        val parcels = parcelsTable.fetchNotSynced().map{ it.toServerParcel() }
                         if (parcels.isNotEmpty()) {
                             logger.logD(LOG_TAG, "sync size ${parcels.size}")
                             val resp = parcelsApi.registerParcels(parcels)
                             if (resp) {
                                 logger.logD(LOG_TAG, "sync ok")
-                                parcelsTable.replaceAllTransaction(parcels.map { it.asSynced() })
+                                parcelsTable.replaceAllTransaction(parcels.map { it.toSyncedParcel() })
                             }
                             else {
                                 logger.logD(LOG_TAG, "sync fail")

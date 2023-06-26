@@ -9,9 +9,9 @@ kotlin {
     iosArm64()
     iosSimulatorArm64()
 
+    val serializationVersion: String by project
     sourceSets {
         val commonMain by getting {
-            val serializationVersion: String by project
             dependencies {
                 implementation(project(":core"))
                 implementation(project(":domain"))

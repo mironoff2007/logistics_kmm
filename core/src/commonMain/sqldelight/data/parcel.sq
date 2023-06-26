@@ -22,7 +22,7 @@ selectAll:
 SELECT * FROM ParcelEntity;
 
 selectNotSynced:
-SELECT * FROM ParcelEntity WHERE synced = "true";
+SELECT * FROM ParcelEntity WHERE synced = "false";
 
 insert:
 INSERT INTO ParcelEntity
