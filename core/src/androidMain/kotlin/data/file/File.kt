@@ -3,7 +3,7 @@ package data.file
 import java.nio.file.Files
 import kotlin.io.path.Path
 
-actual class File actual constructor(private val path: String, private val name: String) {
+actual class File actual constructor(private val path: String, val name: String) {
 
     private var file: java.io.File? = null
     private fun create() {
@@ -17,8 +17,8 @@ actual class File actual constructor(private val path: String, private val name:
     }
 
     actual fun write(text: String): Result<Boolean> = try {
-        if (file == null) create()
-        file!!.bufferedWriter().use { out -> out.write(text) }
+        file ?: create()
+        file?.appendText(text + "\n")
         Result.success(true)
     } catch (e: Exception) {
         Result.failure(e)
@@ -32,4 +32,5 @@ actual class File actual constructor(private val path: String, private val name:
     } catch (e: Exception) {
         Result.failure(e)
     }
+
 }

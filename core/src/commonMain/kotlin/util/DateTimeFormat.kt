@@ -39,8 +39,11 @@ object DateTimeFormat {
     fun formatDB(time: Long) = format(time, DB_FORMAT)
     fun formatLog(time: Long) = format(time, LOG_FORMAT)
 
+    fun formatLogFile(time: Long) = format(time, LOG_FILE_FORMAT)
+
     private const val UI_FORMAT = "dd.MM.yyyy HH:mm"
     private const val DB_FORMAT = "dd.MM.yyyy_HH:mm:ss"
+    private const val LOG_FILE_FORMAT = "dd-MM-yyyy_HH:mm:ss"
     private const val LOG_FORMAT = "dd.MM.yyyy-HH:mm:ss.SSS"
 
 }

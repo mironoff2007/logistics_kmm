@@ -12,8 +12,8 @@ import ru.mironov.common.Logger
 import ru.mironov.common.data.DataConstants
 import ru.mironov.common.data.getFilesPath
 import ru.mironov.common.logging.consoleLog
-import util.DateTimeFormat
 import ru.mironov.domain.di.Singleton
+import util.DateTimeFormat
 
 @Singleton
 class LoggerImpl @Inject constructor(): Logger {
@@ -41,7 +41,7 @@ class LoggerImpl @Inject constructor(): Logger {
     private fun getPath() = "${getFilesPath()}/${DataConstants.APP_FOLDER_NAME}/${DataConstants.LOGS_FOLDER_NAME}/"
 
     private fun createFile(): File? {
-        var name = DateTimeFormat.formatLog(Clock.System.now().epochSeconds * 1000)
+        var name = DateTimeFormat.formatLogFile(Clock.System.now().epochSeconds * 1000)
         return try {
             while (name.contains(" ")) name = name.replace(" ","_")
             while (name.contains(":")) name = name.replace(":","-")
@@ -59,7 +59,7 @@ class LoggerImpl @Inject constructor(): Logger {
                 val line = "[${getTime()}]-$msg"
                 val logTag = "$DEBUG_TAG:$tag"
                 consoleLog(logTag, line)
-                save(line)
+                save(fileLogLine(logTag, msg))
             }
         }
     }
@@ -70,14 +70,16 @@ class LoggerImpl @Inject constructor(): Logger {
                 val line = "[${getTime()}]-$msg"
                 val logTag = "$ERROR_TAG:$tag:"
                 consoleLog(logTag, line)
-                save(line)
+                save(fileLogLine(logTag, msg))
             }
         }
     }
 
+    private fun fileLogLine(tag: String, msg: String) = "[${getTime()}]:$tag-$msg"
+
     private fun getTime(): String {
         val date = Clock.System.now().toEpochMilliseconds()
-        return DateTimeFormat.formatLog(date) ?: date.toString()
+        return DateTimeFormat.formatLog(date)
     }
 
     private suspend fun save(text: String): Boolean {

@@ -17,8 +17,8 @@ actual class File actual constructor(private val path: String, val name: String)
     }
 
     actual fun write(text: String): Result<Boolean> = try {
-        if (file == null) create()
-        file!!.bufferedWriter().use { out -> out.write(text) }
+        file ?: create()
+        file?.appendText(text + "\n")
         Result.success(true)
     } catch (e: Exception) {
         Result.failure(e)
