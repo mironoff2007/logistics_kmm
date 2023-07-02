@@ -23,14 +23,14 @@ import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import ru.mironov.domain.model.Parcel
 import com.mironov.localization.StringRes
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
-import util.DateTimeFormat
+import ru.mironov.domain.model.Parcel
 import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens
+import util.DateTimeFormat
 
 @Composable
 fun RegisterResult(
@@ -97,7 +97,10 @@ private fun ParcelViewItem(
     submit: () -> Unit,
 ) {
     Card(
-        modifier = Modifier.wrapContentWidth().wrapContentHeight(),
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .padding(15.dp),
         shape = RoundedCornerShape(25.dp),
         backgroundColor = MaterialTheme.colors.surface,
     ) {

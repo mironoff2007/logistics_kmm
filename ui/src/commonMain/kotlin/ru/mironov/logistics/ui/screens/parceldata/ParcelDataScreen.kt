@@ -27,10 +27,10 @@ import com.mironov.localization.StringRes
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
-import util.DateTimeFormat
 import ru.mironov.domain.model.Parcel
 import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens
+import util.DateTimeFormat
 
 @Composable
 fun ParcelDataScreen(
@@ -73,7 +73,10 @@ private fun ParcelViewItem(
     parcel: Parcel
 ) {
     Card(
-        modifier = Modifier.wrapContentWidth().wrapContentHeight().padding(top = 15.dp),
+        modifier = Modifier
+            .wrapContentWidth()
+            .wrapContentHeight()
+            .padding(15.dp),
         shape = RoundedCornerShape(25.dp),
         backgroundColor = MaterialTheme.colors.surface,
     ) {
