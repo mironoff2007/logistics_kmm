@@ -4,7 +4,6 @@ plugins {
     id("com.android.library")
     id("org.jetbrains.compose")
     kotlin("plugin.serialization")
-    id("app.cash.sqldelight")
 }
 
 kotlin {
@@ -49,22 +48,6 @@ kotlin {
                 @OptIn(org.jetbrains.compose.ExperimentalComposeLibrary::class)
                 implementation(compose.components.resources)
 
-                implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-
-
-                implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
-
-                implementation("org.jetbrains.kotlinx:kotlinx-collections-immutable:0.3.5")
-
-                //Ktor
-                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
-                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
-                implementation("io.ktor:ktor-client-websockets:$ktorVersion")
-                implementation("io.ktor:ktor-client-auth:$ktorVersion")
-                implementation("io.ktor:ktor-client-core:$ktorVersion")
-                implementation("io.ktor:ktor-client-logging:$ktorVersion")
-
-                implementation("com.squareup.okio:okio:$okioVersion")
 
             }
         }
@@ -74,18 +57,11 @@ kotlin {
                 api("androidx.appcompat:appcompat:1.6.1")
                 api("androidx.core:core-ktx:1.9.0")
 
-                implementation("app.cash.sqldelight:android-driver:$sqldelightVersion")
-
-                implementation("io.ktor:ktor-client-android:$ktorVersion")
             }
         }
         val desktopMain by getting {
             dependencies {
                 api(compose.preview)
-
-                implementation("app.cash.sqldelight:sqlite-driver:$sqldelightVersion")
-
-                implementation("io.ktor:ktor-client-okhttp:$ktorVersion")
             }
         }
 
@@ -98,9 +74,6 @@ kotlin {
             iosArm64Main.dependsOn(this)
             iosSimulatorArm64Main.dependsOn(this)
             dependencies {
-                implementation("app.cash.sqldelight:native-driver:$sqldelightVersion")
-
-                implementation("io.ktor:ktor-client-darwin:$ktorVersion")
             }
         }
     }
