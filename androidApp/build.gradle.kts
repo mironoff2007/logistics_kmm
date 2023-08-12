@@ -26,6 +26,7 @@ kotlin {
                 implementation ("androidx.test.espresso:espresso-core:3.5.1")
                 // Test rules and transitive dependencies:
                 // Needed for createAndroidComposeRule, but not createComposeRule:
+                implementation("androidx.compose.ui:ui-test-junit4:1.2.0")
                 implementation("androidx.compose.ui:ui-test-manifest:1.4.3")
 
                 implementation ("androidx.core:core-ktx:1.8.0")
@@ -50,6 +51,8 @@ android {
         targetSdk = (findProperty("android.targetSdk") as String).toInt()
         versionCode = 1
         versionName = "1.0"
+
+        testInstrumentationRunner = "ru.mironov.logistics.CustomTestRunner"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_11
