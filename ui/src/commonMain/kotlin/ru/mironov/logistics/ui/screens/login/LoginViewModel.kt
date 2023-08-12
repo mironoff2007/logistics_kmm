@@ -1,5 +1,7 @@
 package ru.mironov.logistics.ui.screens.login
 
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
@@ -22,8 +24,13 @@ class LoginViewModel(
     val loginResult = SingleEventFlow<State<Boolean>?>()
     val userNameLoaded = SingleEventFlow<String>()
 
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        logger.logE(LOG_TAG, throwable.stackTraceToString())
+    }
+    private val supervisor = SupervisorJob()
+
     fun login(login: String, password: String) {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler + supervisor) {
             loginResult.postEvent(State.Loading())
             loginRepo.login(userName = login, password = password).let {
                 when (it) {
@@ -46,19 +53,22 @@ class LoginViewModel(
     }
 
     fun logout() {
-        viewModelScope.launch {
+        viewModelScope.launch(exceptionHandler + supervisor) {
             loginRepo.logout()
         }
     }
 
     fun onScreenComposed() {
-        viewModelScope.launch {
-            logger.logD("Login Screen", "Login screen opened")
+        viewModelScope.launch(exceptionHandler + supervisor) {
+            logger.logD(LOG_TAG, "Login screen opened")
             val userSettings = prefs.load() ?: UserData()
             val userName = userSettings.getString(UserData.UserName) ?: ""
             userNameLoaded.postEvent(userName)
         }
     }
 
+    companion object {
+        private const val LOG_TAG = "LoginVM"
+    }
 
 }
