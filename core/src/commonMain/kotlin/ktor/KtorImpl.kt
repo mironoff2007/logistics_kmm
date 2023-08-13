@@ -16,18 +16,22 @@ import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
+import me.tatarka.inject.annotations.Inject
 
-object Ktor {
 
-    var isTest = false
+class KtorImpl @Inject constructor(): KtorClient {
 
+    private var isTest = false
     private val mockBuilder = TestClientBuilder()
-
-    fun addNextResponse(json: String) {
+    override fun addNextResponse(json: String) {
         mockBuilder.addNextResponse(json)
     }
 
-    fun getKtorClient(log: (String)-> Unit): HttpClient =
+    override fun setTestMode() {
+        isTest = true
+    }
+
+    override fun getKtorClient(log: (String)-> Unit): HttpClient =
         if (!isTest) getProdKtorClient(log)
         else mockBuilder.getKtorClient(log)
 

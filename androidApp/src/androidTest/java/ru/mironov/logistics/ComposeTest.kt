@@ -12,7 +12,6 @@ import org.junit.Assert.*
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.mironov.common.ktor.Ktor
 import ru.mironov.common.ktor.auth.AuthResponse
 import ru.mironov.domain.model.auth.TokenResp
 
@@ -28,7 +27,7 @@ class ComposeTest {
         val token = TokenResp(token = "", expireAt = expireAt)
         val resp = Json.encodeToString(AuthResponse(token))
 
-        Ktor.addNextResponse(resp)
+        //Ktor.addNextResponse(resp)
 
         composeTestRule.setContent {
             MainScreen()

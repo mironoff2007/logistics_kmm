@@ -24,9 +24,7 @@ import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.domain.di.Singleton
 
-@Singleton
-@Inject
-class TestClientBuilder(): ClientBuilder {
+class TestClientBuilder @Inject constructor(): ClientBuilder {
 
     private val responseQueue = ArrayDeque<String>()
     fun addNextResponse(json: String) {

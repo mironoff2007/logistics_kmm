@@ -1,8 +1,8 @@
 package ru.mironov.logistics
 
 import android.app.Application
+import com.mironov.di.ApplicationComponent
 import ru.mironov.common.AppContext
-import ru.mironov.common.ktor.Ktor
 
 class MainApp : Application() {
 
@@ -10,7 +10,8 @@ class MainApp : Application() {
         super.onCreate()
         AppContext.appContext = applicationContext
 
-        Ktor.isTest = isTest()
+        val ktor = ApplicationComponent.getKtor()
+        if (isTest()) ktor.setTestMode()
     }
 
     @Synchronized

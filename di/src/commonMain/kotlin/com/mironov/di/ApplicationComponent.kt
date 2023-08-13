@@ -3,6 +3,8 @@ package com.mironov.di
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import ru.mironov.common.Logger
+import ru.mironov.common.ktor.KtorClient
+import ru.mironov.common.ktor.KtorImpl
 import ru.mironov.domain.di.Singleton
 import ru.mironov.logistics.AuthApi
 import ru.mironov.logistics.CitiesApi
@@ -20,6 +22,7 @@ abstract class ApplicationComponent(
     @Component val emptyComponent: EmptyComponent
 ) {
     abstract val factory: ViewModelFactory
+    abstract val ktor: KtorClient
 
     companion object {
         private var instance: ApplicationComponent? = null
@@ -28,13 +31,18 @@ abstract class ApplicationComponent(
             .create(
                 ServerContractComponent::class.create(),
                 EmptyComponent::class.create()
-                )
+            )
             .also { instance = it }
         fun getVmFactory() = getInstance().factory
+        fun getKtor() = getInstance().ktor
 
     }
     val LoggerImpl.bind: Logger
         @Provides get() = this
+
+    val KtorImpl.bind: KtorClient
+        @Provides get() = this
+
 }
 
 
@@ -49,10 +57,13 @@ abstract class ServerContractComponent() {
     val Auth.bind: AuthApi
         @Provides get() = this
 
-    val CitiesSource.bind: CitiesApi
-        @Provides get() = this
-
     val ParcelsSource.bind: ParcelsApi
         @Provides get() = this
 
+    val CitiesSource.bind: CitiesApi
+        @Provides get() = this
+
+    val KtorImpl.bind: KtorClient
+        @Provides get() = this
 }
+

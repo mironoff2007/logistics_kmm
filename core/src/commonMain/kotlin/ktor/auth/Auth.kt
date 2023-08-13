@@ -13,19 +13,21 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
+import ru.mironov.common.ktor.KtorClient
+import ru.mironov.common.ktor.WebConstants.BEARER
 import ru.mironov.domain.model.Res
 import ru.mironov.domain.model.auth.AuthUser
 import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.AuthApi
-import ru.mironov.common.ktor.Ktor
-import ru.mironov.common.ktor.WebConstants.BEARER
-
 
 @Inject
-class Auth(private val logger: Logger) : AuthApi {
+class Auth(
+    private val logger: Logger,
+    private val ktor: KtorClient
+) : AuthApi {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
-    private val client: HttpClient = Ktor.getKtorClient(log)
+    private val client: HttpClient =  ktor.getKtorClient(log)
 
     override suspend fun auth(token: String): String = client.get("/authenticate") {
         headers {

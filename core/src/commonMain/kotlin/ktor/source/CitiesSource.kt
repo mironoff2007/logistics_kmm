@@ -6,16 +6,19 @@ import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
+import ru.mironov.common.Logger
+import ru.mironov.common.ktor.KtorClient
 import ru.mironov.domain.model.City
 import ru.mironov.logistics.CitiesApi
-import ru.mironov.common.ktor.Ktor
-import ru.mironov.common.Logger
 
 @Inject
-class CitiesSource(private val logger: Logger): CitiesApi {
+class CitiesSource(
+    private val logger: Logger,
+    private val ktor: KtorClient
+) : CitiesApi {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
-    private val client: HttpClient = Ktor.getKtorClient(log)
+    private val client: HttpClient = ktor.getKtorClient(log)
     override suspend fun fetchCities(): List<City> {
         return try {
             val response = client.get("/cities")
