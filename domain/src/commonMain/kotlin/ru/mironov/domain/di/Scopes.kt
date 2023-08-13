@@ -4,4 +4,7 @@ import me.tatarka.inject.annotations.Scope
 
 
 @Scope
-annotation class Singleton
+annotation class AppScope
+
+@Scope
+annotation class NetworkScope

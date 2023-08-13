@@ -17,8 +17,9 @@ import io.ktor.http.HttpHeaders
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
+import ru.mironov.domain.di.NetworkScope
 
-
+@NetworkScope
 class KtorImpl @Inject constructor(): KtorClient {
 
     private var isTest = false

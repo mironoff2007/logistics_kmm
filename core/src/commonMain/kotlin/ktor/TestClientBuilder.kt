@@ -22,7 +22,6 @@ import io.ktor.serialization.kotlinx.json.json
 import io.ktor.utils.io.ByteReadChannel
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.domain.di.Singleton
 
 class TestClientBuilder @Inject constructor(): ClientBuilder {
 

@@ -2,7 +2,7 @@ package ru.mironov.logistics.ui.navigation
 
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.domain.di.Singleton
+import ru.mironov.domain.di.AppScope
 import ru.mironov.domain.viewmodel.AbsViewModel
 import ru.mironov.logistics.ui.SyncViewModel
 import ru.mironov.logistics.ui.screens.login.LoginViewModel
@@ -15,7 +15,7 @@ import ru.mironov.logistics.ui.screens.splash.SplashViewModel
 import ru.mironov.logistics.ui.screens.warehouse.WarehouseViewModel
 import kotlin.reflect.KClass
 
-@Singleton
+@AppScope
 @Inject
 class ViewModelFactory(
     private val logger: Logger,

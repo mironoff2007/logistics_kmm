@@ -5,6 +5,7 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.mironov.di.ApplicationComponent
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -27,7 +28,8 @@ class ComposeTest {
         val token = TokenResp(token = "", expireAt = expireAt)
         val resp = Json.encodeToString(AuthResponse(token))
 
-        //Ktor.addNextResponse(resp)
+        val ktor = ApplicationComponent.getKtor()
+        ktor.addNextResponse(resp)
 
         composeTestRule.setContent {
             MainScreen()
