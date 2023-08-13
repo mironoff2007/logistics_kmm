@@ -84,7 +84,7 @@ class LoggerImpl @Inject constructor(): Logger {
 
     private suspend fun save(text: String): Boolean {
         createJob?.join()
-        return file?.write(text)?.isSuccess == true
+        return file?.append(text)?.isSuccess == true
     }
 
     companion object {

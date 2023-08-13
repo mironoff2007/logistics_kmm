@@ -16,21 +16,32 @@ actual class File actual constructor(private val path: String, val name: String)
         }
     }
 
-    actual fun write(text: String): Result<Boolean> = try {
-        file ?: create()
-        file?.appendText(text + "\n")
-        Result.success(true)
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    actual fun write(text: String): Result<Boolean> =
+        try {
+            file ?: create()
+            file?.writeText(text + "\n")
+            Result.success(true)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
 
-    actual fun read(): Result<String> = try {
-        if (file == null) create()
-        var text: String?
-        file!!.bufferedReader().use { input -> text = input.readLine() }
-        Result.success(text!!)
-    } catch (e: Exception) {
-        Result.failure(e)
-    }
+    actual fun read(): Result<String> =
+        try {
+            if (file == null) create()
+            var text: String?
+            file!!.bufferedReader().use { input -> text = input.readLine() }
+            Result.success(text!!)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
+    actual fun append(text: String): Result<Boolean> =
+        try {
+            file ?: create()
+            file?.appendText(text + "\n")
+            Result.success(true)
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
 
 }
