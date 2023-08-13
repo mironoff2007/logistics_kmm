@@ -29,7 +29,6 @@ class ComposeTest {
         val resp = Json.encodeToString(AuthResponse(token))
 
         Ktor.addNextResponse(resp)
-        Ktor.addNextResponse(resp)
 
         composeTestRule.setContent {
             MainScreen()
@@ -41,7 +40,7 @@ class ComposeTest {
                 .fetchSemanticsNodes().size == 1
         }
         composeTestRule.onNodeWithTag(ru.mironov.logistics.ui.screens.login.LOGIN_BTN_TAG).performClick()
-        composeTestRule.waitUntil(100_000) { false }
+        //composeTestRule.waitUntil(100_000) { false }
 
 
         assertEquals(true, true)
