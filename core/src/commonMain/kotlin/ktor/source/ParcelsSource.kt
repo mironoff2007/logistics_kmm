@@ -8,7 +8,7 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.KtorClient
+import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.logistics.parcel.ParcelsApi
 import ru.mironov.logistics.parcel.ServerParcel
 

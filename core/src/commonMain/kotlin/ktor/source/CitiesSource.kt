@@ -7,7 +7,7 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.KtorClient
+import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.domain.model.City
 import ru.mironov.logistics.CitiesApi
 

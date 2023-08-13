@@ -2,6 +2,9 @@ package ru.mironov.common.ktor
 
 import io.ktor.client.HttpClient
 import me.tatarka.inject.annotations.Inject
+import ru.mironov.common.ktor.client.ClientBuilderImpl
+import ru.mironov.common.ktor.client.KtorClient
+import ru.mironov.common.ktor.client.TestClientBuilder
 import ru.mironov.domain.di.NetworkScope
 
 @NetworkScope
@@ -13,11 +16,8 @@ class KtorProvider @Inject constructor(
     private var isTest = false
 
     override fun addNextResponse(json: String) {
-        testClientBuilder.addNextResponse(json)
-    }
-
-    override fun setTestMode() {
         isTest = true
+        testClientBuilder.addNextResponse(json)
     }
 
     override fun getKtorClient(log: (String) -> Unit): HttpClient =

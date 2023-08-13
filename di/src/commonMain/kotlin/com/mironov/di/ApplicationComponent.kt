@@ -3,7 +3,7 @@ package com.mironov.di
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.KtorClient
+import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.common.ktor.KtorProvider
 import ru.mironov.domain.di.AppScope
 import ru.mironov.logistics.AuthApi
