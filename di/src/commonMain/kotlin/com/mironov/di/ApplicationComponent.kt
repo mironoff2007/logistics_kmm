@@ -4,7 +4,7 @@ import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.KtorClient
-import ru.mironov.common.ktor.KtorImpl
+import ru.mironov.common.ktor.KtorProvider
 import ru.mironov.domain.di.AppScope
 import ru.mironov.logistics.AuthApi
 import ru.mironov.logistics.CitiesApi
@@ -40,7 +40,7 @@ abstract class ApplicationComponent(
     val LoggerImpl.bind: Logger
         @Provides get() = this
 
-    val KtorImpl.bind: KtorClient
+    val KtorProvider.bind: KtorClient
         @Provides get() = this
 
 }
@@ -66,7 +66,7 @@ abstract class ServerContractComponent() {
     val CitiesSource.bind: CitiesApi
         @Provides get() = this
 
-    val KtorImpl.bind: KtorClient
+    val KtorProvider.bind: KtorClient
         @Provides get() = this
 }
 
