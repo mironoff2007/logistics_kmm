@@ -1,6 +1,8 @@
 package ru.mironov.common.ktor
 
 import io.ktor.client.HttpClient
+import io.ktor.client.engine.mock.MockEngine
+import io.ktor.client.engine.mock.respond
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
@@ -14,28 +16,36 @@ import io.ktor.client.request.header
 import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
+import io.ktor.http.HttpStatusCode
+import io.ktor.http.headersOf
 import io.ktor.serialization.kotlinx.json.json
+import io.ktor.utils.io.ByteReadChannel
 import kotlinx.serialization.json.Json
+import me.tatarka.inject.annotations.Inject
+import ru.mironov.domain.di.Singleton
 
-object Ktor {
+@Singleton
+@Inject
+class TestClientBuilder(): ClientBuilder {
 
-    var isTest = false
-
-    private val mockBuilder = TestClientBuilder()
-
+    private val responseQueue = ArrayDeque<String>()
     fun addNextResponse(json: String) {
-        mockBuilder.addNextResponse(json)
+        responseQueue.add(json)
     }
 
-    fun getKtorClient(log: (String)-> Unit): HttpClient =
-        if (!isTest) getProdKtorClient(log)
-        else mockBuilder.getKtorClient(log)
+    private val mockEngine = MockEngine { request ->
+        respond(
+            content = ByteReadChannel(responseQueue.firstOrNull() ?: ""),
+            status = HttpStatusCode.OK,
+            headers = headersOf(HttpHeaders.ContentType, "application/json")
+        )
+    }
 
-    private fun getProdKtorClient(log: (String)-> Unit) = HttpClient(HttpEngineFactory().createEngine()) {
+    override fun getKtorClient(log: (String) -> Unit): HttpClient = HttpClient(mockEngine) {
         install(Logging) {
             logger = object : Logger {
                 override fun log(message: String) {
-                   log.invoke(message)
+                    log.invoke(message)
                 }
             }
             logger = Logger.DEFAULT
@@ -72,5 +82,4 @@ object Ktor {
             url(getBaseUrl())
         }
     }
-
 }

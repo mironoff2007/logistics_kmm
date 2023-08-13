@@ -5,11 +5,16 @@ import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import org.junit.Test
-import org.junit.runner.RunWith
-
+import kotlinx.datetime.Clock
+import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.Json
 import org.junit.Assert.*
 import org.junit.Rule
+import org.junit.Test
+import org.junit.runner.RunWith
+import ru.mironov.common.ktor.Ktor
+import ru.mironov.common.ktor.auth.AuthResponse
+import ru.mironov.domain.model.auth.TokenResp
 
 @RunWith(AndroidJUnit4::class)
 class ComposeTest {
@@ -19,6 +24,13 @@ class ComposeTest {
 
     @Test
     fun loginUiTest() {
+        val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360
+        val token = TokenResp(token = "", expireAt = expireAt)
+        val resp = Json.encodeToString(AuthResponse(token))
+
+        Ktor.addNextResponse(resp)
+        Ktor.addNextResponse(resp)
+
         composeTestRule.setContent {
             MainScreen()
         }
@@ -29,7 +41,8 @@ class ComposeTest {
                 .fetchSemanticsNodes().size == 1
         }
         composeTestRule.onNodeWithTag(ru.mironov.logistics.ui.screens.login.LOGIN_BTN_TAG).performClick()
-        composeTestRule.waitUntil(10_000) { true }
+        composeTestRule.waitUntil(100_000) { false }
+
 
         assertEquals(true, true)
     }

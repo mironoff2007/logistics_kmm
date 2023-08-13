@@ -52,6 +52,8 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-stdlib:1.8.20")
 
 
+                //Test
+                implementation("io.ktor:ktor-client-mock:$ktorVersion")
             }
         }
         val androidMain by getting {

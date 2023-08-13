@@ -7,7 +7,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
-        android:name="com.logistics.MainApp"
+        android:name="ru.mironov.logistics.MainApp"
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="Logistics"
@@ -17,7 +17,7 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar"
         android:usesCleartextTraffic="true">
         <activity
-            android:name="com.logistics.MainActivity"
+            android:name="ru.mironov.logistics.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

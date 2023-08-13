@@ -1,4 +1,4 @@
-package com.logistics
+package ru.mironov.logistics
 
 import android.os.Bundle
 import androidx.activity.compose.setContent

@@ -1,4 +1,4 @@
-package com.logistics.peview
+package ru.mironov.logistics.peview
 
 
 import androidx.compose.runtime.Composable
