@@ -1,6 +1,6 @@
 package ru.mironov.logistics.ui.screens.parceldata
 
-import com.mironov.database.parcel.ParcelsTable
+import com.mironov.database.parcel.ParcelsDbSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -15,7 +15,7 @@ import ru.mironov.logistics.ui.SingleEventFlow
 
 @Inject
 class ParcelDataViewModel(
-    private val parcelsTable: ParcelsTable,
+    private val parcelsDbSource: ParcelsDbSource,
     val logger: Logger
 ) : ViewModel() {
 
@@ -43,7 +43,7 @@ class ParcelDataViewModel(
 
     suspend fun getParcel(args: String) {
         val parcelData = Json.decodeFromString<ParcelDataArg>(args)
-        val parcelFromDb = parcelsTable.get(parcelData.id)
+        val parcelFromDb = parcelsDbSource.get(parcelData.id)
         _parcel.emit(parcelFromDb)
     }
 

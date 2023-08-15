@@ -10,7 +10,7 @@ import ru.mironov.common.data.getFilesPath
 import ru.mironov.domain.settings.BaseSettings
 
 @Inject
-class SharedPreferences {
+class SharedPreferences constructor() {
 
     val path = getFilesPath() + "/" + DataConstants.APP_FOLDER_NAME + "/"
 
@@ -47,6 +47,17 @@ class SharedPreferences {
         } catch (e: Exception) {
             println(e.stackTraceToString())
             null
+        }
+    }
+
+    inline fun <reified T: BaseSettings> clear(settings: T): Boolean {
+        val file = createFile<T>()
+        return try {
+            file?.write("")
+            true
+        }
+        catch (e: Exception) {
+            false
         }
     }
 

@@ -1,7 +1,7 @@
 package ru.mironov.logistics.ui.screens.warehouse
 
-import com.mironov.database.city.CityTable
-import com.mironov.database.parcel.ParcelsTable
+import com.mironov.database.city.CityDbSource
+import com.mironov.database.parcel.ParcelsDbSource
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +21,8 @@ import ru.mironov.logistics.ui.screens.parceldata.ParcelDataArg
 
 @Inject
 class WarehouseViewModel(
-    private val parcelsTable: ParcelsTable,
-    private val cityTable: CityTable,
+    private val parcelsDbSource: ParcelsDbSource,
+    private val cityDbSource: CityDbSource,
     val logger: Logger
 ) : ViewModel() {
 
@@ -50,7 +50,7 @@ class WarehouseViewModel(
         viewModelScope.launch(supervisor) {
             try {
                 _loading.emit(true)
-                val cities = cityTable.fetchAll()
+                val cities = cityDbSource.fetchAll()
                 val citiesWithNull = mutableListOf<City?>()
                 citiesWithNull.add(null)
                 citiesWithNull.addAll(cities)
@@ -92,7 +92,7 @@ class WarehouseViewModel(
         searchJob = viewModelScope.launch {
             _loading.emit(true)
             try {
-                val parcels = parcelsTable.selectSearch(search = search, currentCitySearch = currentCity, destinationCitySearch = destinationCity)
+                val parcels = parcelsDbSource.selectSearch(search = search, currentCitySearch = currentCity, destinationCitySearch = destinationCity)
                 _parcels.emit(parcels)
             } catch (e: Exception) {
                 logger.logE(LOG_TAG, e.stackTraceToString())

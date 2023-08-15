@@ -16,6 +16,7 @@ kotlin {
         implementation(project(":domain"))
         implementation(project(":localization"))
         implementation(project(":database"))
+        implementation(project(":sharedprefs"))
         implementation(project(":logging"))
 
         implementation("androidx.activity:activity-compose:1.5.0")

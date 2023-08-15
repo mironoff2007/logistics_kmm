@@ -33,7 +33,7 @@ class TestClientBuilder @Inject constructor() : ClientBuilder {
 
     private val mockEngine = MockEngine { request ->
         respond(
-            content = ByteReadChannel(responseQueue.firstOrNull() ?: ""),
+            content = ByteReadChannel(responseQueue.removeFirstOrNull() ?: ""),
             status = HttpStatusCode.OK,
             headers = headersOf(HttpHeaders.ContentType, "application/json")
         )

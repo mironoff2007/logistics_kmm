@@ -65,7 +65,7 @@ open class BaseSettings() {
 }
 
 @Serializable
-class CommonSettings(): BaseSettings(){
+class CommonSettings() : BaseSettings() {
     object LogsEnabled : Setting<Boolean>(false)
 
     object AppLocale : Setting<Localization.Language>(Localization.Language.English)

@@ -20,6 +20,8 @@ import ru.mironov.common.ktor.auth.AuthResponse
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.auth.TokenResp
+import ru.mironov.domain.settings.CommonSettings
+import ru.mironov.domain.settings.UserData
 
 @RunWith(AndroidJUnit4::class)
 class ComposeTest {
@@ -27,8 +29,19 @@ class ComposeTest {
     @get:Rule
     val composeTestRule = createComposeRule()
 
+    protected fun clearMemory() {
+        val dbComponent = ApplicationComponent.getDbComponent()
+        val prefs = dbComponent.sharedPrefs
+        prefs.clear(UserData())
+        prefs.clear(CommonSettings())
+
+        dbComponent.cityDbSource.clear()
+        dbComponent.parcelsDbSource.clear()
+    }
+
     @Test
     fun loginUiTest() {
+        clearMemory()
         val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360
         val token = TokenResp(token = "", expireAt = expireAt)
         val resp = Json.encodeToString(AuthResponse(token))

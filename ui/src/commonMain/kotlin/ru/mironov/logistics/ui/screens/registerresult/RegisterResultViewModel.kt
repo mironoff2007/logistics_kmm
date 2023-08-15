@@ -1,6 +1,6 @@
 package ru.mironov.logistics.ui.screens.registerresult
 
-import com.mironov.database.parcel.ParcelsTable
+import com.mironov.database.parcel.ParcelsDbSource
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,7 @@ import ru.mironov.logistics.ui.SingleEventFlow
 
 @Inject
 class RegisterResultViewModel(
-    private val parcelsTable: ParcelsTable,
+    private val parcelsDbSource: ParcelsDbSource,
     val logger: Logger
 ): ViewModel() {
 
@@ -51,7 +51,7 @@ class RegisterResultViewModel(
         viewModelScope.launch(supervisor) {
             try {
                 _loading.emit(true)
-                parcelsTable.replace(_parcel.value!!)
+                parcelsDbSource.replace(_parcel.value!!)
                 result.postEventSuspend(true)
             } catch (e: Exception) {
                 logger.logE(LOG_TAG, e.stackTraceToString())

@@ -7,8 +7,7 @@ import ru.mironov.domain.model.City
 
 
 @Inject
-class CityTable(private val cityDb: CityDb) {
-
+class CityDbSource(private val cityDb: CityDb) {
 
     fun clear() {
         cityDb.drop()

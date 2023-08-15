@@ -10,14 +10,15 @@ import ru.mironov.domain.model.Parcel
 
 
 @Inject
-class ParcelsTable(
+class ParcelsDbSource(
     private val parcelDb: ParcelDb,
     private val cityDb: CityDb
 ) {
 
     
     fun clear() {
-
+        parcelDb.drop()
+        cityDb.drop()
     }
 
     

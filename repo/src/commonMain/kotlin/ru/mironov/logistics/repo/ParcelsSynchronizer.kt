@@ -1,6 +1,6 @@
 package ru.mironov.logistics.repo
 
-import com.mironov.database.parcel.ParcelsTable
+import com.mironov.database.parcel.ParcelsDbSource
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -16,7 +16,7 @@ import ru.mironov.logistics.parcel.ParcelsApi
 
 @Inject
 class ParcelsSynchronizer(
-    private val parcelsTable: ParcelsTable,
+    private val parcelsDbSource: ParcelsDbSource,
     private val parcelsApi: ParcelsApi,
     private val logger: Logger,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
@@ -39,13 +39,13 @@ class ParcelsSynchronizer(
                 job?.join()
                 job = scope.launch {
                     try {
-                        val parcels = parcelsTable.fetchNotSynced().map{ it.toServerParcel() }
+                        val parcels = parcelsDbSource.fetchNotSynced().map{ it.toServerParcel() }
                         if (parcels.isNotEmpty()) {
                             logger.logD(LOG_TAG, "sync size ${parcels.size}")
                             val resp = parcelsApi.registerParcels(parcels)
                             if (resp) {
                                 logger.logD(LOG_TAG, "sync ok")
-                                parcelsTable.replaceAllTransaction(parcels.map { it.toSyncedParcel() })
+                                parcelsDbSource.replaceAllTransaction(parcels.map { it.toSyncedParcel() })
                             }
                             else {
                                 logger.logD(LOG_TAG, "sync fail")

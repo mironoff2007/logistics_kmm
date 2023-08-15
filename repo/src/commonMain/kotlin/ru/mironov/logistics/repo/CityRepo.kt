@@ -1,6 +1,6 @@
 package ru.mironov.logistics.repo
 
-import com.mironov.database.city.CityTable
+import com.mironov.database.city.CityDbSource
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.domain.model.City
 import ru.mironov.logistics.CitiesApi
@@ -8,7 +8,7 @@ import ru.mironov.logistics.CitiesApi
 @Inject
 class CityRepo(
     private val citySource: CitiesApi,
-    private val cityTable: CityTable
+    private val cityTable: CityDbSource
 ) {
 
     suspend fun fetchCities(): List<City> {

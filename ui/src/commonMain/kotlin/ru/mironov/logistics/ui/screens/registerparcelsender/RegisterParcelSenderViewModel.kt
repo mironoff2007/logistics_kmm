@@ -1,6 +1,6 @@
 package ru.mironov.logistics.ui.screens.registerparcelsender
 
-import com.mironov.database.city.CityTable
+import com.mironov.database.city.CityDbSource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -17,7 +17,7 @@ import ru.mironov.domain.viewmodel.ViewModel
 
 @Inject
 class RegisterParcelSenderViewModel(
-    private val cityTable: CityTable,
+    private val cityDbSource: CityDbSource,
     val logger: Logger
 ) : ViewModel() {
 
@@ -45,7 +45,7 @@ class RegisterParcelSenderViewModel(
     private suspend fun getCities() {
         _loading.emit(true)
         try {
-            val cities = cityTable.fetchAll()
+            val cities = cityDbSource.fetchAll()
             logger.logD(LOG_TAG, "load cities: $cities")
             _cities.emit(cities)
         } catch (e: Exception) {

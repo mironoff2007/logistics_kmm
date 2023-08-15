@@ -1,5 +1,7 @@
 package com.mironov.di
 
+import com.mironov.database.city.CityDbSource
+import com.mironov.database.parcel.ParcelsDbSource
 import me.tatarka.inject.annotations.Component
 import me.tatarka.inject.annotations.Provides
 import ru.mironov.common.Logger
@@ -13,6 +15,7 @@ import ru.mironov.common.ktor.source.CitiesSource
 import ru.mironov.common.ktor.auth.Auth
 import ru.mironov.common.ktor.source.ParcelsSource
 import ru.mironov.domain.di.NetworkScope
+import ru.mironov.logistics.SharedPreferences
 import ru.mironov.logistics.logging.LoggerImpl
 import ru.mironov.logistics.ui.navigation.ViewModelFactory
 
@@ -20,7 +23,7 @@ import ru.mironov.logistics.ui.navigation.ViewModelFactory
 @AppScope
 abstract class ApplicationComponent(
     @Component val serverContractComponent: ServerContractComponent,
-    @Component val emptyComponent: EmptyComponent
+    @Component val databaseComponent: DatabaseComponent
 ) {
     abstract val factory: ViewModelFactory
 
@@ -30,11 +33,12 @@ abstract class ApplicationComponent(
         private fun getInstance() = instance ?: ApplicationComponent::class
             .create(
                 ServerContractComponent::class.create(),
-                EmptyComponent::class.create()
+                DatabaseComponent::class.create()
             )
             .also { instance = it }
         fun getVmFactory() = getInstance().factory
         fun getKtor() = getInstance().serverContractComponent.ktor
+        fun getDbComponent() = getInstance().databaseComponent
 
     }
     val LoggerImpl.bind: Logger
@@ -47,8 +51,10 @@ abstract class ApplicationComponent(
 
 
 @Component
-abstract class EmptyComponent() {
-
+abstract class DatabaseComponent() {
+    abstract val sharedPrefs: SharedPreferences
+    abstract val parcelsDbSource: ParcelsDbSource
+    abstract val cityDbSource: CityDbSource
 }
 
 @NetworkScope
