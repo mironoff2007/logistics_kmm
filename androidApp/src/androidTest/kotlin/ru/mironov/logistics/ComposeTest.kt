@@ -12,7 +12,9 @@ import com.mironov.localization.StringRes
 import kotlinx.datetime.Clock
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import org.junit.After
 import org.junit.Assert.*
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -25,24 +27,17 @@ import ru.mironov.domain.settings.CommonSettings
 import ru.mironov.domain.settings.UserData
 
 @RunWith(AndroidJUnit4::class)
-class ComposeTest {
+class ComposeTest: BaseTest() {
 
     @get:Rule
     val composeTestRule = createComposeRule()
 
-    protected fun clearMemory() {
-        val dbComponent = ApplicationComponent.getDbComponent()
-        val prefs = dbComponent.sharedPrefs
-        prefs.clear(UserData())
-        prefs.clear(CommonSettings())
-
-        dbComponent.cityDbSource.clear()
-        dbComponent.parcelsDbSource.clear()
+    @Before
+    override fun before() {
+        super.before()
     }
-
     @Test
     fun loginUiTest() {
-        clearMemory()
         val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360
         val token = TokenResp(token = "", expireAt = expireAt)
         val cities = listOf(City(1, "City1"))
@@ -70,6 +65,11 @@ class ComposeTest {
         composeTestRule
             .onNodeWithTag(TopBar.TITLE_TAG)
             .assert(hasText(localizedString(StringRes.RegisterParcel)))
+    }
+
+    @After
+    override fun after() {
+        super.after()
     }
 
 }
