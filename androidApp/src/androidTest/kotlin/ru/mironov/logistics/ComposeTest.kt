@@ -2,7 +2,6 @@ package ru.mironov.logistics
 
 import androidx.compose.ui.test.assert
 import androidx.compose.ui.test.hasText
-import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onAllNodesWithTag
 import androidx.compose.ui.test.onNodeWithTag
 import androidx.compose.ui.test.performClick
@@ -15,7 +14,6 @@ import kotlinx.serialization.json.Json
 import org.junit.After
 import org.junit.Assert.*
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import ru.mironov.common.ktor.auth.AuthResponse
@@ -23,14 +21,9 @@ import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.auth.TokenResp
-import ru.mironov.domain.settings.CommonSettings
-import ru.mironov.domain.settings.UserData
 
 @RunWith(AndroidJUnit4::class)
-class ComposeTest: BaseTest() {
-
-    @get:Rule
-    val composeTestRule = createComposeRule()
+class ComposeTest: BaseUITest() {
 
     @Before
     override fun before() {

@@ -1,11 +1,15 @@
 package ru.mironov.logistics
 
+import androidx.compose.ui.test.junit4.createComposeRule
 import com.mironov.di.ApplicationComponent
+import org.junit.Rule
 import ru.mironov.domain.settings.CommonSettings
 import ru.mironov.domain.settings.UserData
 
-abstract class BaseTest {
+abstract class BaseUITest {
 
+    @get:Rule
+    val composeTestRule = createComposeRule()
 
     open fun before() {
         clearMemory()
