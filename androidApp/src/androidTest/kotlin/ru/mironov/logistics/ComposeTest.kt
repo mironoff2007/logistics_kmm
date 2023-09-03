@@ -29,6 +29,7 @@ class ComposeTest: BaseUITest() {
     override fun before() {
         super.before()
     }
+
     @Test
     fun loginUiTest() {
         val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360

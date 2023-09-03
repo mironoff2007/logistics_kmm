@@ -41,6 +41,7 @@ kotlin {
         implementation("androidx.core:core-ktx:1.8.0")
         implementation("androidx.compose.ui:ui-tooling-preview:1.4.3")
         implementation("androidx.compose.ui:ui-tooling:1.4.3")
+        implementation("androidx.test:rules:1.5.0")
     }
 }
 
