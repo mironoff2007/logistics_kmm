@@ -12,12 +12,12 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.source.ParcelsApi
+import ru.mironov.common.ktor.source.ParcelsWebSource
 
 @Inject
 class ParcelsSynchronizer(
     private val parcelsDbSource: ParcelsDbSource,
-    private val parcelsApi: ParcelsApi,
+    private val parcelsWebSource: ParcelsWebSource,
     private val logger: Logger,
     dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) {
@@ -42,7 +42,7 @@ class ParcelsSynchronizer(
                         val parcels = parcelsDbSource.fetchNotSynced().map{ it.toServerParcel() }
                         if (parcels.isNotEmpty()) {
                             logger.logD(LOG_TAG, "sync size ${parcels.size}")
-                            val resp = parcelsApi.registerParcels(parcels)
+                            val resp = parcelsWebSource.registerParcels(parcels)
                             if (resp) {
                                 logger.logD(LOG_TAG, "sync ok")
                                 parcelsDbSource.replaceAllTransaction(parcels.map { it.toSyncedParcel() })

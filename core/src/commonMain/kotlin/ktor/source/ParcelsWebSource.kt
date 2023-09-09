@@ -18,14 +18,15 @@ import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
 import ru.mironov.logistics.parcel.ServerParcel
 
 @Inject
-class ParcelsSource(
+class ParcelsWebSource(
     private val logger: Logger,
     private val ktor: KtorClient
-) : ParcelsApi {
+) {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
     private val client: HttpClient = ktor.getKtorClient(log)
-    override suspend fun registerParcels(parcels: List<ServerParcel>): Boolean {
+
+    suspend fun registerParcels(parcels: List<ServerParcel>): Boolean {
         return try {
             val response = client.post("/registerParcels") {
                 contentType(ContentType.Application.Json)
@@ -38,7 +39,7 @@ class ParcelsSource(
         }
     }
 
-    override suspend fun searchParcels(searchBy: String): SearchResponse {
+    suspend fun searchParcels(searchBy: String): SearchResponse {
         return try {
             val response = client.get("/searchParcels") {
                 url {

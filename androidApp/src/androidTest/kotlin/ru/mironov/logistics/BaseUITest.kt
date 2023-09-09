@@ -35,5 +35,4 @@ abstract class BaseUITest {
     open fun after() {
         clearMemory()
     }
-
 }
