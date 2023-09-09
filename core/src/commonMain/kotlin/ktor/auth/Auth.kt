@@ -18,7 +18,6 @@ import ru.mironov.common.ktor.WebConstants.BEARER
 import ru.mironov.domain.model.Res
 import ru.mironov.domain.model.auth.AuthUser
 import ru.mironov.domain.model.auth.Token
-import ru.mironov.logistics.AuthApi
 
 @Inject
 class Auth(

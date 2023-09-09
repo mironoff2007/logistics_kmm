@@ -8,11 +8,11 @@ import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.common.ktor.KtorProvider
 import ru.mironov.domain.di.AppScope
-import ru.mironov.logistics.AuthApi
-import ru.mironov.logistics.CitiesApi
-import ru.mironov.logistics.parcel.ParcelsApi
+import ru.mironov.common.ktor.auth.AuthApi
+import ru.mironov.common.ktor.source.ParcelsApi
 import ru.mironov.common.ktor.source.CitiesSource
 import ru.mironov.common.ktor.auth.Auth
+import ru.mironov.common.ktor.source.CitiesApi
 import ru.mironov.common.ktor.source.ParcelsSource
 import ru.mironov.domain.di.NetworkScope
 import ru.mironov.logistics.SharedPreferences

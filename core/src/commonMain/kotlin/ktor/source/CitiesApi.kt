@@ -1,4 +1,4 @@
-package ru.mironov.logistics
+package ru.mironov.common.ktor.source
 
 import ru.mironov.domain.model.City
 

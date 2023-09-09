@@ -9,7 +9,8 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.domain.model.City
-import ru.mironov.logistics.CitiesApi
+import ru.mironov.domain.model.toCity
+import ru.mironov.logistics.ServerCity
 
 @Inject
 class CitiesSource(
@@ -22,7 +23,8 @@ class CitiesSource(
     override suspend fun fetchCities(): List<City> {
         return try {
             val response = client.get("/cities")
-            Json.decodeFromString(response.bodyAsText())
+            val serverCities: List<ServerCity> = Json.decodeFromString(response.bodyAsText())
+            serverCities.map { it.toCity() }
         }
         catch (e: Exception) {
             emptyList()
@@ -32,5 +34,4 @@ class CitiesSource(
     companion object {
         private const val LOG_TAG = "CitiesApi"
     }
-
 }

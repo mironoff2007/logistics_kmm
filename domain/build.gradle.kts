@@ -15,6 +15,7 @@ kotlin {
         val commonMain by getting {
             dependencies {
                 implementation(project(":localization"))
+                implementation(project(":server_contract"))
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")

@@ -2,8 +2,8 @@ package ru.mironov.logistics.repo
 
 import com.mironov.database.city.CityDbSource
 import me.tatarka.inject.annotations.Inject
+import ru.mironov.common.ktor.source.CitiesApi
 import ru.mironov.domain.model.City
-import ru.mironov.logistics.CitiesApi
 
 @Inject
 class CityRepo(
@@ -19,5 +19,4 @@ class CityRepo(
         }
         return cityTable.fetchAll()
     }
-
 }

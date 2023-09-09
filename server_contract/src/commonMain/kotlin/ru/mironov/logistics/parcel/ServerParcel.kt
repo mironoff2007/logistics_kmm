@@ -1,7 +1,7 @@
 package ru.mironov.logistics.parcel
 
 import kotlinx.serialization.Serializable
-import ru.mironov.domain.model.City
+import ru.mironov.logistics.ServerCity
 
 @Serializable
 data class ServerParcel(
@@ -12,9 +12,9 @@ data class ServerParcel(
     val senderName: String,
     val senderSecondName: String,
     val senderAddress: String,
-    val destinationCity: City,
-    val currentCity: City,
-    val senderCity: City,
+    val destinationCity: ServerCity,
+    val currentCity: ServerCity,
+    val senderCity: ServerCity,
     val dateShow: String,
     val date: Long
 )

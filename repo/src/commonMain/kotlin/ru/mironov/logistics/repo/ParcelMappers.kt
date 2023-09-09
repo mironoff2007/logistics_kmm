@@ -1,6 +1,8 @@
 package ru.mironov.logistics.repo
 
 import ru.mironov.domain.model.Parcel
+import ru.mironov.domain.model.toCity
+import ru.mironov.domain.model.toServerCity
 import ru.mironov.logistics.parcel.ServerParcel
 
 
@@ -13,13 +15,14 @@ fun Parcel.toServerParcel(): ServerParcel {
         senderName = this.senderName,
         senderSecondName = this.senderSecondName,
         senderAddress = this.senderAddress,
-        destinationCity = this.destinationCity,
-        currentCity = this.currentCity,
-        senderCity = this.senderCity,
+        destinationCity = this.destinationCity.toServerCity(),
+        currentCity = this.currentCity.toServerCity(),
+        senderCity = this.senderCity.toServerCity(),
         dateShow = this.dateShow,
         date = this.dateMillis
     )
 }
+
 
 fun ServerParcel.toSyncedParcel(): Parcel {
     return Parcel(
@@ -30,9 +33,9 @@ fun ServerParcel.toSyncedParcel(): Parcel {
         senderName = this.senderName,
         senderSecondName = this.senderSecondName,
         senderAddress = this.senderAddress,
-        destinationCity = this.destinationCity,
-        currentCity = this.currentCity,
-        senderCity = this.senderCity,
+        destinationCity = this.destinationCity.toCity(),
+        currentCity = this.currentCity.toCity(),
+        senderCity = this.senderCity.toCity(),
         dateShow = this.dateShow,
         dateMillis = this.date,
         synced = true

@@ -15,7 +15,6 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(project(":domain"))
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
             }

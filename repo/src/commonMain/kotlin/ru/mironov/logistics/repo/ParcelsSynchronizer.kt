@@ -12,7 +12,7 @@ import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.logistics.parcel.ParcelsApi
+import ru.mironov.common.ktor.source.ParcelsApi
 
 @Inject
 class ParcelsSynchronizer(

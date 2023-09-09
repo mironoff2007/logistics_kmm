@@ -1,15 +1,20 @@
 package ru.mironov.common.ktor.source
 
 import io.ktor.client.HttpClient
+import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
+import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
-import ru.mironov.logistics.parcel.ParcelsApi
+import ru.mironov.logistics.parcel.SearchResponse
+import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
 import ru.mironov.logistics.parcel.ServerParcel
 
 @Inject
@@ -33,8 +38,21 @@ class ParcelsSource(
         }
     }
 
-    companion object {
-        private const val LOG_TAG = "ParcelsApi"
+    override suspend fun searchParcels(searchBy: String): SearchResponse {
+        return try {
+            val response = client.get("/searchParcels") {
+                url {
+                    parameters.append(SEARCH_QUERY_TAG, searchBy)
+                }
+            }
+            Json.decodeFromString(response.bodyAsText())
+        } catch (e: Exception) {
+            log.invoke(e.stackTraceToString())
+            SearchResponse(0, emptyList())
+        }
     }
 
+    companion object {
+        private const val LOG_TAG = "ParcelsSource"
+    }
 }
