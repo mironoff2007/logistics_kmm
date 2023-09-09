@@ -3,8 +3,8 @@ package ui
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.material3.DropdownMenuItem
-import androidx.compose.material3.MenuItemColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.DpOffset
@@ -20,9 +20,9 @@ actual fun ExpectDropdownMenu(
 ) = androidx.compose.material.DropdownMenu(
     expanded,
     onDismissRequest,
-    focusable,
     modifier,
     offset,
+    rememberScrollState(),
     content
 )
 
