@@ -1,11 +1,8 @@
-
-
 plugins {
     kotlin("multiplatform")
     id("org.jetbrains.kotlin.jvm") apply false
     kotlin("plugin.serialization")
     id("com.google.devtools.ksp")
-    id("org.jetbrains.kotlin.kapt")
 }
 
 kotlin {
@@ -29,7 +26,7 @@ kotlin {
                 runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:${findProperty("kotlin.version")}")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
-                implementation("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
+                implementation("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
 
             }
         }
@@ -37,6 +34,6 @@ kotlin {
 
     dependencies {
         //KInject
-        ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.6.1")
+        ksp("me.tatarka.inject:kotlin-inject-compiler-ksp:0.6.3")
     }
 }
