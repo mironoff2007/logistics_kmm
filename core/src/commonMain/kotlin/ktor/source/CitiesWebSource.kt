@@ -33,6 +33,6 @@ class CitiesWebSource(
     }
 
     companion object {
-        private const val LOG_TAG = "CitiesApi"
+        private const val LOG_TAG = "CitiesWebSource"
     }
 }
