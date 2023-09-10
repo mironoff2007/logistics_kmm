@@ -63,9 +63,6 @@ abstract class ServerContractComponent() {
     val Auth.bind: AuthApi
         @Provides get() = this
 
-    val CitiesWebSource.bind: CitiesWebSource
-        @Provides get() = this
-
     val KtorProvider.bind: KtorClient
         @Provides get() = this
 }

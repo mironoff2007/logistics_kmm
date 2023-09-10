@@ -43,7 +43,7 @@ class ComposeTest: BaseUITest() {
         ktor.addNextResponse(citiesResp)
         ktor.addNextResponse(respAuth)
 
-        composeTestRule.setContent {
+         composeTestRule.setContent {
             MainScreen()
         }
 
