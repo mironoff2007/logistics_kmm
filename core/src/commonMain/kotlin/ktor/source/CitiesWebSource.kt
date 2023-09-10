@@ -13,14 +13,15 @@ import ru.mironov.domain.model.toCity
 import ru.mironov.logistics.ServerCity
 
 @Inject
-class CitiesSource(
+class CitiesWebSource(
     private val logger: Logger,
     private val ktor: KtorClient
-) : CitiesApi {
+) {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
     private val client: HttpClient = ktor.getKtorClient(log)
-    override suspend fun fetchCities(): List<City> {
+
+    suspend fun fetchCities(): List<City> {
         return try {
             val response = client.get("/cities")
             val serverCities: List<ServerCity> = Json.decodeFromString(response.bodyAsText())

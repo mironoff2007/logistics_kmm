@@ -9,10 +9,8 @@ import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.common.ktor.KtorProvider
 import ru.mironov.domain.di.AppScope
 import ru.mironov.common.ktor.auth.AuthApi
-import ru.mironov.common.ktor.source.CitiesSource
+import ru.mironov.common.ktor.source.CitiesWebSource
 import ru.mironov.common.ktor.auth.Auth
-import ru.mironov.common.ktor.source.CitiesApi
-import ru.mironov.common.ktor.source.ParcelsWebSource
 import ru.mironov.domain.di.NetworkScope
 import ru.mironov.logistics.SharedPreferences
 import ru.mironov.logistics.logging.LoggerImpl
@@ -65,7 +63,7 @@ abstract class ServerContractComponent() {
     val Auth.bind: AuthApi
         @Provides get() = this
 
-    val CitiesSource.bind: CitiesApi
+    val CitiesWebSource.bind: CitiesWebSource
         @Provides get() = this
 
     val KtorProvider.bind: KtorClient
