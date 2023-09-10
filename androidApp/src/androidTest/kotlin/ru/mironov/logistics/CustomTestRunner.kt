@@ -4,13 +4,14 @@ import android.app.Application
 import android.content.Context
 import androidx.test.runner.AndroidJUnitRunner
 
+/**
+ * used at method isAndroidTest
+ */
 class CustomTestRunner : AndroidJUnitRunner() {
 
     override fun newApplication(
         classLoader: ClassLoader?,
         className: String?,
         context: Context?
-    ): Application = super.newApplication(
-        classLoader, MainApp::class.java.name, context
-    )
+    ): Application = super.newApplication(classLoader, MainApp::class.java.name, context)
 }

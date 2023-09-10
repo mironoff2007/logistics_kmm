@@ -1,6 +1,7 @@
 package ru.mironov.common.ktor
 
 import io.ktor.client.HttpClient
+import ktor.client.isAndroidTest
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.ktor.client.ClientBuilderImpl
 import ru.mironov.common.ktor.client.KtorClient
@@ -13,15 +14,13 @@ class KtorProvider @Inject constructor(
     private val testClientBuilder: TestClientBuilder
 ): KtorClient {
 
-    private var isTest = false
-
     override fun addNextResponse(json: String) {
-        isTest = true
+        if (isAndroidTest()) throw Exception("is called not in test")
         testClientBuilder.addNextResponse(json)
     }
 
     override fun getKtorClient(log: (String) -> Unit): HttpClient =
-        if (!isTest) clientBuilder.getKtorClient(log)
+        if (!isAndroidTest()) clientBuilder.getKtorClient(log)
         else testClientBuilder.getKtorClient(log)
 
 }

@@ -7,7 +7,7 @@ interface KtorClient {
     fun getKtorClient(log: (String)-> Unit): HttpClient
 
     /**
-     * TestOnly
+     * Android Test Only
      */
     fun addNextResponse(json: String)
 

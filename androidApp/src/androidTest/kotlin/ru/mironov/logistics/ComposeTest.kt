@@ -43,10 +43,9 @@ class ComposeTest: BaseUITest() {
         ktor.addNextResponse(citiesResp)
         ktor.addNextResponse(respAuth)
 
-         composeTestRule.setContent {
+        composeTestRule.setContent {
             MainScreen()
         }
-
         composeTestRule.waitUntil(10_000) {
             composeTestRule
                 .onAllNodesWithTag(ru.mironov.logistics.ui.screens.login.LOGIN_BTN_TAG)
@@ -65,5 +64,4 @@ class ComposeTest: BaseUITest() {
     override fun after() {
         super.after()
     }
-
 }
