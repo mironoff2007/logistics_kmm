@@ -26,7 +26,7 @@ kotlin {
                 runtimeOnly("org.jetbrains.kotlin:kotlin-reflect:${findProperty("kotlin.version")}")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0")
-                implementation("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
+                implementation("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
 
             }
         }
