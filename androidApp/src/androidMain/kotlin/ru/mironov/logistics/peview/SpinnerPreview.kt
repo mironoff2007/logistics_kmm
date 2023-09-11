@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
 import kotlinx.collections.immutable.toPersistentList
 import ru.mironov.common.ui.Spinner
-import ru.mironov.logistics.ui.theme.LogisticsTheme
+import ru.mironov.common.ui.theme.LogisticsTheme
 
 @Preview()
 @Composable

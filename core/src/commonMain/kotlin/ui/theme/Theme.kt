@@ -1,4 +1,4 @@
-package ru.mironov.logistics.ui.theme
+package ru.mironov.common.ui.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material.MaterialTheme
@@ -6,6 +6,12 @@ import androidx.compose.material.darkColors
 import androidx.compose.material.lightColors
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
+import ru.mironov.logistics.ui.theme.LightBlack
+import ru.mironov.logistics.ui.theme.Main
+import ru.mironov.logistics.ui.theme.MainDark
+import ru.mironov.logistics.ui.theme.Purple700
+import ru.mironov.logistics.ui.theme.Shapes
+import ru.mironov.logistics.ui.theme.Typography
 
 private val DarkColorPalette = darkColors(
     primary = MainDark,

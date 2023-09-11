@@ -22,7 +22,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.mironov.di.ApplicationComponent
 import com.mironov.localization.StringRes
 import ru.mironov.common.res.localizedString
-import ru.mironov.logistics.ui.theme.LogisticsTheme
+import ru.mironov.common.ui.theme.LogisticsTheme
 import ru.mironov.logistics.ui.theme.Main
 import ru.mironov.logistics.ui.theme.MainDark
 

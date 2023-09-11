@@ -1,8 +1,13 @@
-import androidx.compose.ui.window.ComposeUIViewController
+package com.mironov
+
+import NavRoot
+import androidx.compose.runtime.Composable
 import com.mironov.di.ApplicationComponent
 import ru.mironov.common.ui.theme.LogisticsTheme
 
-fun MainViewController() = ComposeUIViewController {
+
+@Composable
+fun DesktopAppCommon() {
     LogisticsTheme {
         NavRoot(ApplicationComponent.getVmFactory()) {}
     }

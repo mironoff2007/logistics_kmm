@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import kotlinx.collections.immutable.toPersistentList
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
-import ru.mironov.logistics.ui.theme.LogisticsTheme
+import ru.mironov.common.ui.theme.LogisticsTheme
 
 @Composable
 fun RegisterParcelSenderWithDataPreview() {
