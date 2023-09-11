@@ -17,7 +17,7 @@ kotlin {
                 implementation(project(":domain"))
                 implementation(project(":logging"))
 
-                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
             }
