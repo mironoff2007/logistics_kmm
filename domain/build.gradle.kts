@@ -20,7 +20,7 @@ kotlin {
                 implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.1")
                 implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:$serializationVersion")
 
-                api("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
             }

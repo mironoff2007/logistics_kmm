@@ -29,7 +29,7 @@ kotlin {
                 implementation (project(":database"))
                 implementation (project(":sharedprefs"))
 
-                api("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
 
                 api(compose.runtime)
                 api(compose.foundation)

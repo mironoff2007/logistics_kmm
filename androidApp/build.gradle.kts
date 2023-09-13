@@ -6,7 +6,7 @@ plugins {
 }
 
 kotlin {
-    androidTarget()
+    android()
 
     val serializationVersion: String by project
     dependencies {

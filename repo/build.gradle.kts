@@ -18,7 +18,7 @@ kotlin {
                 implementation (project(":logging"))
                 implementation (project(":server_contract"))
 
-                api("me.tatarka.inject:kotlin-inject-runtime:0.6.3")
+                api("me.tatarka.inject:kotlin-inject-runtime:0.6.1")
 
                 implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
