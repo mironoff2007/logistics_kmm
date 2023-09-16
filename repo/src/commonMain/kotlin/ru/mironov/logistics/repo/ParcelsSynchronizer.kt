@@ -39,7 +39,7 @@ class ParcelsSynchronizer(
                 job?.join()
                 job = scope.launch {
                     try {
-                        val parcels = parcelsDbSource.fetchNotSynced().map{ it.toServerParcel() }
+                        val parcels = parcelsDbSource.fetchNotSynced().map { it.toServerParcel() }
                         if (parcels.isNotEmpty()) {
                             logger.logD(LOG_TAG, "sync size ${parcels.size}")
                             val resp = parcelsWebSource.registerParcels(parcels)
@@ -78,5 +78,4 @@ class ParcelsSynchronizer(
     companion object {
         private const val LOG_TAG = "ParcelsSynchronizer"
     }
-
 }

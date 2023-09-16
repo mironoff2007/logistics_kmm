@@ -15,13 +15,16 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.common.Logger
+import ru.mironov.common.ktor.source.ParcelsWebSource
 import ru.mironov.logistics.ui.SingleEventFlow
 import ru.mironov.domain.viewmodel.ViewModel
+import ru.mironov.logistics.repo.ParcelsRepo
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataArg
 
 @Inject
 class WarehouseViewModel(
     private val parcelsDbSource: ParcelsDbSource,
+    private val parcelsRepo: ParcelsRepo,
     private val cityDbSource: CityDbSource,
     val logger: Logger
 ) : ViewModel() {
@@ -92,7 +95,11 @@ class WarehouseViewModel(
         searchJob = viewModelScope.launch {
             _loading.emit(true)
             try {
-                val parcels = parcelsDbSource.selectSearch(search = search, currentCitySearch = currentCity, destinationCitySearch = destinationCity)
+                val parcels = parcelsRepo.searchParcels(
+                    searchBy = search,
+                    fromCityId = currentCity?.id.toString(),
+                    toCityId = destinationCity?.id.toString()
+                )
                 _parcels.emit(parcels)
             } catch (e: Exception) {
                 logger.logE(LOG_TAG, e.stackTraceToString())
@@ -105,5 +112,4 @@ class WarehouseViewModel(
     companion object {
         private const val LOG_TAG = "WarehouseVM"
     }
-
 }

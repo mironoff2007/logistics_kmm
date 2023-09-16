@@ -5,6 +5,22 @@ import ru.mironov.domain.model.toCity
 import ru.mironov.domain.model.toServerCity
 import ru.mironov.logistics.parcel.ServerParcel
 
+fun ServerParcel.toParcel(): Parcel {
+    return Parcel(
+        parcelId = this.parcelId,
+        customerName = this.customerName,
+        customerSecondName = this.customerSecondName,
+        address = this.address,
+        senderName = this.senderName,
+        senderSecondName = this.senderSecondName,
+        senderAddress = this.senderAddress,
+        destinationCity = this.destinationCity.toCity(),
+        currentCity = this.currentCity.toCity(),
+        senderCity = this.senderCity.toCity(),
+        dateShow = this.dateShow,
+        synced = true
+    )
+}
 
 fun Parcel.toServerParcel(): ServerParcel {
     return ServerParcel(

@@ -14,7 +14,9 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.logistics.parcel.SearchResponse
+import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_FROM_CITY_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
+import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_TO_CITY_TAG
 import ru.mironov.logistics.parcel.ServerParcel
 
 @Inject
@@ -39,11 +41,17 @@ class ParcelsWebSource(
         }
     }
 
-    suspend fun searchParcels(searchBy: String): SearchResponse {
+    suspend fun searchParcels(
+        searchBy: String,
+        fromCityId: String,
+        toCityId: String
+    ): SearchResponse {
         return try {
             val response = client.get("/searchParcels") {
                 url {
                     parameters.append(SEARCH_QUERY_TAG, searchBy)
+                    parameters.append(SEARCH_FROM_CITY_TAG, fromCityId)
+                    parameters.append(SEARCH_TO_CITY_TAG, toCityId)
                 }
             }
             Json.decodeFromString(response.bodyAsText())
