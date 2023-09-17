@@ -36,8 +36,8 @@ class CityDbSource(private val cityDb: CityDb) {
     }
 
     
-    fun get(id: Int): City {
-        return cityDb.getById(id.toLong()).executeAsOne().toCity()
+    fun get(id: Int): City? {
+        return cityDb.getById(id.toLong()).executeAsOneOrNull()?.toCity()
     }
 
 }

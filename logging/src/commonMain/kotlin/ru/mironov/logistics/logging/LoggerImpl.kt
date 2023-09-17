@@ -68,7 +68,7 @@ class LoggerImpl @Inject constructor(): Logger {
         scope.launch {
             if (enabled) {
                 val line = "[${getTime()}]-$msg"
-                val logTag = "$ERROR_TAG:$tag:"
+                val logTag = "$ERROR_TAG:$tag"
                 consoleLog(logTag, line)
                 save(fileLogLine(logTag, msg))
             }

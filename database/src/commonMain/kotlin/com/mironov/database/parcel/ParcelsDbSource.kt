@@ -58,7 +58,7 @@ class ParcelsDbSource(
     
     fun get(id: Long): Parcel? {
         val cities = cityDb.getAllCities().executeAsList().map { it.toCity() }
-        return parcelDb.get(id).executeAsOne().toParcel(cities)
+        return parcelDb.get(id).executeAsOneOrNull()?.toParcel(cities)
     }
 
     
