@@ -84,11 +84,11 @@ fun Warehouse(
 
             vm.navWithArg.Observe()
             vm.navWithArg.onEvent { arg ->
-                arg?.let{ navModel.navigateWithArgs(Screens.ParcelData.getName(), it) }
+                arg?.let { navModel.navigateWithArgs(Screens.ParcelData.getName(), it) }
             }
 
-            val click = fun(id: Long) {
-                vm.postArgsAndGo(id)
+            val click = fun(parcel: Parcel) {
+                vm.postArgsAndGo(parcel)
             }
 
             var currentCity by remember { mutableStateOf<City?>(null) }
@@ -253,7 +253,7 @@ private fun CityFilter(
 }
 
 @Composable
-private fun WarehouseLazyColumn(loading: Boolean, parcels: List<Parcel>, click: (Long) -> Unit) {
+private fun WarehouseLazyColumn(loading: Boolean, parcels: List<Parcel>, click: (Parcel) -> Unit) {
     if (loading) CircularProgressIndicator()
     else LazyColumn(
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 5.dp).fillMaxWidth(),
@@ -273,11 +273,11 @@ private fun WarehouseLazyColumn(loading: Boolean, parcels: List<Parcel>, click: 
 @Composable
 private fun ParcelViewItem(
     parcel: Parcel,
-    click: (Long) -> Unit
+    click: (Parcel) -> Unit
 ) {
     Card(
         modifier = Modifier.wrapContentWidth().wrapContentHeight().clickable {
-                    click.invoke(parcel.parcelId)
+                    click.invoke(parcel)
         },
         shape = RoundedCornerShape(25.dp),
         backgroundColor = MaterialTheme.colors.surface,

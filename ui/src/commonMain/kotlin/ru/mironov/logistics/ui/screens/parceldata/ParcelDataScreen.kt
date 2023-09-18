@@ -51,7 +51,7 @@ fun ParcelDataScreen(
         val parcel = vm.parcel.collectAsState()
 
         TopBar(
-            title = localizedString(Screens.RegisterDestinationParcel.title),
+            title = localizedString(Screens.ParcelData.title),
             buttonIcon = Icons.Filled.Menu,
             onButtonClicked = { openDrawer() }
         )

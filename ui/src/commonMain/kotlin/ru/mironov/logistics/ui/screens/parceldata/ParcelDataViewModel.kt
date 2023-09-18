@@ -41,11 +41,10 @@ class ParcelDataViewModel(
         }
     }
 
-    suspend fun getParcel(args: String) {
+    private suspend fun getParcel(args: String) {
         val parcelData = Json.decodeFromString<ParcelDataArg>(args)
-        val parcelFromDb = parcelsDbSource.get(parcelData.id)
-        if (parcelFromDb == null) logger.logE(LOG_TAG, "parcel is null")
-        _parcel.emit(parcelFromDb)
+        val parcel = parcelData.parcel
+        _parcel.emit(parcel)
     }
 
     companion object {

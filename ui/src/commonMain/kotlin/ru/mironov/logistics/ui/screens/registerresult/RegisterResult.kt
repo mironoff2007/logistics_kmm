@@ -64,7 +64,7 @@ fun RegisterResult(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(
-            title = localizedString(Screens.Warehouse.title),
+            title = localizedString(Screens.RegisterResult.title),
             buttonIcon = Icons.Filled.Menu,
             onButtonClicked = { openDrawer() }
         )

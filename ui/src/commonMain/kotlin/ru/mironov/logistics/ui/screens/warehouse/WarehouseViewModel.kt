@@ -72,11 +72,11 @@ class WarehouseViewModel(
         }
     }
 
-    fun postArgsAndGo(id: Long) {
+    fun postArgsAndGo(parcel: Parcel) {
         viewModelScope.launch {
             _loading.emit(true)
             try {
-                val json = Json.encodeToString(ParcelDataArg(id))
+                val json = Json.encodeToString(ParcelDataArg(parcel))
                 navWithArg.postEvent(json)
             } catch (e: Exception) {
                 logger.logE(LOG_TAG, e.stackTraceToString())

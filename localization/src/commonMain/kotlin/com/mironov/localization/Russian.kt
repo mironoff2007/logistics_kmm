@@ -8,6 +8,7 @@ object Russian {
             StringRes.Logout -> "Выход из профиля"
             StringRes.Settings -> "Настройки"
             StringRes.RegisterParcel -> "Регистрация посылки"
+            StringRes.ParcelData -> "Данные посылки"
             StringRes.Warehouse -> "Склад"
             StringRes.Back -> "Назад"
             StringRes.RequestPermissions -> "Пожалуйста, предоставьте разрешения"

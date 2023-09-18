@@ -129,9 +129,7 @@ fun NavRoot(
                         backPressed = backPressed
                     )
 
-                    if (showMsg != null) {
-                        Dialog(showMsg!!)
-                    }
+                    showMsg?.let { msg -> Dialog(msg)  }
                 }
             }
         }
@@ -228,6 +226,5 @@ fun Dialog(showMsg: String) {
                 )
             )
         }
-
     }
 }

@@ -7,6 +7,7 @@ object English {
             StringRes.Login -> "Login"
             StringRes.Logout -> "Logout"
             StringRes.Settings -> "Settings"
+            StringRes.ParcelData -> "Parcel data"
             StringRes.RegisterParcel -> "Register Parcel"
             StringRes.Warehouse -> "Warehouse"
             StringRes.Back -> "Back"
