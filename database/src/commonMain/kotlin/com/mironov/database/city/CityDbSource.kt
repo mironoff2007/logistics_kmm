@@ -1,7 +1,7 @@
 package com.mironov.database.city
 
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.common.data.CityDb
+import ru.mironov.common.data.sqlitedb.CityDb
 import ru.mironov.common.data.toCity
 import ru.mironov.domain.model.City
 

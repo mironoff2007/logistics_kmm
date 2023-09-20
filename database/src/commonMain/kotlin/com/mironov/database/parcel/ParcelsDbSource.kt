@@ -1,11 +1,10 @@
 package com.mironov.database.parcel
 
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.common.data.CityDb
-import ru.mironov.common.data.ParcelDb
+import ru.mironov.common.data.sqlitedb.CityDb
+import ru.mironov.common.data.sqlitedb.ParcelDb
 import ru.mironov.common.data.toCity
 import ru.mironov.common.data.toParcel
-import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 
 

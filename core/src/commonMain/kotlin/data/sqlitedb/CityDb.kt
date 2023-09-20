@@ -1,4 +1,4 @@
-package ru.mironov.common.data
+package ru.mironov.common.data.sqlitedb
 
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.db.SqlDriver
@@ -6,6 +6,7 @@ import data.CityEntity
 import data.CityQueries
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.data.Constants.DB_NAME
+import ru.mironov.common.data.DriverFactory
 import ru.mironov.domain.model.City
 
 @Inject

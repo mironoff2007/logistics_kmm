@@ -1,4 +1,4 @@
-package ru.mironov.common.data
+package ru.mironov.common.data.sqlitedb
 
 import app.cash.sqldelight.Query
 import app.cash.sqldelight.db.SqlDriver
