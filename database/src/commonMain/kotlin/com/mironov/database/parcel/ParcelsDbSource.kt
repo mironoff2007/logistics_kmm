@@ -26,28 +26,9 @@ class ParcelsDbSource(
         parcelDb.replace(parcel)
     }
 
-    
-    fun inTransaction(method: () -> Unit) {
-
-    }
-
-    
-    fun insertAllBatch(parcels: List<Parcel>) {
-
-    }
-
-    
     fun replaceAllTransaction(parcels: List<Parcel>) {
         parcelDb.replaceAll(parcels)
     }
-
-    
-    fun count(): Int {
-        var count = 0
-
-        return count
-    }
-
     
     fun fetchAll(): List<Parcel> {
         val parcelsEntities = parcelDb.getAllParcels()
@@ -66,15 +47,17 @@ class ParcelsDbSource(
         val cities = cityDb.getAllCities().executeAsList().map { it.toCity() }
         return parcelDb.getNotSynced().executeAsList().map { it.toParcel(cities) }
     }
-
-    
-    fun selectSearch(
-        search: String,
-        currentCitySearch: City?,
-        destinationCitySearch: City?
-    ): List<Parcel> {
-        return fetchAll() //todo
+    fun fetchSynced(): List<Parcel> {
+        val cities = cityDb.getAllCities().executeAsList().map { it.toCity() }
+        return parcelDb.getSynced().executeAsList().map { it.toParcel(cities) }
     }
+
+    fun delete(parcel: Parcel) =
+        parcelDb.delete(parcel.parcelId)
+
+    fun delete(parcels: List<Parcel>) =
+        parcelDb.delete(parcels)
+
 
 
 }

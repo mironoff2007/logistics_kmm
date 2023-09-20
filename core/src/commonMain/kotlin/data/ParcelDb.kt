@@ -14,19 +14,19 @@ class ParcelDb() {
     private val driver: SqlDriver = DriverFactory().createDriver(DB_NAME)
     private val parcelQueries = ParcelQueries(driver)
 
-    fun drop() {
-        parcelQueries.drop()
+    fun drop() = parcelQueries.drop()
+
+    fun get(id: Long): Query<ParcelEntity> = parcelQueries.getById(id)
+
+    fun delete(list: List<Parcel>) = parcelQueries.transaction {
+        list.forEach { parcelQueries.delete(it.parcelId) }
     }
 
-    fun get(id: Long): Query<ParcelEntity> {
-        return parcelQueries.getById(id)
-    }
+    fun delete(id: Long) = parcelQueries.delete(id)
 
-    fun getAllParcels(): Query<ParcelEntity> {
-        return parcelQueries.selectAll()
-    }
+    fun getAllParcels(): Query<ParcelEntity> = parcelQueries.selectAll()
 
-    fun replace(parcel: Parcel) {
+    fun replace(parcel: Parcel) =
         parcelQueries.replace(
             parcelId = parcel.parcelId,
             customerName = parcel.customerName,
@@ -42,15 +42,15 @@ class ParcelDb() {
             date = parcel.dateMillis,
             synced = parcel.synced.toString()
         )
-    }
 
-    fun replaceAll(list: List<Parcel>) {
+    fun replaceAll(list: List<Parcel>) =
         parcelQueries.transaction { list.forEach { replace(it) } }
-    }
 
-    fun getNotSynced(): Query<ParcelEntity> {
-        return parcelQueries.selectNotSynced()
-    }
+    fun getNotSynced(): Query<ParcelEntity> =
+        parcelQueries.selectNotSynced()
+
+    fun getSynced(): Query<ParcelEntity> =
+        parcelQueries.selectSynced()
 
 }
 

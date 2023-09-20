@@ -18,11 +18,17 @@ CREATE TABLE ParcelEntity (
 getById:
 SELECT * FROM ParcelEntity WHERE parcelId = :id;
 
+delete:
+DELETE FROM ParcelEntity WHERE parcelId = :id;
+
 selectAll:
 SELECT * FROM ParcelEntity;
 
 selectNotSynced:
 SELECT * FROM ParcelEntity WHERE synced = "false";
+
+selectSynced:
+SELECT * FROM ParcelEntity WHERE synced = "true";
 
 insert:
 INSERT INTO ParcelEntity

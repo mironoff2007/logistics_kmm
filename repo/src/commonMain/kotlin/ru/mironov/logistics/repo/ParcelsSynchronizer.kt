@@ -46,6 +46,8 @@ class ParcelsSynchronizer(
                             if (resp) {
                                 logger.logD(LOG_TAG, "sync ok")
                                 parcelsDbSource.replaceAllTransaction(parcels.map { it.toSyncedParcel() })
+
+                                clearSynced()
                             }
                             else {
                                 logger.logD(LOG_TAG, "sync fail")
@@ -53,6 +55,7 @@ class ParcelsSynchronizer(
                         }
                         else {
                             logger.logD(LOG_TAG, "all synced")
+                            clearSynced()
                         }
                     }
                     catch (e: Exception) {
@@ -60,6 +63,16 @@ class ParcelsSynchronizer(
                     }
                 }
             }
+        }
+    }
+
+    private suspend fun clearSynced() {
+        val syncedParcels = parcelsDbSource.fetchSynced()
+        val notDeleted = parcelsDbSource.fetchSynced().isNotEmpty()
+        if (notDeleted) {
+            parcelsDbSource.delete(syncedParcels)
+            val deleted = parcelsDbSource.fetchSynced().isEmpty()
+            logger.logD(LOG_TAG, "synced ${syncedParcels.size} parcels are deleted $deleted")
         }
     }
 
