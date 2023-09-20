@@ -83,7 +83,7 @@ class RegisterParcelDestinationViewModel(
                     dateShow = DateTimeFormat.formatDB(time) ?: time.toString(),
                     destinationCity = recipientData.city!!,
                     currentCity = parcelSenderData!!.city!!,
-                    senderCity = parcelSenderData!!.city!!
+                    senderCity = parcelSenderData!!.city!!,
                 )
                 val argString = Json.encodeToString(parcel)
                 navWithArg.postEventSuspend(argString)

@@ -18,6 +18,7 @@ fun ServerParcel.toParcel(): Parcel {
         currentCity = this.currentCity.toCity(),
         senderCity = this.senderCity.toCity(),
         dateShow = this.dateShow,
+        dateMillis = this.date,
         synced = true
     )
 }
