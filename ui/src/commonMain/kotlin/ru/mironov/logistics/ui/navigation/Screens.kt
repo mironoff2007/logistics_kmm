@@ -13,6 +13,7 @@ sealed class Screens(val title: StringRes, val icon: ImageRes) {
     object RegisterSenderParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
     object ParcelData : Screens(StringRes.ParcelData, ImageRes.None)
     object Warehouse : Screens(StringRes.Warehouse, ImageRes.Warehouse)
+    object GlobalSearch : Screens(StringRes.GlobalSearch, ImageRes.GlobalSearch)
     object SettingsScreen : Screens(StringRes.Settings, ImageRes.Settings)
     object SettingsScreenLoggedOut : Screens(StringRes.Settings, ImageRes.Settings)
     object Back : Screens(StringRes.Back, ImageRes.Back)

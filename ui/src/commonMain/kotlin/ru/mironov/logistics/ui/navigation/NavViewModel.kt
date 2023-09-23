@@ -81,9 +81,10 @@ class NavViewModel(
         viewModelScope.launch {
             val list = when (screen) {
                 Screens.LoginScreen, Screens.LogoutScreen -> listOf(Screens.SettingsScreenLoggedOut)
-                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen -> listOf(
+                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch -> listOf(
                     Screens.RegisterSenderParcel,
                     Screens.Warehouse,
+                    Screens.GlobalSearch,
                     Screens.SettingsScreen,
                     Screens.LogoutScreen
                 )

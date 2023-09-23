@@ -9,6 +9,7 @@ enum class StringRes {
     Settings,
     RegisterParcel,
     Warehouse,
+    GlobalSearch,
     Back,
 
     RequestPermissions,

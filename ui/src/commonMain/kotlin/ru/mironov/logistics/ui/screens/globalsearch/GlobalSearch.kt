@@ -1,4 +1,4 @@
-package ru.mironov.logistics.ui.screens.warehouse
+package ru.mironov.logistics.ui.screens.globalsearch
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,9 +56,9 @@ import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
-fun Warehouse(
+fun GlobalSearch(
     openDrawer: () -> Job,
-    vm: WarehouseViewModel,
+    vm: GlobalSearchViewModel,
     navModel: NavViewModel
 ) {
     Column(
@@ -67,7 +67,7 @@ fun Warehouse(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(
-            title = localizedString(Screens.Warehouse.title),
+            title = localizedString(Screens.GlobalSearch.title),
             buttonIcon = Icons.Filled.Menu,
             onButtonClicked = { openDrawer() }
         )

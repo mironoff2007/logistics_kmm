@@ -7,6 +7,7 @@ enum class ImageRes {
     Box,
     RegisterParcel,
     Warehouse,
+    GlobalSearch,
     Settings,
     Logout,
     Back,

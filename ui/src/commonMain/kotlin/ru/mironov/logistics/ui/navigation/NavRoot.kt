@@ -43,6 +43,8 @@ import ru.mironov.logistics.ui.navigation.ViewModelFactory
 import ru.mironov.logistics.ui.navigation.navcontroller.NavigationHost
 import ru.mironov.logistics.ui.navigation.navcontroller.composableRoute
 import ru.mironov.logistics.ui.navigation.navcontroller.rememberNavController
+import ru.mironov.logistics.ui.screens.globalsearch.GlobalSearch
+import ru.mironov.logistics.ui.screens.globalsearch.GlobalSearchViewModel
 import ru.mironov.logistics.ui.screens.login.LoginScreen
 import ru.mironov.logistics.ui.screens.login.LoginViewModel
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataScreen
@@ -185,6 +187,11 @@ fun CustomNavigationHost(
             val vm: WarehouseViewModel = viewModelFactory.provide(WarehouseViewModel::class)
             navModel.setStartDestination(it, vm)
             Warehouse(openDrawer, vm, navModel)
+        }
+        composableRoute(Screens.GlobalSearch, navModel) {
+            val vm: GlobalSearchViewModel = viewModelFactory.provide(GlobalSearchViewModel::class)
+            navModel.setStartDestination(it, vm)
+            GlobalSearch(openDrawer, vm, navModel)
         }
         composableRoute(Screens.ParcelData, navModel) {
             val vm: ParcelDataViewModel = viewModelFactory.provide(ParcelDataViewModel::class)

@@ -10,6 +10,7 @@ object English {
             StringRes.ParcelData -> "Parcel data"
             StringRes.RegisterParcel -> "Register Parcel"
             StringRes.Warehouse -> "Warehouse"
+            StringRes.GlobalSearch -> "Search parcel"
             StringRes.Back -> "Back"
             StringRes.RequestPermissions -> "Please, grant permissions"
             //Login

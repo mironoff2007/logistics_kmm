@@ -10,6 +10,7 @@ object Russian {
             StringRes.RegisterParcel -> "Регистрация посылки"
             StringRes.ParcelData -> "Данные посылки"
             StringRes.Warehouse -> "Склад"
+            StringRes.GlobalSearch -> "Поиск посылок"
             StringRes.Back -> "Назад"
             StringRes.RequestPermissions -> "Пожалуйста, предоставьте разрешения"
             //Login
