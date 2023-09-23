@@ -1,5 +1,7 @@
 package ru.mironov.common.ktor.client
 
+import androidx.compose.ui.text.intl.Locale
+import androidx.compose.ui.text.toLowerCase
 import io.ktor.client.HttpClient
 import io.ktor.client.plugins.DefaultRequest
 import io.ktor.client.plugins.HttpTimeout
@@ -52,7 +54,9 @@ class ClientBuilderImpl @Inject constructor() : ClientBuilder {
             install(ResponseObserver) {
                 onResponse { response ->
                     log.invoke(response.toString())
-                    log.invoke(response.bodyAsText())
+                    if (!response.bodyAsText().lowercase().contains("token")) {
+                        log.invoke(response.bodyAsText())
+                    }
                 }
             }
 
