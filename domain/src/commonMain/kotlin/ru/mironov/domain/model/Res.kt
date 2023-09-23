@@ -1,6 +1,6 @@
 package ru.mironov.domain.model
 
-import ru.mironov.domain.model.web.ErrorResponse
+import ru.mironov.logistics.ErrorResponse
 
 sealed class Res<T> {
     data class Success<T>(val value: T) : Res<T>()

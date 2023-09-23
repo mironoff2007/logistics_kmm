@@ -1,9 +1,9 @@
-package ru.mironov.domain.model.auth
+package ru.mironov.logistics.auth
 
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class AuthUser(
+data class AuthRequest(
     val username: String,
     val password: String
 )

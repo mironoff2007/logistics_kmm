@@ -5,7 +5,7 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.auth.Auth
 import ru.mironov.domain.model.Res
-import ru.mironov.domain.model.auth.AuthUser
+import ru.mironov.logistics.auth.AuthRequest
 import ru.mironov.domain.model.auth.Token
 
 @Inject
@@ -23,7 +23,7 @@ class LoginRepo(
 
     suspend fun login(userName: String, password: String): Res<Token?> {
         logger.logD(LOG_TAG, "login")
-        return auth.signIn(AuthUser(username = userName, password = password)).also {
+        return auth.signIn(AuthRequest(username = userName, password = password)).also {
             if (it is Res.Success) {
                 logger.logD(LOG_TAG, "call new token success")
                 token = it.value?.token

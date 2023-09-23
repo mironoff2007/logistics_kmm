@@ -16,7 +16,7 @@ import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.common.ktor.WebConstants.BEARER
 import ru.mironov.domain.model.Res
-import ru.mironov.domain.model.auth.AuthUser
+import ru.mironov.logistics.auth.AuthRequest
 import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.auth.AuthResponse
 
@@ -35,7 +35,7 @@ class Auth(
         }
     }.bodyAsText()
 
-    override suspend fun signIn(user: AuthUser): Res<Token?> {
+    override suspend fun signIn(user: AuthRequest): Res<Token?> {
         return try {
             client.post("/signin") {
                 contentType(ContentType.Application.Json)
@@ -60,7 +60,7 @@ class Auth(
         }
     }
 
-    override suspend fun signUp(user: AuthUser) {
+    override suspend fun signUp(user: AuthRequest) {
         TODO("Not yet implemented")
     }
 

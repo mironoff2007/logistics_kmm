@@ -1,4 +1,4 @@
-package ru.mironov.domain.model.web
+package ru.mironov.logistics
 
 import kotlinx.serialization.Serializable
 
