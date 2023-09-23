@@ -18,6 +18,7 @@ import ru.mironov.common.ktor.WebConstants.BEARER
 import ru.mironov.domain.model.Res
 import ru.mironov.domain.model.auth.AuthUser
 import ru.mironov.domain.model.auth.Token
+import ru.mironov.logistics.auth.AuthResponse
 
 @Inject
 class Auth(
@@ -43,7 +44,7 @@ class Auth(
                 when (it.status) {
                     HttpStatusCode.OK -> Res.Success(
                         Token (
-                            token = it.body<AuthResponse>().token.token.toCharArray(),
+                            token = it.body<AuthResponse>().token.value.toCharArray(),
                             expireAt = it.body<AuthResponse>().token.expireAt
                         )
                     )

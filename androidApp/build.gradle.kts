@@ -14,6 +14,7 @@ kotlin {
         implementation(project(":ui"))
         implementation(project(":di"))
         implementation(project(":domain"))
+        implementation(project(":server_contract"))
         implementation(project(":localization"))
         implementation(project(":database"))
         implementation(project(":sharedprefs"))

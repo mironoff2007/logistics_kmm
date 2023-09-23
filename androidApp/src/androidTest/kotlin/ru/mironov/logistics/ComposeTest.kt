@@ -16,11 +16,12 @@ import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
-import ru.mironov.common.ktor.auth.AuthResponse
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.City
-import ru.mironov.domain.model.auth.TokenResp
+import ru.mironov.logistics.auth.AuthResponse
+import ru.mironov.logistics.auth.ServerToken
+import ru.mironov.logistics.auth.UserRole
 
 @RunWith(AndroidJUnit4::class)
 class ComposeTest: BaseUITest() {
@@ -33,9 +34,10 @@ class ComposeTest: BaseUITest() {
     @Test
     fun loginUiTest() {
         val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360
-        val token = TokenResp(token = "", expireAt = expireAt)
+        val token = ServerToken(value = "", expireAt = expireAt)
         val cities = listOf(City(1, "City1"))
-        val respAuth = Json.encodeToString(AuthResponse(token))
+        val userRole = UserRole(0, ServerCity(0, ""))
+        val respAuth = Json.encodeToString(AuthResponse(token, userRole))
         val citiesResp = Json.encodeToString(cities)
 
         val ktor = ApplicationComponent.getKtor()
