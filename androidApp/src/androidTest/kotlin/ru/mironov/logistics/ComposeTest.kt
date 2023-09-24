@@ -21,7 +21,6 @@ import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.City
 import ru.mironov.logistics.auth.AuthResponse
 import ru.mironov.logistics.auth.ServerToken
-import ru.mironov.logistics.auth.UserRole
 
 @RunWith(AndroidJUnit4::class)
 class ComposeTest: BaseUITest() {

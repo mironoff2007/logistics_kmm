@@ -42,12 +42,15 @@ class Auth(
                 setBody(user)
             }.let {
                 when (it.status) {
-                    HttpStatusCode.OK -> Res.Success(
-                        Token (
-                            token = it.body<AuthResponse>().token.value.toCharArray(),
-                            expireAt = it.body<AuthResponse>().token.expireAt
+                    HttpStatusCode.OK -> {
+                        val authResponse = it.body<AuthResponse>()
+                        Res.Success(
+                            Token(
+                                token = authResponse.token.value.toCharArray(),
+                                expireAt = authResponse.token.expireAt
+                            )
                         )
-                    )
+                    }
                     else -> Res.HttpError(
                         code = it.status.value,
                         error = it.body()
