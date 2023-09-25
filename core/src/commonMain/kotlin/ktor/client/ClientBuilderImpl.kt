@@ -54,8 +54,9 @@ class ClientBuilderImpl @Inject constructor() : ClientBuilder {
             install(ResponseObserver) {
                 onResponse { response ->
                     log.invoke(response.toString())
-                    if (!response.bodyAsText().lowercase().contains("token")) {
-                        log.invoke(response.bodyAsText())
+                    val body = response.bodyAsText()
+                    if (!body.lowercase().contains("token")) {
+                        log.invoke(body)
                     }
                 }
             }
