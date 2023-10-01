@@ -5,7 +5,7 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.auth.Auth
 import ru.mironov.domain.di.AppScope
-import ru.mironov.domain.model.Res
+import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest
 import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.UserRole
@@ -22,11 +22,23 @@ class UserSessionRepo(
     private var role: UserRole? = null
     private var token: Token? = null
 
-    suspend fun login(userName: String, password: String): Res<Token?> {
+
+
+    suspend fun login(userName: String, password: String): Result<Boolean> =
+        when (val result = getTokenWithResult(userName, password)) {
+            is Result.Success -> Result.Success(true)
+
+            is Result.Error -> Result.Error(result.exception)
+
+            is Result.HttpError -> Result.HttpError(result.code, result.error)
+        }
+
+
+    private suspend fun getTokenWithResult(userName: String, password: String): Result<Token?> {
         logger.logD(LOG_TAG, "login")
-        val result = auth.signIn(AuthRequest(username = userName, password = password))
-        return when (result) {
-            is Res.Success -> {
+        return when (val result =
+            auth.signIn(AuthRequest(username = userName, password = password))) {
+            is Result.Success -> {
                 val result = result.value
                 logger.logD(LOG_TAG, "call new token success")
 
@@ -36,14 +48,12 @@ class UserSessionRepo(
 
                 val tokenValue = result?.token?.value?.toCharArray() ?: charArrayOf()
                 this.token = Token(tokenValue, result?.token?.expireAt ?: 0)
-                Res.Success(token)
+                Result.Success(token)
             }
-            is Res.Error -> {
-                Res.Error(result.exception)
-            }
-            is Res.HttpError -> {
-                Res.HttpError(result.code, result.error)
-            }
+
+            is Result.Error -> Result.Error(result.exception)
+
+            is Result.HttpError -> Result.HttpError(result.code, result.error)
         }
     }
 
@@ -55,16 +65,14 @@ class UserSessionRepo(
         } else {
             logger.logD(LOG_TAG, "get new token")
             if (login != null && password != null) {
-                val loginResult = login(
+                val loginResult = getTokenWithResult(
                     login.contentToString(),
                     password.contentToString()
                 )
-                if (loginResult is Res.Success) {
+                if (loginResult is Result.Success) {
                     loginResult.value
-                }
-                else null
-            }
-            else {
+                } else null
+            } else {
                 logger.logD(LOG_TAG, "no credentials")
                 null
             }

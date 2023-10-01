@@ -5,7 +5,7 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.domain.model.Res
+import ru.mironov.domain.model.Result
 import ru.mironov.domain.model.web.ErrorCodes
 import ru.mironov.domain.settings.UserData
 import ru.mironov.domain.viewmodel.State
@@ -34,16 +34,15 @@ class LoginViewModel(
             loginResult.postEvent(State.Loading())
             userSessionRepo.login(userName = login, password = password).let {
                 when (it) {
-                    is Res.Success -> {
+                    is Result.Success -> {
                         val userSettings = prefs.load() ?: UserData()
                         userSettings.add(UserData.UserName, login)
                         prefs.save(userSettings)
                         loginResult.postEvent(State.Success(true))
                     }
-                    is Res.Error -> {
-                        loginResult.postEvent(State.Error(it.exception.message ?: ""))
-                    }
-                    is Res.HttpError -> {
+                    is Result.Error -> loginResult.postEvent(State.Error(it.exception.message ?: ""))
+
+                    is Result.HttpError -> {
                         val msg = ErrorCodes.localizedError(it.error.code)
                         loginResult.postEvent(State.Error(msg))
                     }
@@ -70,5 +69,4 @@ class LoginViewModel(
     companion object {
         private const val LOG_TAG = "LoginVM"
     }
-
 }

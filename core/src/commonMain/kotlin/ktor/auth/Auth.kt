@@ -2,23 +2,16 @@ package ru.mironov.common.ktor.auth
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
-import io.ktor.client.request.HttpRequestBuilder
-import io.ktor.client.request.get
-import io.ktor.client.request.headers
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
-import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
-import ru.mironov.common.ktor.WebConstants.BEARER
-import ru.mironov.domain.model.Res
+import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest
-import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.auth.AuthResponse
 
 @Inject
@@ -30,7 +23,7 @@ class Auth(
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
     private val client: HttpClient =  ktor.getKtorClient(log)
 
-    override suspend fun signIn(user: AuthRequest): Res<AuthResponse?> {
+    override suspend fun signIn(user: AuthRequest): Result<AuthResponse?> {
         return try {
             client.post("/signin") {
                 contentType(ContentType.Application.Json)
@@ -39,9 +32,9 @@ class Auth(
                 when (it.status) {
                     HttpStatusCode.OK -> {
                         val authResponse = it.body<AuthResponse>()
-                        Res.Success(authResponse)
+                        Result.Success(authResponse)
                     }
-                    else -> Res.HttpError(
+                    else -> Result.HttpError(
                         code = it.status.value,
                         error = it.body()
                     )
@@ -49,7 +42,7 @@ class Auth(
             }
         } catch (e: Exception) {
             logger.logE(LOG_TAG, e.stackTraceToString())
-            Res.Error(e)
+            Result.Error(e)
         }
     }
 
