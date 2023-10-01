@@ -16,6 +16,7 @@ import ru.mironov.common.ktor.source.ParcelsWebSource
 
 @Inject
 class ParcelsSynchronizer(
+    private val userSessionRepo: UserSessionRepo,
     private val parcelsDbSource: ParcelsDbSource,
     private val parcelsWebSource: ParcelsWebSource,
     private val logger: Logger,
@@ -42,11 +43,10 @@ class ParcelsSynchronizer(
                         val parcels = parcelsDbSource.fetchNotSynced().map { it.toServerParcel() }
                         if (parcels.isNotEmpty()) {
                             logger.logD(LOG_TAG, "sync size ${parcels.size}")
-                            val resp = parcelsWebSource.registerParcels(parcels)
+                            val resp = parcelsWebSource.registerParcels(userSessionRepo.getOrRefreshToken(),parcels)
                             if (resp) {
                                 logger.logD(LOG_TAG, "sync ok")
                                 parcelsDbSource.replaceAllTransaction(parcels.map { it.toSyncedParcel() })
-
                                 clearSynced()
                             }
                             else {

@@ -12,7 +12,10 @@ import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
+import ru.mironov.common.ktor.auth.Auth
+import ru.mironov.common.ktor.auth.addAuth
 import ru.mironov.common.ktor.client.KtorClient
+import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.parcel.SearchResponse
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_FROM_CITY_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
@@ -21,16 +24,18 @@ import ru.mironov.logistics.parcel.ServerParcel
 
 @Inject
 class ParcelsWebSource(
-    private val logger: Logger,
-    private val ktor: KtorClient
+    private val auth: Auth,
+    private val ktor: KtorClient,
+    private val logger: Logger
 ) {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
     private val client: HttpClient = ktor.getKtorClient(log)
 
-    suspend fun registerParcels(parcels: List<ServerParcel>): Boolean {
+    suspend fun registerParcels(token: Token?, parcels: List<ServerParcel>): Boolean {
         return try {
             val response = client.post("/registerParcels") {
+                this.addAuth(token?.tokenValue)
                 contentType(ContentType.Application.Json)
                 setBody(parcels)
             }

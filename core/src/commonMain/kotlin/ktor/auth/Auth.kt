@@ -2,6 +2,7 @@ package ru.mironov.common.ktor.auth
 
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
+import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.get
 import io.ktor.client.request.headers
 import io.ktor.client.request.post
@@ -29,13 +30,7 @@ class Auth(
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)
     private val client: HttpClient =  ktor.getKtorClient(log)
 
-    override suspend fun auth(token: String): String = client.get("/authenticate") {
-        headers {
-            append(HttpHeaders.Authorization, "$BEARER $token")
-        }
-    }.bodyAsText()
-
-    override suspend fun signIn(user: AuthRequest): Res<Token?> {
+    override suspend fun signIn(user: AuthRequest): Res<AuthResponse?> {
         return try {
             client.post("/signin") {
                 contentType(ContentType.Application.Json)
@@ -44,12 +39,7 @@ class Auth(
                 when (it.status) {
                     HttpStatusCode.OK -> {
                         val authResponse = it.body<AuthResponse>()
-                        Res.Success(
-                            Token(
-                                token = authResponse.token.value.toCharArray(),
-                                expireAt = authResponse.token.expireAt
-                            )
-                        )
+                        Res.Success(authResponse)
                     }
                     else -> Res.HttpError(
                         code = it.status.value,
@@ -70,5 +60,4 @@ class Auth(
     companion object {
         private const val LOG_TAG = "AuthApi"
     }
-
 }

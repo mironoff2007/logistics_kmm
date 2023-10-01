@@ -11,13 +11,13 @@ import ru.mironov.domain.settings.UserData
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.SharedPreferences
-import ru.mironov.logistics.repo.LoginRepo
+import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.SingleEventFlow
 
 @Inject
 class LoginViewModel(
     private val prefs: SharedPreferences,
-    private val loginRepo: LoginRepo,
+    private val userSessionRepo: UserSessionRepo,
     private val logger: Logger
 ) : ViewModel() {
 
@@ -32,7 +32,7 @@ class LoginViewModel(
     fun login(login: String, password: String) {
         viewModelScope.launch(exceptionHandler + supervisor) {
             loginResult.postEvent(State.Loading())
-            loginRepo.login(userName = login, password = password).let {
+            userSessionRepo.login(userName = login, password = password).let {
                 when (it) {
                     is Res.Success -> {
                         val userSettings = prefs.load() ?: UserData()
@@ -54,7 +54,7 @@ class LoginViewModel(
 
     fun logout() {
         viewModelScope.launch(exceptionHandler + supervisor) {
-            loginRepo.logout()
+            userSessionRepo.logout()
         }
     }
 

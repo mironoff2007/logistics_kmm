@@ -2,6 +2,6 @@ package ru.mironov.domain.model.auth
 
 
 class Token(
-    val token: CharArray,
+    val tokenValue: CharArray,
     val expireAt: Long
 )
