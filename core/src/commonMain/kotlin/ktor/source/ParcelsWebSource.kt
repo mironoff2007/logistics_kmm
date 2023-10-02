@@ -1,6 +1,8 @@
 package ru.mironov.common.ktor.source
 
+import androidx.compose.foundation.gestures.rememberScrollableState
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
@@ -15,7 +17,9 @@ import ru.mironov.common.Logger
 import ru.mironov.common.ktor.auth.Auth
 import ru.mironov.common.ktor.auth.addAuth
 import ru.mironov.common.ktor.client.KtorClient
+import ru.mironov.domain.model.Result
 import ru.mironov.domain.model.auth.Token
+import ru.mironov.logistics.ErrorResponse
 import ru.mironov.logistics.parcel.SearchResponse
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_FROM_CITY_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
@@ -47,22 +51,33 @@ class ParcelsWebSource(
     }
 
     suspend fun searchParcels(
+        token: Token?,
         searchBy: String,
         fromCityId: String,
         toCityId: String
-    ): SearchResponse {
+    ): Result<SearchResponse?> {
         return try {
             val response = client.get("/searchParcels") {
+                this.addAuth(token?.tokenValue)
                 url {
                     parameters.append(SEARCH_QUERY_TAG, searchBy)
                     parameters.append(SEARCH_FROM_CITY_TAG, fromCityId)
                     parameters.append(SEARCH_TO_CITY_TAG, toCityId)
                 }
             }
-            Json.decodeFromString(response.bodyAsText())
+            if (response.status == HttpStatusCode.OK) Result.Success(Json.decodeFromString(response.bodyAsText()))
+            else {
+                val errorBody = try {
+                    response.body() as ErrorResponse
+                } catch (e: Exception) {
+                    ErrorResponse.empty()
+                }
+                Result.HttpError(response.status.value, errorBody)
+            }
+
         } catch (e: Exception) {
             log.invoke(e.stackTraceToString())
-            SearchResponse(0, emptyList())
+            Result.Error(e)
         }
     }
 
