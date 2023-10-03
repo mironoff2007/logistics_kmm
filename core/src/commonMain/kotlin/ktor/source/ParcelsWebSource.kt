@@ -9,10 +9,10 @@ import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.HttpResult
 import ru.mironov.common.ktor.source.auth.Auth
 import ru.mironov.common.ktor.source.auth.addAuth
 import ru.mironov.common.ktor.client.KtorClient
+import ru.mironov.common.ktor.toResult
 import ru.mironov.domain.model.Result
 import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.parcel.SearchResponse
@@ -60,7 +60,7 @@ class ParcelsWebSource(
                     parameters.append(SEARCH_TO_CITY_TAG, toCityId)
                 }
             }
-            HttpResult.toResult(response)
+            response.toResult()
         } catch (e: Exception) {
             log.invoke(e.stackTraceToString())
             Result.Error(e)

@@ -7,8 +7,8 @@ import io.ktor.http.ContentType
 import io.ktor.http.contentType
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.HttpResult
 import ru.mironov.common.ktor.client.KtorClient
+import ru.mironov.common.ktor.toResult
 import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest
 import ru.mironov.logistics.auth.AuthResponse
@@ -28,7 +28,7 @@ class Auth(
                 contentType(ContentType.Application.Json)
                 setBody(user)
             }.let { response ->
-                HttpResult.toResult(response)
+                response.toResult()
             }
         } catch (e: Exception) {
             logger.logE(LOG_TAG, e.stackTraceToString())

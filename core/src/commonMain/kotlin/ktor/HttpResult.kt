@@ -9,21 +9,19 @@ import kotlinx.serialization.json.Json
 import ru.mironov.domain.model.Result
 import ru.mironov.logistics.ErrorResponse
 
-object HttpResult {
-    suspend inline fun <reified T> toResult(response: HttpResponse): Result<T> {
-        return if (response.status == HttpStatusCode.OK) {
-            try {
-                Result.Success(Json.decodeFromString(response.bodyAsText()))
-            } catch (e: Exception) {
-                Result.Error(e)
-            }
-        } else {
-            val errorBody = try {
-                response.body() as ErrorResponse
-            } catch (e: Exception) {
-                ErrorResponse.empty()
-            }
-            Result.HttpError(response.status.value, errorBody)
+suspend inline fun <reified T> HttpResponse.toResult(): Result<T> =
+    if (this.status == HttpStatusCode.OK) {
+        try {
+            Result.Success(Json.decodeFromString(this.bodyAsText()))
+        } catch (e: Exception) {
+            Result.Error(e)
         }
+    } else {
+        val errorBody = try {
+            this.body() as ErrorResponse
+        } catch (e: Exception) {
+            ErrorResponse.empty()
+        }
+        Result.HttpError(this.status.value, errorBody)
     }
-}
+
