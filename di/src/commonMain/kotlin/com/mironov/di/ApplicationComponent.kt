@@ -8,9 +8,9 @@ import ru.mironov.common.Logger
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.common.ktor.KtorProvider
 import ru.mironov.domain.di.AppScope
-import ru.mironov.common.ktor.auth.AuthApi
+import ru.mironov.common.ktor.source.auth.AuthApi
 import ru.mironov.common.ktor.source.CitiesWebSource
-import ru.mironov.common.ktor.auth.Auth
+import ru.mironov.common.ktor.source.auth.Auth
 import ru.mironov.domain.di.NetworkScope
 import ru.mironov.logistics.SharedPreferences
 import ru.mironov.logistics.logging.LoggerImpl

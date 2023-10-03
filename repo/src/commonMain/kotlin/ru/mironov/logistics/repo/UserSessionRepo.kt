@@ -3,7 +3,7 @@ package ru.mironov.logistics.repo
 import kotlinx.datetime.Clock
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.auth.Auth
+import ru.mironov.common.ktor.source.auth.Auth
 import ru.mironov.domain.di.AppScope
 import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest

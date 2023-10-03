@@ -1,4 +1,4 @@
-package ru.mironov.common.ktor.auth
+package ru.mironov.common.ktor.source.auth
 
 import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest

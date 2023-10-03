@@ -1,4 +1,4 @@
-package ru.mironov.common.ktor.auth
+package ru.mironov.common.ktor.source.auth
 
 import io.ktor.client.request.HttpRequestBuilder
 import io.ktor.client.request.headers

@@ -1,25 +1,20 @@
 package ru.mironov.common.ktor.source
 
-import androidx.compose.foundation.gestures.rememberScrollableState
 import io.ktor.client.HttpClient
-import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.client.statement.bodyAsText
 import io.ktor.http.ContentType
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.contentType
-import kotlinx.serialization.decodeFromString
-import kotlinx.serialization.json.Json
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
-import ru.mironov.common.ktor.auth.Auth
-import ru.mironov.common.ktor.auth.addAuth
+import ru.mironov.common.ktor.HttpResult
+import ru.mironov.common.ktor.source.auth.Auth
+import ru.mironov.common.ktor.source.auth.addAuth
 import ru.mironov.common.ktor.client.KtorClient
 import ru.mironov.domain.model.Result
 import ru.mironov.domain.model.auth.Token
-import ru.mironov.logistics.ErrorResponse
 import ru.mironov.logistics.parcel.SearchResponse
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_FROM_CITY_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
@@ -55,7 +50,7 @@ class ParcelsWebSource(
         searchBy: String,
         fromCityId: String,
         toCityId: String
-    ): Result<SearchResponse?> {
+    ): Result<SearchResponse> {
         return try {
             val response = client.get("/searchParcels") {
                 this.addAuth(token?.tokenValue)
@@ -65,16 +60,7 @@ class ParcelsWebSource(
                     parameters.append(SEARCH_TO_CITY_TAG, toCityId)
                 }
             }
-            if (response.status == HttpStatusCode.OK) Result.Success(Json.decodeFromString(response.bodyAsText()))
-            else {
-                val errorBody = try {
-                    response.body() as ErrorResponse
-                } catch (e: Exception) {
-                    ErrorResponse.empty()
-                }
-                Result.HttpError(response.status.value, errorBody)
-            }
-
+            HttpResult.toResult(response)
         } catch (e: Exception) {
             log.invoke(e.stackTraceToString())
             Result.Error(e)
