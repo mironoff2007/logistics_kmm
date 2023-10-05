@@ -10,12 +10,15 @@ import ru.mironov.common.Logger
 import ru.mironov.domain.settings.CommonSettings
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.SharedPreferences
+import ru.mironov.logistics.UserRole
+import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.navigation.navcontroller.NavController
 
 @Inject
 class NavViewModel(
-    val prefs: SharedPreferences,
-    val logger: Logger
+    private val sessionRepo: UserSessionRepo,
+    private val prefs: SharedPreferences,
+    private val logger: Logger
 ) : ViewModel() {
 
     lateinit var navigationController: NavController
@@ -69,6 +72,7 @@ class NavViewModel(
             _showMsg.emit(null)
         }
     }
+
     fun enableLoggerIfEnabled() {
         viewModelScope.launch {
             val settings = prefs.load() ?: CommonSettings()
@@ -79,22 +83,44 @@ class NavViewModel(
 
     fun getAllowedDestinationsFor(screen: Screens) {
         viewModelScope.launch {
+            val userRole = sessionRepo.getRole()
             val list = when (screen) {
                 Screens.LoginScreen, Screens.LogoutScreen -> listOf(Screens.SettingsScreenLoggedOut)
-                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch -> listOf(
-                    Screens.RegisterSenderParcel,
-                    Screens.Warehouse,
-                    Screens.GlobalSearch,
-                    Screens.SettingsScreen,
-                    Screens.LogoutScreen
-                )
+                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch -> mutableListOf(
+                    Screens.LogoutScreen, Screens.SettingsScreen
+                ).apply { addAll(byRole(userRole)) }
+
                 Screens.RegisterDestinationParcel, Screens.RegisterResult -> listOf(Screens.Back)
                 Screens.SettingsScreenLoggedOut -> listOf(Screens.LogoutScreen)
                 Screens.ParcelData -> listOf(Screens.Back)
+
                 else -> listOf()
             }
             _allowedDestinations.emit(list)
         }
     }
+
+    private fun byRole(userRole: UserRole?): List<Screens> =
+        when (userRole) {
+            UserRole.COURIER -> listOf(
+                Screens.RegisterSenderParcel,
+                Screens.Warehouse,
+                Screens.GlobalSearch
+            )
+
+            UserRole.DRIVER -> listOf(
+                Screens.RegisterSenderParcel,
+                Screens.Warehouse,
+                Screens.GlobalSearch
+            )
+
+            UserRole.SERVICE_POINT_MANAGER -> listOf(
+                Screens.RegisterSenderParcel,
+                Screens.Warehouse,
+                Screens.GlobalSearch
+            )
+
+            else -> listOf()
+        }
 
 }
