@@ -1,6 +1,6 @@
 package ru.mironov.logistics
 
-import data.file.File
+import data.file.MultiplatformFile
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -14,11 +14,11 @@ class SharedPreferences constructor() {
 
     val path = getFilesPath() + "/" + DataConstants.APP_FOLDER_NAME + "/"
 
-    inline fun <reified T : BaseSettings> createFile(): File? {
+    inline fun <reified T : BaseSettings> createFile(): MultiplatformFile? {
         val kClass = T::class
         val settingName = kClass.simpleName
         return try {
-            File(path, "$settingName.json")
+            MultiplatformFile(path, "$settingName.json")
         } catch (e: Exception) {
             println(e.stackTraceToString())
             null

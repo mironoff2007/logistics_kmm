@@ -1,6 +1,6 @@
 package ru.mironov.logistics.logging
 
-import data.file.File
+import data.file.MultiplatformFile
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.IO
@@ -19,12 +19,31 @@ import util.DateTimeFormat
 class LoggerImpl @Inject constructor(): Logger {
 
     private val scope = CoroutineScope(Dispatchers.IO)
-    private var file: File? = null
+    private var file: MultiplatformFile? = null
     private var createJob: Job? = null
+    private var logFiles : List<String> = emptyList()
 
     init {
         createJob = scope.launch {
             file = createFile()
+            logFiles =  file?.listPath()?.getOrDefault(emptyList()) ?: emptyList()
+            cleanOldLogs()
+        }
+    }
+
+    private fun cleanOldLogs() {
+        val files = logFiles.map { path ->
+            val index = path.indexOfLast { char -> char == "\\".single() }
+            val filePath = path.subSequence(0, index).toString()
+            val fileName = path.subSequence(index + 1, path.length).toString()
+            MultiplatformFile(filePath, fileName)
+        }
+        val sorted = files.sortedByDescending { DateTimeFormat.toDate(it.name(), DateTimeFormat.LOG_FILE_FORMAT) }
+        sorted.forEachIndexed { index, multiplatformFile ->
+            if (index + 1 > KEEP_COUNT) {
+                val res = multiplatformFile.delete()
+                logD(LOG_TAG, "delete ${multiplatformFile.name()} $res")
+            }
         }
     }
 
@@ -40,12 +59,12 @@ class LoggerImpl @Inject constructor(): Logger {
 
     private fun getPath() = "${getFilesPath()}/${DataConstants.APP_FOLDER_NAME}/${DataConstants.LOGS_FOLDER_NAME}/"
 
-    private fun createFile(): File? {
+    private fun createFile(): MultiplatformFile? {
         var name = DateTimeFormat.formatLogFile(Clock.System.now().epochSeconds * 1000)
         return try {
             while (name.contains(" ")) name = name.replace(" ","_")
             while (name.contains(":")) name = name.replace(":","-")
-            File(getPath(),"$name.log" )
+            MultiplatformFile(getPath(),"$name.log" )
         }
         catch (e: Exception) {
             e.stackTraceToString()
@@ -90,5 +109,7 @@ class LoggerImpl @Inject constructor(): Logger {
     companion object {
         const val DEBUG_TAG = "DEBUG"
         const val ERROR_TAG = "ERROR"
+        const val LOG_TAG = "LOGGER"
+        private const val KEEP_COUNT = 3
     }
 }
