@@ -34,7 +34,7 @@ class LoggerImpl @Inject constructor(): Logger {
     private fun cleanOldLogs() {
         val files = logFiles.map { path ->
             var index = path.indexOfLast { char -> char == "\\".single() }
-            if (index == -1) path.indexOfLast { char -> char == "/".single() }
+            if (index == -1) index = path.indexOfLast { char -> char == "/".single() }
             val filePath = path.subSequence(0, index).toString()
             val fileName = path.subSequence(index + 1, path.length).toString()
             MultiplatformFile(filePath, fileName)
