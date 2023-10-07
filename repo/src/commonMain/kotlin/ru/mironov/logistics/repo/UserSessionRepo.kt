@@ -22,8 +22,6 @@ class UserSessionRepo(
     private var role: UserRole? = null
     private var token: Token? = null
 
-
-
     suspend fun login(userName: String, password: String): Result<Boolean> =
         when (val result = getTokenWithResult(userName, password)) {
             is Result.Success -> Result.Success(true)
@@ -32,7 +30,6 @@ class UserSessionRepo(
 
             is Result.HttpError -> Result.HttpError(result.code, result.error)
         }
-
 
     private suspend fun getTokenWithResult(userName: String, password: String): Result<Token?> {
         logger.logD(LOG_TAG, "login")

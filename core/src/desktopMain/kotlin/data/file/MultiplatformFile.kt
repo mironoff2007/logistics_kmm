@@ -1,11 +1,18 @@
 package data.file
 
 import java.nio.file.Files
+import java.nio.file.Path
 import kotlin.io.path.Path
+import kotlin.io.path.listDirectoryEntries
 
-actual class File actual constructor(private val path: String, val name: String) {
+actual class MultiplatformFile actual constructor(private val path: String, val name: String) {
 
     private var file: java.io.File? = null
+
+    init {
+        create()
+    }
+
     private fun create() {
         try {
             if (!Files.exists(Path(path))) Files.createDirectory(Path(path))
@@ -43,5 +50,21 @@ actual class File actual constructor(private val path: String, val name: String)
         } catch (e: Exception) {
             Result.failure(e)
         }
+
+    actual fun listPath(): Result<List<String>> =
+        try {
+            val path = Path(path)
+            Result.success(path.listDirectoryEntries().map { it.toString() })
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+
+    actual fun path(): String = path
+    actual fun name(): String = name
+    actual fun delete(): Result<Boolean> = try {
+        Result.success(file?.delete() ?: false)
+    } catch (e: Exception) {
+        Result.failure(e)
+    }
 
 }
