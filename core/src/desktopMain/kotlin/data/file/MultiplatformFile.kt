@@ -5,7 +5,7 @@ import java.nio.file.Path
 import kotlin.io.path.Path
 import kotlin.io.path.listDirectoryEntries
 
-actual class MultiplatformFile actual constructor(private val path: String, val name: String) {
+actual class MultiplatformFile actual constructor(private val path: String, private val name: String) {
 
     private var file: java.io.File? = null
 

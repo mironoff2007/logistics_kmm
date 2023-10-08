@@ -8,7 +8,7 @@ import ru.mironov.domain.di.AppScope
 import ru.mironov.domain.model.Result
 import ru.mironov.logistics.auth.AuthRequest
 import ru.mironov.domain.model.auth.Token
-import ru.mironov.logistics.UserRole
+import ru.mironov.logistics.auth.UserData
 
 @Inject
 @AppScope
@@ -19,7 +19,7 @@ class UserSessionRepo(
 
     private var login: CharArray? = null
     private var password: CharArray? = null
-    private var role: UserRole? = null
+    private var userData: UserData? = null
     private var token: Token? = null
 
     suspend fun login(userName: String, password: String): Result<Boolean> =
@@ -41,7 +41,9 @@ class UserSessionRepo(
 
                 this.password = password.toCharArray()
                 this.login = userName.toCharArray()
-                this.role = result?.userData?.role
+                this.userData = result?.userData
+
+                logger.logD(LOG_TAG, "userData-${result?.userData}")
 
                 val tokenValue = result?.token?.value?.toCharArray() ?: charArrayOf()
                 this.token = Token(tokenValue, result?.token?.expireAt ?: 0)
@@ -76,7 +78,7 @@ class UserSessionRepo(
         }
     }
 
-    fun getRole() = role
+    fun getRole() = userData?.role
 
     fun logout() {
         login = null
