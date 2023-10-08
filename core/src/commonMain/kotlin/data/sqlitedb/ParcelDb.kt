@@ -30,6 +30,7 @@ class ParcelDb() {
     fun replace(parcel: Parcel) =
         parcelQueries.replace(
             parcelId = parcel.parcelId,
+            storeId = parcel.storeId,
             customerName = parcel.customerName,
             customerSecondName = parcel.customerSecondName,
             address = parcel.address,

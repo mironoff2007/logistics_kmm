@@ -16,10 +16,12 @@ import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.domain.model.ParcelData
 import ru.mironov.domain.viewmodel.ViewModel
+import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.SingleEventFlow
 @Inject
 class RegisterParcelDestinationViewModel(
     private val cityDbSource: CityDbSource,
+    private val userSessionRepo: UserSessionRepo,
     val logger: Logger
 ): ViewModel() {
 
@@ -74,13 +76,14 @@ class RegisterParcelDestinationViewModel(
                 )
                 val parcel = Parcel(
                     parcelId = time,
+                    storeId = userSessionRepo.getUserData()?.userStoreId ?: 0L,
                     customerName = recipientData.personName,
                     customerSecondName = recipientData.personSecondName,
                     address = recipientData.address,
                     senderName = parcelSenderData!!.personName,
                     senderSecondName = parcelSenderData!!.personSecondName,
                     senderAddress = parcelSenderData!!.address,
-                    dateShow = DateTimeFormat.formatDB(time) ?: time.toString(),
+                    dateShow = DateTimeFormat.formatDB(time),
                     destinationCity = recipientData.city!!,
                     currentCity = parcelSenderData!!.city!!,
                     senderCity = parcelSenderData!!.city!!,

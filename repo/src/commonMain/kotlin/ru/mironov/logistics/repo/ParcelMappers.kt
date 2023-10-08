@@ -8,6 +8,7 @@ import ru.mironov.logistics.parcel.ServerParcel
 fun ServerParcel.toParcel(): Parcel {
     return Parcel(
         parcelId = this.parcelId,
+        storeId = this.storeId,
         customerName = this.customerName,
         customerSecondName = this.customerSecondName,
         address = this.address,
@@ -26,6 +27,7 @@ fun ServerParcel.toParcel(): Parcel {
 fun Parcel.toServerParcel(): ServerParcel {
     return ServerParcel(
         parcelId = this.parcelId,
+        storeId = storeId,
         customerName = this.customerName,
         customerSecondName = this.customerSecondName,
         address = this.address,
@@ -44,6 +46,7 @@ fun Parcel.toServerParcel(): ServerParcel {
 fun ServerParcel.toSyncedParcel(): Parcel {
     return Parcel(
         parcelId = this.parcelId,
+        storeId = this.storeId,
         customerName = this.customerName,
         customerSecondName = this.customerSecondName,
         address = this.address,

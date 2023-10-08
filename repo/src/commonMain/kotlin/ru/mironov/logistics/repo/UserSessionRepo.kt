@@ -79,6 +79,7 @@ class UserSessionRepo(
     }
 
     fun getRole() = userData?.role
+    fun getUserData() = userData
 
     fun logout() {
         login = null

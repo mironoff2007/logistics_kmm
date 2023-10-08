@@ -16,6 +16,7 @@ fun CityEntity.toCity(): City {
 fun ParcelEntity.toParcel(cities: List<City>): Parcel {
     return Parcel(
         parcelId = this.parcelId,
+        storeId = this.storeId ?: 0,
         customerName = this.customerName ?: "",
         customerSecondName = this.customerSecondName ?: "",
         address = this.address ?: "",

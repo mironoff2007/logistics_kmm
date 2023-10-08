@@ -1,5 +1,6 @@
 CREATE TABLE ParcelEntity (
   parcelId INTEGER PRIMARY KEY AUTOINCREMENT,
+  storeId INTEGER DEFAULT 0,
   customerName TEXT DEFAULT NULL,
   customerSecondName TEXT DEFAULT NULL,
   address TEXT DEFAULT NULL,
@@ -32,11 +33,11 @@ SELECT * FROM ParcelEntity WHERE synced = "true";
 
 insert:
 INSERT INTO ParcelEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 replace:
 INSERT OR REPLACE INTO ParcelEntity
-VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
 
 drop:
 DELETE FROM ParcelEntity;

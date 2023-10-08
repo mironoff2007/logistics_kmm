@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class Parcel(
     val parcelId: Long,
+    val storeId: Long,
     val customerName: String,
     val customerSecondName: String,
     val address: String,
