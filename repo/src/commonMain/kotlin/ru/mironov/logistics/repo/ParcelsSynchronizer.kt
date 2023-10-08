@@ -13,8 +13,10 @@ import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.common.ktor.source.ParcelsWebSource
+import ru.mironov.domain.di.AppScope
 
 @Inject
+@AppScope
 class ParcelsSynchronizer(
     private val userSessionRepo: UserSessionRepo,
     private val parcelsDbSource: ParcelsDbSource,

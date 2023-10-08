@@ -11,6 +11,7 @@ import ru.mironov.domain.settings.UserData
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.SharedPreferences
+import ru.mironov.logistics.repo.ParcelsSynchronizer
 import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.SingleEventFlow
 
@@ -18,6 +19,7 @@ import ru.mironov.logistics.ui.SingleEventFlow
 class LoginViewModel(
     private val prefs: SharedPreferences,
     private val userSessionRepo: UserSessionRepo,
+    private val parcelsSynchronizer: ParcelsSynchronizer,
     private val logger: Logger
 ) : ViewModel() {
 
@@ -38,6 +40,9 @@ class LoginViewModel(
                         val userSettings = prefs.load() ?: UserData()
                         userSettings.add(UserData.UserName, login)
                         prefs.save(userSettings)
+
+                        parcelsSynchronizer.start()
+
                         loginResult.postEvent(State.Success(true))
                     }
                     is Result.Error -> loginResult.postEvent(State.Error(it.exception.message ?: ""))

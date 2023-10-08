@@ -11,8 +11,6 @@ class SyncViewModel(
     private val logger: Logger
 ) : ViewModel() {
 
-    init {
-        parcelsSync.start()
-    }
+    fun startSync() = parcelsSync.start()
 
 }
