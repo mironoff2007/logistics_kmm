@@ -19,11 +19,13 @@ import ru.mironov.common.ktor.source.ParcelsWebSource
 import ru.mironov.logistics.ui.SingleEventFlow
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.repo.ParcelsRepo
+import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataArg
 
 @Inject
 class WarehouseViewModel(
     private val parcelsDbSource: ParcelsDbSource,
+    private val sessionRepo: UserSessionRepo,
     private val parcelsRepo: ParcelsRepo,
     private val cityDbSource: CityDbSource,
     val logger: Logger
@@ -98,7 +100,8 @@ class WarehouseViewModel(
                 val parcels = parcelsRepo.searchParcels(
                     searchBy = search,
                     fromCityId = currentCity?.id.toString(),
-                    toCityId = destinationCity?.id.toString()
+                    toCityId = destinationCity?.id.toString(),
+                    storeId = sessionRepo.getUserData()?.userStoreId
                 )
                 _parcels.emit(parcels)
             } catch (e: Exception) {

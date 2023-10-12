@@ -13,14 +13,12 @@ class ParcelsDbSource(
     private val parcelDb: ParcelDb,
     private val cityDb: CityDb
 ) {
-
     
     fun clear() {
         parcelDb.drop()
         cityDb.drop()
     }
 
-    
     fun replace(parcel: Parcel) {
         parcelDb.replace(parcel)
     }
@@ -56,8 +54,6 @@ class ParcelsDbSource(
 
     fun delete(parcels: List<Parcel>) =
         parcelDb.delete(parcels)
-
-
 
 }
 

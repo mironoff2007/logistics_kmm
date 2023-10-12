@@ -18,6 +18,7 @@ import ru.mironov.domain.model.auth.Token
 import ru.mironov.logistics.parcel.SearchResponse
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_FROM_CITY_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_QUERY_TAG
+import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_STORE_ID_TAG
 import ru.mironov.logistics.parcel.SearchResponse.Companion.SEARCH_TO_CITY_TAG
 import ru.mironov.logistics.parcel.ServerParcel
 
@@ -49,7 +50,8 @@ class ParcelsWebSource(
         token: Token?,
         searchBy: String,
         fromCityId: String,
-        toCityId: String
+        toCityId: String,
+        storeId: Long?
     ): Result<SearchResponse> {
         return try {
             val response = client.get("/searchParcels") {
@@ -58,6 +60,7 @@ class ParcelsWebSource(
                     parameters.append(SEARCH_QUERY_TAG, searchBy)
                     parameters.append(SEARCH_FROM_CITY_TAG, fromCityId)
                     parameters.append(SEARCH_TO_CITY_TAG, toCityId)
+                    storeId?.let { parameters.append(SEARCH_STORE_ID_TAG, it.toString()) }
                 }
             }
             response.toResult()

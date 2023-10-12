@@ -17,13 +17,15 @@ class ParcelsRepo(
     suspend fun searchParcels(
         searchBy: String,
         fromCityId: String,
-        toCityId: String
+        toCityId: String,
+        storeId: Long? = null
     ): List<Parcel> {
         val response = parcelsWebSource.searchParcels(
             token = userSessionRepo.getOrRefreshToken(),
             searchBy = searchBy,
             fromCityId = fromCityId,
-            toCityId = toCityId
+            toCityId = toCityId,
+            storeId = storeId
         )
         return when (response) {
             is Result.Success -> response.value?.parcels?.map { it.toParcel() } ?: emptyList()
