@@ -21,6 +21,7 @@ import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.City
 import ru.mironov.logistics.auth.AuthResponse
 import ru.mironov.logistics.auth.ServerToken
+import ru.mironov.logistics.auth.UserData
 
 @RunWith(AndroidJUnit4::class)
 class ComposeTest: BaseUITest() {
@@ -35,7 +36,12 @@ class ComposeTest: BaseUITest() {
         val expireAt = Clock.System.now().toEpochMilliseconds() + 1000 * 360
         val token = ServerToken(value = "", expireAt = expireAt)
         val cities = listOf(City(1, "City1"))
-        val userRole = UserRole(0, ServerCity(0, ""))
+        val userRole = UserData(
+            userId = 1,
+            userStoreId = 1,
+            location = ServerCity(0, ""),
+            role = UserRole.COURIER
+        )
         val respAuth = Json.encodeToString(AuthResponse(token, userRole))
         val citiesResp = Json.encodeToString(cities)
 
