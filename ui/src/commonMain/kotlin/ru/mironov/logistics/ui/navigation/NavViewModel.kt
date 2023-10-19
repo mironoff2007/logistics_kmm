@@ -86,7 +86,7 @@ class NavViewModel(
             val userRole = sessionRepo.getRole()
             val list = when (screen) {
                 Screens.LoginScreen, Screens.LogoutScreen -> listOf(Screens.SettingsScreenLoggedOut)
-                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch -> mutableListOf(
+                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch, Screens.BackPack -> mutableListOf(
                     Screens.LogoutScreen, Screens.SettingsScreen
                 ).apply { addAll(byRole(userRole)) }
 
@@ -104,7 +104,7 @@ class NavViewModel(
         when (userRole) {
             UserRole.COURIER -> listOf(
                 Screens.RegisterSenderParcel,
-                Screens.Warehouse,
+                Screens.BackPack,
                 Screens.GlobalSearch
             )
 

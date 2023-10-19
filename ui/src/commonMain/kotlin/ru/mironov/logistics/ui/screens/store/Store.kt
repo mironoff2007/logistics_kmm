@@ -1,4 +1,4 @@
-package ru.mironov.logistics.ui.screens.warehouse
+package ru.mironov.logistics.ui.screens.store
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,10 +56,11 @@ import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
-fun Warehouse(
+fun StoreScreen(
     openDrawer: () -> Job,
-    vm: WarehouseViewModel,
-    navModel: NavViewModel
+    vm: StoreViewModel,
+    navModel: NavViewModel,
+    screen: Screens
 ) {
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
@@ -100,7 +101,8 @@ fun Warehouse(
                 vm.search(
                     search = search,
                     currentCity = currentCity,
-                    destinationCity = destinationCity
+                    destinationCity = destinationCity,
+                    screen = screen
                 )
             }
             val onDestinationCitySelected = fun(city: City?) {
@@ -108,7 +110,8 @@ fun Warehouse(
                 vm.search(
                     search = search,
                     currentCity = currentCity,
-                    destinationCity = destinationCity
+                    destinationCity = destinationCity,
+                    screen = screen
                 )
             }
 
@@ -117,7 +120,8 @@ fun Warehouse(
                 vm.search(
                     search = searchValue,
                     currentCity = currentCity,
-                    destinationCity = destinationCity
+                    destinationCity = destinationCity,
+                    screen = screen
                 )
             }
 
@@ -125,7 +129,9 @@ fun Warehouse(
                 vm.onScreenOpened(
                     search = search,
                     currentCity = currentCity,
-                    destinationCity = destinationCity)
+                    destinationCity = destinationCity,
+                    screen = screen
+                )
             }
 
             var showFilter by remember { mutableStateOf(true) }

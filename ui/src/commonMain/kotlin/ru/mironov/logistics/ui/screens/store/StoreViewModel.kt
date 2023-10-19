@@ -1,4 +1,4 @@
-package ru.mironov.logistics.ui.screens.globalsearch
+package ru.mironov.logistics.ui.screens.store
 
 import com.mironov.database.city.CityDbSource
 import com.mironov.database.parcel.ParcelsDbSource
@@ -18,11 +18,14 @@ import ru.mironov.common.Logger
 import ru.mironov.logistics.ui.SingleEventFlow
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.repo.ParcelsRepo
+import ru.mironov.logistics.repo.UserSessionRepo
+import ru.mironov.logistics.ui.navigation.Screens
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataArg
 
 @Inject
-class GlobalSearchViewModel(
+class StoreViewModel(
     private val parcelsDbSource: ParcelsDbSource,
+    private val sessionRepo: UserSessionRepo,
     private val parcelsRepo: ParcelsRepo,
     private val cityDbSource: CityDbSource,
     val logger: Logger
@@ -47,7 +50,10 @@ class GlobalSearchViewModel(
         get() { return _cities.asStateFlow() }
 
     fun onScreenOpened(
-        search: String, currentCity: City?, destinationCity: City?
+        search: String,
+        currentCity: City?,
+        destinationCity: City?,
+        screen: Screens
     ) {
         viewModelScope.launch(supervisor) {
             try {
@@ -61,7 +67,8 @@ class GlobalSearchViewModel(
                 search(
                     search = search,
                     currentCity = currentCity,
-                    destinationCity = destinationCity
+                    destinationCity = destinationCity,
+                    screen = screen
                 )
             } catch (e: Exception) {
                 logger.logE(LOG_TAG, e.stackTraceToString())
@@ -85,7 +92,12 @@ class GlobalSearchViewModel(
         }
     }
 
-    fun search(search: String, currentCity: City?, destinationCity: City?) {
+    fun search(
+        search: String,
+        currentCity: City?,
+        destinationCity: City?,
+        screen: Screens
+    ) {
         searchJob?.let {
             try {
                 it.cancel()
@@ -94,10 +106,14 @@ class GlobalSearchViewModel(
         searchJob = viewModelScope.launch {
             _loading.emit(true)
             try {
+                val storeId =
+                    if (screen != Screens.GlobalSearch) sessionRepo.getUserData()?.userStoreId
+                    else null
                 val parcels = parcelsRepo.searchParcels(
                     searchBy = search,
                     fromCityId = currentCity?.id.toString(),
-                    toCityId = destinationCity?.id.toString()
+                    toCityId = destinationCity?.id.toString(),
+                    storeId = storeId
                 )
                 _parcels.emit(parcels)
             } catch (e: Exception) {

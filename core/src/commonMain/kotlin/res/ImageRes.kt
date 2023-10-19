@@ -6,6 +6,7 @@ enum class ImageRes {
     None,
     Box,
     RegisterParcel,
+    Backpack,
     Warehouse,
     GlobalSearch,
     Settings,

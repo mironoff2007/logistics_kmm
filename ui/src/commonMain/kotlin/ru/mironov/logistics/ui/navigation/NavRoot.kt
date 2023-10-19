@@ -43,8 +43,6 @@ import ru.mironov.logistics.ui.navigation.ViewModelFactory
 import ru.mironov.logistics.ui.navigation.navcontroller.NavigationHost
 import ru.mironov.logistics.ui.navigation.navcontroller.composableRoute
 import ru.mironov.logistics.ui.navigation.navcontroller.rememberNavController
-import ru.mironov.logistics.ui.screens.globalsearch.GlobalSearch
-import ru.mironov.logistics.ui.screens.globalsearch.GlobalSearchViewModel
 import ru.mironov.logistics.ui.screens.login.LoginScreen
 import ru.mironov.logistics.ui.screens.login.LoginViewModel
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataScreen
@@ -59,8 +57,8 @@ import ru.mironov.logistics.ui.screens.settings.SettingsScreen
 import ru.mironov.logistics.ui.screens.settings.SettingsViewModel
 import ru.mironov.logistics.ui.screens.splash.SplashScreen
 import ru.mironov.logistics.ui.screens.splash.SplashViewModel
-import ru.mironov.logistics.ui.screens.warehouse.Warehouse
-import ru.mironov.logistics.ui.screens.warehouse.WarehouseViewModel
+import ru.mironov.logistics.ui.screens.store.StoreScreen
+import ru.mironov.logistics.ui.screens.store.StoreViewModel
 
 
 @Composable
@@ -183,15 +181,20 @@ fun CustomNavigationHost(
             val vm: RegisterResultViewModel = viewModelFactory.provide(RegisterResultViewModel::class)
             RegisterResult(openDrawer, backPressed, vm, navModel)
         }
-        composableRoute(Screens.Warehouse, navModel) {
-            val vm: WarehouseViewModel = viewModelFactory.provide(WarehouseViewModel::class)
-            navModel.setStartDestination(it, vm)
-            Warehouse(openDrawer, vm, navModel)
+        composableRoute(Screens.Warehouse, navModel) { screen ->
+            val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
+            navModel.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navModel, screen)
         }
-        composableRoute(Screens.GlobalSearch, navModel) {
-            val vm: GlobalSearchViewModel = viewModelFactory.provide(GlobalSearchViewModel::class)
-            navModel.setStartDestination(it, vm)
-            GlobalSearch(openDrawer, vm, navModel)
+        composableRoute(Screens.BackPack, navModel) { screen ->
+            val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
+            navModel.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navModel, screen)
+        }
+        composableRoute(Screens.GlobalSearch, navModel) { screen ->
+            val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
+            navModel.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navModel, screen)
         }
         composableRoute(Screens.ParcelData, navModel) {
             val vm: ParcelDataViewModel = viewModelFactory.provide(ParcelDataViewModel::class)

@@ -14,6 +14,7 @@ fun getPainterResource(imageRes: ImageRes): Painter
         ImageRes.Compose -> "compose-multiplatform.xml"
         ImageRes.Box -> "box.xml"
         ImageRes.RegisterParcel -> "register_parcel.xml"
+        ImageRes.Backpack -> "backpack.xml"
         ImageRes.Warehouse -> "warehouse.xml"
         ImageRes.GlobalSearch -> "search_parcel.xml"
         ImageRes.Settings -> "settings.xml"

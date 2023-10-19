@@ -5,18 +5,19 @@ import ru.mironov.common.res.ImageRes
 
 sealed class Screens(val title: StringRes, val icon: ImageRes) {
 
-    object SplashScreen : Screens(StringRes.None, ImageRes.None)
-    object LoginScreen : Screens(StringRes.Login, ImageRes.None)
-    object LogoutScreen : Screens(StringRes.Logout, ImageRes.Logout)
-    object RegisterResult : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
-    object RegisterDestinationParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
-    object RegisterSenderParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
-    object ParcelData : Screens(StringRes.ParcelData, ImageRes.None)
-    object Warehouse : Screens(StringRes.Warehouse, ImageRes.Warehouse)
-    object GlobalSearch : Screens(StringRes.GlobalSearch, ImageRes.GlobalSearch)
-    object SettingsScreen : Screens(StringRes.Settings, ImageRes.Settings)
-    object SettingsScreenLoggedOut : Screens(StringRes.Settings, ImageRes.Settings)
-    object Back : Screens(StringRes.Back, ImageRes.Back)
+    data object SplashScreen : Screens(StringRes.None, ImageRes.None)
+    data object LoginScreen : Screens(StringRes.Login, ImageRes.None)
+    data object LogoutScreen : Screens(StringRes.Logout, ImageRes.Logout)
+    data object RegisterResult : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
+    data object RegisterDestinationParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
+    data object RegisterSenderParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
+    data object ParcelData : Screens(StringRes.ParcelData, ImageRes.None)
+    data object Warehouse : Screens(StringRes.Warehouse, ImageRes.Warehouse)
+    data object BackPack : Screens(StringRes.Backpack, ImageRes.Backpack)
+    data object GlobalSearch : Screens(StringRes.GlobalSearch, ImageRes.GlobalSearch)
+    data object SettingsScreen : Screens(StringRes.Settings, ImageRes.Settings)
+    data object SettingsScreenLoggedOut : Screens(StringRes.Settings, ImageRes.Settings)
+    data object Back : Screens(StringRes.Back, ImageRes.Back)
 
     fun getName(): String {
         return this::class.simpleName ?: ""

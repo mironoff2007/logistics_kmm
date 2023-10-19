@@ -8,6 +8,7 @@ enum class StringRes {
     Logout,
     Settings,
     RegisterParcel,
+    Backpack,
     Warehouse,
     GlobalSearch,
     Back,

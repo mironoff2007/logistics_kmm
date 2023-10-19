@@ -12,8 +12,7 @@ import ru.mironov.logistics.ui.screens.registerparcelsender.RegisterParcelSender
 import ru.mironov.logistics.ui.screens.registerresult.RegisterResultViewModel
 import ru.mironov.logistics.ui.screens.settings.SettingsViewModel
 import ru.mironov.logistics.ui.screens.splash.SplashViewModel
-import ru.mironov.logistics.ui.screens.globalsearch.GlobalSearchViewModel
-import ru.mironov.logistics.ui.screens.warehouse.WarehouseViewModel
+import ru.mironov.logistics.ui.screens.store.StoreViewModel
 import kotlin.reflect.KClass
 
 @AppScope
@@ -28,8 +27,7 @@ class ViewModelFactory(
     private val registerResult: () -> RegisterResultViewModel,
     private val settingsVm: () -> SettingsViewModel,
     private val loginVm: () -> LoginViewModel,
-    private val warehouseVm: () -> WarehouseViewModel,
-    private val globalSearachVm: () -> GlobalSearchViewModel,
+    private val warehouseVm: () -> StoreViewModel,
     private val parcelDataVm: () -> ParcelDataViewModel
 ) {
 
@@ -65,8 +63,7 @@ class ViewModelFactory(
             RegisterResultViewModel::class.simpleName  -> registerResult()
             SettingsViewModel::class.simpleName  -> settingsVm()
             LoginViewModel::class.simpleName  -> loginVm()
-            WarehouseViewModel::class.simpleName  -> warehouseVm()
-            GlobalSearchViewModel::class.simpleName  -> globalSearachVm()
+            StoreViewModel::class.simpleName  -> warehouseVm()
             ParcelDataViewModel::class.simpleName  -> parcelDataVm()
             else -> throw Exception("no inject method for ${type.simpleName}, add method to app component")
         }  as T

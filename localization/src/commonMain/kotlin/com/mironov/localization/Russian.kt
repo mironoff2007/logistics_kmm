@@ -9,6 +9,7 @@ object Russian {
             StringRes.Settings -> "Настройки"
             StringRes.RegisterParcel -> "Регистрация посылки"
             StringRes.ParcelData -> "Данные посылки"
+            StringRes.Backpack -> "Рюкзак"
             StringRes.Warehouse -> "Склад"
             StringRes.GlobalSearch -> "Поиск посылок"
             StringRes.Back -> "Назад"
