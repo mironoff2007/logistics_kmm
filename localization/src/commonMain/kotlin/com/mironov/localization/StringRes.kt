@@ -9,6 +9,7 @@ enum class StringRes {
     Settings,
     RegisterParcel,
     Backpack,
+    Cargo,
     Warehouse,
     GlobalSearch,
     Back,

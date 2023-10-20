@@ -11,6 +11,7 @@ object English {
             StringRes.RegisterParcel -> "Register Parcel"
             StringRes.Warehouse -> "Warehouse"
             StringRes.Backpack -> "Backpack"
+            StringRes.Cargo -> "Cargo"
             StringRes.GlobalSearch -> "Search parcel"
             StringRes.Back -> "Back"
             StringRes.RequestPermissions -> "Please, grant permissions"

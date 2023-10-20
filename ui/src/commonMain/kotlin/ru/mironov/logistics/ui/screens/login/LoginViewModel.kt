@@ -11,9 +11,11 @@ import ru.mironov.domain.settings.UserData
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.domain.viewmodel.ViewModel
 import ru.mironov.logistics.SharedPreferences
+import ru.mironov.logistics.UserRole
 import ru.mironov.logistics.repo.ParcelsSynchronizer
 import ru.mironov.logistics.repo.UserSessionRepo
 import ru.mironov.logistics.ui.SingleEventFlow
+import ru.mironov.logistics.ui.navigation.Screens
 
 @Inject
 class LoginViewModel(
@@ -23,7 +25,7 @@ class LoginViewModel(
     private val logger: Logger
 ) : ViewModel() {
 
-    val loginResult = SingleEventFlow<State<Boolean>?>()
+    val loginResult = SingleEventFlow<State<Screens>?>()
     val userNameLoaded = SingleEventFlow<String>()
 
     private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
@@ -43,7 +45,11 @@ class LoginViewModel(
 
                         parcelsSynchronizer.start()
 
-                        loginResult.postEvent(State.Success(true))
+                        val goToScreen = when (userSessionRepo.getRole()) {
+                            UserRole.DRIVER -> Screens.CarCargo
+                            else -> Screens.RegisterSenderParcel
+                        }
+                        loginResult.postEvent(State.Success(goToScreen))
                     }
                     is Result.Error -> loginResult.postEvent(State.Error(it.exception.message ?: ""))
 

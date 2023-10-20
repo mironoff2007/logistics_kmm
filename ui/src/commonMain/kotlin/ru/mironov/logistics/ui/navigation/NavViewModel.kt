@@ -85,12 +85,24 @@ class NavViewModel(
         viewModelScope.launch {
             val userRole = sessionRepo.getRole()
             val list = when (screen) {
-                Screens.LoginScreen, Screens.LogoutScreen -> listOf(Screens.SettingsScreenLoggedOut)
-                Screens.RegisterSenderParcel, Screens.Warehouse, Screens.SettingsScreen, Screens.GlobalSearch, Screens.BackPack -> mutableListOf(
-                    Screens.LogoutScreen, Screens.SettingsScreen
-                ).apply { addAll(byRole(userRole)) }
+                Screens.LoginScreen,
+                Screens.LogoutScreen -> listOf(Screens.SettingsScreenLoggedOut)
 
-                Screens.RegisterDestinationParcel, Screens.RegisterResult -> listOf(Screens.Back)
+                Screens.RegisterSenderParcel,
+                Screens.CarCargo,
+                Screens.Warehouse,
+                Screens.SettingsScreen,
+                Screens.GlobalSearch,
+                Screens.BackPack -> {
+                    mutableListOf(
+                        Screens.LogoutScreen,
+                        Screens.SettingsScreen
+                    ).apply { addAll(byRole(userRole)) }
+                }
+
+                Screens.RegisterDestinationParcel,
+                Screens.RegisterResult -> listOf(Screens.Back)
+
                 Screens.SettingsScreenLoggedOut -> listOf(Screens.LogoutScreen)
                 Screens.ParcelData -> listOf(Screens.Back)
 
@@ -109,8 +121,7 @@ class NavViewModel(
             )
 
             UserRole.DRIVER -> listOf(
-                Screens.RegisterSenderParcel,
-                Screens.Warehouse,
+                Screens.CarCargo,
                 Screens.GlobalSearch
             )
 

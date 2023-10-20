@@ -181,6 +181,11 @@ fun CustomNavigationHost(
             val vm: RegisterResultViewModel = viewModelFactory.provide(RegisterResultViewModel::class)
             RegisterResult(openDrawer, backPressed, vm, navModel)
         }
+        composableRoute(Screens.CarCargo, navModel) { screen ->
+            val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
+            navModel.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navModel, screen)
+        }
         composableRoute(Screens.Warehouse, navModel) { screen ->
             val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
             navModel.setStartDestination(screen, vm)

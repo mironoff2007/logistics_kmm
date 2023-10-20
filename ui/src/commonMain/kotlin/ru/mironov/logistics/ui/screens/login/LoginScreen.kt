@@ -79,7 +79,7 @@ fun LoginScreen(
             vm.loginResult.onEvent { state ->
                 when (state) {
                     is State.Success -> {
-                        navVm.navigate(Screens.RegisterSenderParcel.getName())
+                        navVm.navigate(state.value.getName())
                         loading.value = false
                     }
                     is State.Loading -> {

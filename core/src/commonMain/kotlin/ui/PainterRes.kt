@@ -15,6 +15,7 @@ fun getPainterResource(imageRes: ImageRes): Painter
         ImageRes.Box -> "box.xml"
         ImageRes.RegisterParcel -> "register_parcel.xml"
         ImageRes.Backpack -> "backpack.xml"
+        ImageRes.Cargo -> "car_cargo.xml"
         ImageRes.Warehouse -> "warehouse.xml"
         ImageRes.GlobalSearch -> "search_parcel.xml"
         ImageRes.Settings -> "settings.xml"

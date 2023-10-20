@@ -12,6 +12,7 @@ sealed class Screens(val title: StringRes, val icon: ImageRes) {
     data object RegisterDestinationParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
     data object RegisterSenderParcel : Screens(StringRes.RegisterParcel, ImageRes.RegisterParcel)
     data object ParcelData : Screens(StringRes.ParcelData, ImageRes.None)
+    data object CarCargo : Screens(StringRes.Cargo, ImageRes.Cargo)
     data object Warehouse : Screens(StringRes.Warehouse, ImageRes.Warehouse)
     data object BackPack : Screens(StringRes.Backpack, ImageRes.Backpack)
     data object GlobalSearch : Screens(StringRes.GlobalSearch, ImageRes.GlobalSearch)
