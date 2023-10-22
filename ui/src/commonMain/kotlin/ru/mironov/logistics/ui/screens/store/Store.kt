@@ -68,7 +68,7 @@ fun StoreScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         TopBar(
-            title = localizedString(Screens.Warehouse.title),
+            title = localizedString(screen.title),
             buttonIcon = Icons.Filled.Menu,
             onButtonClicked = { openDrawer() }
         )
@@ -134,7 +134,7 @@ fun StoreScreen(
                 )
             }
 
-            var showFilter by remember { mutableStateOf(true) }
+            var showFilter by remember { mutableStateOf(screen == Screens.GlobalSearch) }
 
             val filterIsUsed = currentCity != null || destinationCity != null
             val filterIconColor = if (filterIsUsed) Color.Green else MaterialTheme.colors.onSurface
