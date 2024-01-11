@@ -22,10 +22,8 @@ class NavController(
     private val factory: ViewModelFactory
 ) {
     var root: MutableState<String> = mutableStateOf(startDestination)
-    // Variable to store the state of the current screen
     var currentScreen: MutableState<String> = mutableStateOf(startDestination)
 
-    // Function to handle the navigation between the screen
     fun navigate(route: String) {
         if (route != currentScreen.value) {
             if (root.value == route) {
@@ -47,7 +45,6 @@ class NavController(
         }
     }
 
-    // Function to handle the back
     fun navigateBack() {
         if (backStackScreens.isNotEmpty()) {
             currentScreen.value = backStackScreens.last()

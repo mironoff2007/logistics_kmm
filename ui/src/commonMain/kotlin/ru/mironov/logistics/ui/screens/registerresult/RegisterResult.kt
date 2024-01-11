@@ -81,12 +81,10 @@ fun RegisterResult(
             LaunchedEffect(Unit) {
                 val arg = navModel.getArgs()
                 vm.onScreenOpened(arg ?: "")
-
             }
 
             val submit = fun() { vm.submit() }
-            if (parcel.value != null) ParcelViewItem(parcel = parcel.value!!, submit)
-
+            parcel.value?.let { ParcelViewItem(parcel = it, submit) }
         }
     }
 }
@@ -194,7 +192,9 @@ private fun ParcelViewItem(
             )
             Button(
                 modifier = Modifier.padding(top = 25.dp),
-                onClick = { submit.invoke() }
+                onClick = {
+                    submit.invoke()
+                }
             ) {
                 Text(text = localizedString(StringRes.AddParcel), color = MaterialTheme.colors.onPrimary)
             }
