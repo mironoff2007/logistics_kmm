@@ -28,7 +28,7 @@ class ParcelsRepo(
             storeId = storeId
         )
         return when (response) {
-            is Result.Success -> response.value?.parcels?.map { it.toParcel() } ?: emptyList()
+            is Result.Success -> response.value.parcels.map { it.toParcel() }
             is Result.HttpError -> emptyList()
             is Result.Error -> emptyList()
         }
