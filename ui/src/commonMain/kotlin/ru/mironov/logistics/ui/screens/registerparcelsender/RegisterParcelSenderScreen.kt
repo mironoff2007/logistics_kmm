@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mironov.localization.StringRes
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
@@ -90,7 +90,7 @@ fun RegisterParcelSenderScreen(
             register,
             loading.value,
             showMsg,
-            cities.value.toPersistentList(),
+            cities.value.toImmutableList(),
             updateValues,
         )
     }
@@ -164,7 +164,7 @@ fun RegisterParcelSenderLayout(
         )
         Spinner(
             modifier = Modifier.width(250.dp).padding(top = 10.dp),
-            list = cities.map { it.name }.toPersistentList(),
+            list = cities.map { it.name }.toImmutableList(),
             onValueChange = { value ->
                 val citySelected = cities.first {
                     it.name == value

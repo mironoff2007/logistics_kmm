@@ -29,7 +29,7 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mironov.localization.Localization
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import ru.mironov.domain.settings.CommonSettings
 import ru.mironov.domain.settings.Setting
 import ru.mironov.domain.settings.SettingItem
@@ -58,7 +58,7 @@ fun SettingViewItem(
             is Enum<*> -> {
                 when (setting.value) {
                     is Localization.Language -> {
-                        val values = Localization.Language.values().map { it.showName }.toPersistentList()
+                        val values = Localization.Language.values().map { it.showName }.toImmutableList()
                         val onChange = fun(value: String) {
                             val lang = Localization.Language.getByShowName(value)
                             Localization.setLang(lang)

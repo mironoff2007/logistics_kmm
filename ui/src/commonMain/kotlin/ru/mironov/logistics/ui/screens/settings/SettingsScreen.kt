@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import ru.mironov.domain.settings.Setting
 import ru.mironov.domain.settings.SettingItem
@@ -57,7 +57,7 @@ fun SettingsScreen(
             val settings = vm.settings.collectAsState()
             SettingsLazyColumn(
                 updateItem = updateItem,
-                settings = settings.value.toPersistentList(),
+                settings = settings.value.toImmutableList(),
                 textStyle = MaterialTheme.typography.body1
             )
         }

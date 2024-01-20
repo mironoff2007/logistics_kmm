@@ -24,7 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mironov.localization.StringRes
 import kotlinx.collections.immutable.ImmutableList
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
@@ -69,7 +69,7 @@ fun RegisterParcelDestinationScreen(
             buttonIcon = Icons.Filled.Menu,
             onButtonClicked = { openDrawer() }
         )
-        RegisterParcelDestinationLayout(goToNextScreenWithArg, loading.value,  cities.value.toPersistentList(), vm.parcelRecipientData)
+        RegisterParcelDestinationLayout(goToNextScreenWithArg, loading.value,  cities.value.toImmutableList(), vm.parcelRecipientData)
     }
 }
 
@@ -119,7 +119,7 @@ fun RegisterParcelDestinationLayout(
         val resetSpinner = remember { mutableStateOf(false) }
         Spinner(
             modifier = Modifier.width(250.dp).padding(top = 10.dp),
-            list = cities.map { it.name }.toPersistentList(),
+            list = cities.map { it.name }.toImmutableList(),
             onValueChange = { value ->
                 val citySelected = cities.first {
                     it.name == value

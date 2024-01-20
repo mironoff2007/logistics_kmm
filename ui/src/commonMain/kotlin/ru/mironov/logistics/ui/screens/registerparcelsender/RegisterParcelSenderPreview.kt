@@ -1,7 +1,7 @@
 package ru.mironov.logistics.ui.screens.registerparcelsender
 
 import androidx.compose.runtime.Composable
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
 import ru.mironov.common.ui.theme.LogisticsTheme
@@ -20,7 +20,7 @@ fun RegisterParcelSenderWithDataPreview() {
             register = { },
             loading = false,
             showMsg = {},
-            cities = cities.toPersistentList(),
+            cities = cities.toImmutableList(),
             updateValues = {},
         )
     }
@@ -40,7 +40,7 @@ fun RegisterParcelSenderEmptyPreview() {
             register = { },
             loading = false,
             showMsg = {},
-            cities = cities.toPersistentList(),
+            cities = cities.toImmutableList(),
             updateValues = {},
         )
     }

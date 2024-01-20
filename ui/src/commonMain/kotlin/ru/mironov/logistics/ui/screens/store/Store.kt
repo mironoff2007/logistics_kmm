@@ -42,7 +42,7 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.mironov.localization.StringRes
-import kotlinx.collections.immutable.toPersistentList
+import kotlinx.collections.immutable.toImmutableList
 import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.ImageRes
@@ -155,7 +155,7 @@ fun StoreScreen(
                 )
             }
             if (showFilter) Filters(
-                cities = cities.value.toPersistentList(),
+                cities = cities.value.toImmutableList(),
                 onCurrentCityChange = onCurrentCitySelected,
                 onDestinationCityChange = onDestinationCitySelected,
                 selectedCurrentCity = currentCity,
@@ -244,7 +244,7 @@ private fun CityFilter(
         val city = remember { mutableStateOf(selected) }
         Spinner(
             modifier = Modifier.width(150.dp).padding(5.dp),
-            list = cities.map { it?.name ?: localizedString(StringRes.Any) }.toPersistentList(),
+            list = cities.map { it?.name ?: localizedString(StringRes.Any) }.toImmutableList(),
             onValueChange = { value ->
                 val citySelected = cities.firstOrNull {
                     it?.name == value
