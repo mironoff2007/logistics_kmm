@@ -1,6 +1,7 @@
 package ru.mironov.common.ktor.source
 
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.statement.bodyAsText
 import kotlinx.serialization.decodeFromString
@@ -14,8 +15,8 @@ import ru.mironov.logistics.ServerCity
 
 @Inject
 class CitiesWebSource(
-    private val logger: Logger,
-    private val ktor: KtorClient
+    ktor: KtorClient,
+    private val logger: Logger
 ) {
 
     private val log = fun(msg: String) = logger.logD(LOG_TAG, msg)

@@ -24,8 +24,7 @@ import ru.mironov.logistics.parcel.ServerParcel
 
 @Inject
 class ParcelsWebSource(
-    private val auth: Auth,
-    private val ktor: KtorClient,
+    ktor: KtorClient,
     private val logger: Logger
 ) {
 
