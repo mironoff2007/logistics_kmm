@@ -25,8 +25,11 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.KeyboardType
@@ -40,11 +43,13 @@ import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.ImageRes
 import ru.mironov.common.res.localizedString
+import ru.mironov.common.util.ENTER_SYMBOL
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Screens
 import ui.getPainterResource
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     openDrawer: () -> Job,
@@ -72,7 +77,6 @@ fun LoginScreen(
             val showMsg = fun(msg: String) {
                 navVm.showMsg(msg)
             }
-
 
             val loading = remember { mutableStateOf(false) }
             vm.loginResult.Observe()
@@ -111,6 +115,7 @@ fun LoginScreen(
     }
 }
 
+@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginLayout(
     login: (String, String) -> Unit,
@@ -123,9 +128,16 @@ fun LoginLayout(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
+        val keyboardController = LocalSoftwareKeyboardController.current
+
         val password = remember { mutableStateOf(TextFieldValue()) }
         val showPassword = remember { mutableStateOf(false) }
         val transformPassword = if (showPassword.value) VisualTransformation.None else PasswordVisualTransformation()
+
+        if (password.value.text.contains(ENTER_SYMBOL)) {
+            password.value = TextFieldValue(password.value.text.replace(ENTER_SYMBOL, ""))
+            keyboardController?.hide()
+        }
 
         Text(
             text = localizedString(StringRes.Login),
