@@ -23,7 +23,12 @@ class UserSessionRepo(
     private var token: Token? = null
 
     suspend fun login(userName: String, password: String): Result<Boolean> =
-        when (val result = getTokenWithResult(userName, password)) {
+        when (
+            val result = getTokenWithResult(
+                userName = userName.toCharArray(),
+                password = password.toCharArray()
+            )
+        ) {
             is Result.Success -> Result.Success(true)
 
             is Result.Error -> Result.Error(result.exception)
@@ -31,22 +36,28 @@ class UserSessionRepo(
             is Result.HttpError -> Result.HttpError(result.code, result.error)
         }
 
-    private suspend fun getTokenWithResult(userName: String, password: String): Result<Token?> {
+    private suspend fun getTokenWithResult(userName: CharArray?, password: CharArray?): Result<Token?> {
         logger.logD(LOG_TAG, "login")
         return when (val result =
-            auth.signIn(AuthRequest(username = userName, password = password))) {
+            auth.signIn(
+                AuthRequest(
+                    username = userName?.concatToString() ?: "",
+                    password = password?.concatToString() ?: ""
+                )
+            )
+        ) {
             is Result.Success -> {
-                val result = result.value
+                val authResponse = result.value
                 logger.logD(LOG_TAG, "call new token success")
 
-                this.password = password.toCharArray()
-                this.login = userName.toCharArray()
-                this.userData = result?.userData
+                this.password = password
+                this.login = userName
+                this.userData = authResponse?.userData
 
-                logger.logD(LOG_TAG, "userData-${result?.userData}")
+                logger.logD(LOG_TAG, "userData-${authResponse?.userData}")
 
-                val tokenValue = result?.token?.value?.toCharArray() ?: charArrayOf()
-                this.token = Token(tokenValue, result?.token?.expireAt ?: 0)
+                val tokenValue = authResponse?.token?.value?.toCharArray() ?: charArrayOf()
+                this.token = Token(tokenValue, authResponse?.token?.expireAt ?: 0)
                 Result.Success(token)
             }
 
@@ -65,8 +76,8 @@ class UserSessionRepo(
             logger.logD(LOG_TAG, "get new token")
             if (login != null && password != null) {
                 val loginResult = getTokenWithResult(
-                    login.contentToString(),
-                    password.contentToString()
+                    login,
+                    password
                 )
                 if (loginResult is Result.Success) {
                     loginResult.value
