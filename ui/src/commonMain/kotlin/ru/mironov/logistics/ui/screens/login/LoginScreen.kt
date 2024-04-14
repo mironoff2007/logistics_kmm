@@ -22,6 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,6 +46,7 @@ import ru.mironov.common.res.localizedString
 import ru.mironov.common.util.ENTER_SYMBOL
 import ru.mironov.domain.viewmodel.State
 import ru.mironov.logistics.ui.navigation.Navigator
+import ru.mironov.logistics.ui.screens.dialog.DialogAction
 import ui.getPainterResource
 
 @Composable
@@ -52,7 +54,7 @@ fun LoginScreen(
     openDrawer: () -> Job,
     vm: LoginViewModel,
     navigator: Navigator,
-    showMsg: (String) -> Unit
+    showMsg: DialogAction
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -86,7 +88,7 @@ fun LoginScreen(
 
                     is State.Error -> {
                         loading.value = false
-                        showMsg.invoke(state.msg)
+                        showMsg.show(DialogAction.DialogData(state.msg))
                     }
                     else -> {}
                 }

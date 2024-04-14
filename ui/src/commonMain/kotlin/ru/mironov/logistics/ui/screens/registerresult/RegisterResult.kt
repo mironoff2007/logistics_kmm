@@ -30,6 +30,7 @@ import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.Parcel
 import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
+import ru.mironov.logistics.ui.screens.dialog.DialogAction
 import util.DateTimeFormat
 
 @Composable
@@ -38,7 +39,7 @@ fun RegisterResult(
     backAction: (() -> Unit) -> Unit,
     vm: RegisterResultViewModel,
     navigator: Navigator,
-    showMsg: (String) -> Unit
+    showMsg: DialogAction
 ) {
 
     backAction.invoke { navigator.navigateBack() }
@@ -47,10 +48,9 @@ fun RegisterResult(
     vm.result.Observe()
     vm.result.onEvent { result = it }
 
-
     when (result) {
         true -> {
-            showMsg.invoke(localizedString(StringRes.ParcelIsAdded))
+            showMsg.show(DialogAction.DialogData(localizedString(StringRes.ParcelIsAdded)))
             navigator.navigate(Screens.RegisterSenderParcel.getName())
         }
         else -> {}

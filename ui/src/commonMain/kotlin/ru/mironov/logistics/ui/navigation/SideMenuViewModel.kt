@@ -6,16 +6,12 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import me.tatarka.inject.annotations.Inject
-import ru.mironov.common.Logger
-import ru.mironov.domain.settings.CommonSettings
 import ru.mironov.domain.viewmodel.ViewModel
-import ru.mironov.logistics.SharedPreferences
 import ru.mironov.logistics.UserRole
 import ru.mironov.logistics.repo.UserSessionRepo
-import ru.mironov.logistics.ui.navigation.navcontroller.NavController
 
 @Inject
-class NavViewModel(
+class SideMenuViewModel(
     private val sessionRepo: UserSessionRepo,
 ) : ViewModel() {
 
@@ -24,20 +20,6 @@ class NavViewModel(
         get() {
             return _allowedDestinations.asStateFlow()
         }
-
-    private val _showMsg = MutableStateFlow<String?>(null)
-    val showMsg: StateFlow<String?>
-        get() {
-            return _showMsg.asStateFlow()
-        }
-
-    fun showMsg(msg: String, delay: Long = 3000) {
-        viewModelScope.launch {
-            _showMsg.emit(msg)
-            delay(delay)
-            _showMsg.emit(null)
-        }
-    }
 
     fun getAllowedDestinationsFor(screen: Screens) {
         viewModelScope.launch {

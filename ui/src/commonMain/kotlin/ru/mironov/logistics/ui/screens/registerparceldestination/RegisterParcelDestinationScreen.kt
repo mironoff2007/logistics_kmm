@@ -31,7 +31,6 @@ import ru.mironov.common.res.localizedString
 import ru.mironov.common.ui.Spinner
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
-import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 

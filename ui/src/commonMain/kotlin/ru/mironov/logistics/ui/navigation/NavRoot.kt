@@ -1,14 +1,10 @@
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentSize
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.DrawerValue
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalDrawer
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,24 +20,22 @@ import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Outline
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.onSizeChanged
-import androidx.compose.ui.text.AnnotatedString
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.Density
 import androidx.compose.ui.unit.IntSize
 import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import ru.mironov.logistics.ui.navigation.Drawer
-import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Navigator
-
 import ru.mironov.logistics.ui.navigation.Screens
+import ru.mironov.logistics.ui.navigation.SideMenuViewModel
 import ru.mironov.logistics.ui.navigation.ViewModelFactory
 import ru.mironov.logistics.ui.navigation.navcontroller.NavigationHost
 import ru.mironov.logistics.ui.navigation.navcontroller.composableRoute
 import ru.mironov.logistics.ui.navigation.navcontroller.rememberNavController
+import ru.mironov.logistics.ui.screens.dialog.DialogAction
+import ru.mironov.logistics.ui.screens.dialog.DialogScreen
 import ru.mironov.logistics.ui.screens.login.LoginScreen
 import ru.mironov.logistics.ui.screens.login.LoginViewModel
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataScreen
@@ -67,16 +61,22 @@ fun NavRoot(
     backPressed: (() -> Unit) -> Unit
 ) {
 
-    val navController by rememberNavController(startDestination = Screens.SplashScreen.getName(), viewModelFactory = factory)
+    val navController by rememberNavController(
+        startDestination = Screens.SplashScreen.getName(),
+        viewModelFactory = factory
+    )
 
     MaterialTheme {
 
-        val navViewModel = factory.provide<NavViewModel>(type = NavViewModel::class, keepForever =  true)
+        val sideMenuViewModel =
+            factory.provide<SideMenuViewModel>(type = SideMenuViewModel::class, keepForever = true)
 
         navigator.setNavController(navController)
 
-        val allowedDestinations by navViewModel.allowedDestinations.collectAsState()
-        val showMsgFlag by navViewModel.showMsg.collectAsState()
+        val dialogAction = mutableStateOf(DialogAction())
+
+        val allowedDestinations by sideMenuViewModel.allowedDestinations.collectAsState()
+        val showMsgFlag by dialogAction.value.showFlow.collectAsState()
 
         Surface(
             modifier = Modifier.background(color = MaterialTheme.colors.background),
@@ -117,23 +117,23 @@ fun NavRoot(
                     contentAlignment = Alignment.Center
                 ) {
 
-                    val showMsg = fun(msg: String) { navViewModel.showMsg(msg, 3000) }
-
                     CustomNavigationHost(
                         viewModelFactory = factory,
                         openDrawer = openDrawer,
-                        navModel = navViewModel,
+                        navModel = sideMenuViewModel,
                         navigator = navigator,
                         backPressed = backPressed,
-                        showMsg = showMsg
+                        showMsg = dialogAction.value
                     )
 
-                    showMsgFlag?.let { msg -> Dialog(msg)  }
+                    //todo localComposition provider for dialog action
+                    DialogScreen(showMsgFlag, dialogAction)
                 }
             }
         }
     }
 }
+
 
 fun customShape(drawerWidth: Float, height: Float) = object : Shape {
     override fun createOutline(
@@ -148,9 +148,9 @@ fun CustomNavigationHost(
     openDrawer: () -> Job,
     viewModelFactory: ViewModelFactory,
     navigator: Navigator,
-    navModel: NavViewModel,
+    navModel: SideMenuViewModel,
     backPressed: (() -> Unit) -> Unit,
-    showMsg: (String) -> Unit
+    showMsg: DialogAction
 ) {
     NavigationHost(navigator.navigationController) {
 
@@ -170,16 +170,19 @@ fun CustomNavigationHost(
             LoginScreen(openDrawer, vm, navigator, showMsg)
         }
         composableRoute(Screens.RegisterSenderParcel, navModel) {
-            val vm: RegisterParcelSenderViewModel = viewModelFactory.provide(RegisterParcelSenderViewModel::class)
+            val vm: RegisterParcelSenderViewModel =
+                viewModelFactory.provide(RegisterParcelSenderViewModel::class)
             navigator.setStartDestination(it, vm)
             RegisterParcelSenderScreen(openDrawer, vm, navigator)
         }
         composableRoute(Screens.RegisterDestinationParcel, navModel) {
-            val vm: RegisterParcelDestinationViewModel = viewModelFactory.provide(RegisterParcelDestinationViewModel::class)
+            val vm: RegisterParcelDestinationViewModel =
+                viewModelFactory.provide(RegisterParcelDestinationViewModel::class)
             RegisterParcelDestinationScreen(openDrawer, vm, navigator, backPressed)
         }
         composableRoute(Screens.RegisterResult, navModel) {
-            val vm: RegisterResultViewModel = viewModelFactory.provide(RegisterResultViewModel::class)
+            val vm: RegisterResultViewModel =
+                viewModelFactory.provide(RegisterResultViewModel::class)
             RegisterResult(openDrawer, backPressed, vm, navigator, showMsg)
         }
         composableRoute(Screens.CarCargo, navModel) { screen ->
@@ -219,28 +222,3 @@ fun CustomNavigationHost(
     }.build()
 }
 
-@Composable
-fun Dialog(showMsg: String) {
-    Surface(
-        modifier = Modifier
-            .wrapContentSize()
-            .padding(15.dp),
-        elevation = 10.dp,
-        color = MaterialTheme.colors.surface,
-        shape = RoundedCornerShape(15.dp),
-    ) {
-        Box(
-            modifier = Modifier, contentAlignment = Alignment.Center
-        ){
-            Text(
-                modifier = Modifier.padding(15.dp),
-                text = AnnotatedString(showMsg),
-                style = TextStyle(
-                    fontFamily = MaterialTheme.typography.h4.fontFamily,
-                    fontSize = 25.sp,
-                    color = MaterialTheme.colors.onSurface
-                )
-            )
-        }
-    }
-}

@@ -52,7 +52,6 @@ import util.DateTimeFormat
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.common.ui.Spinner
-import ru.mironov.logistics.ui.navigation.NavViewModel
 import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 

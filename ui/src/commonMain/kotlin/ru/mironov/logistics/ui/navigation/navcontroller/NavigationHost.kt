@@ -1,7 +1,7 @@
 package ru.mironov.logistics.ui.navigation.navcontroller
 
 import androidx.compose.runtime.Composable
-import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.SideMenuViewModel
 import ru.mironov.logistics.ui.navigation.Screens
 
 /**
@@ -31,7 +31,7 @@ class NavigationHost(
 @Composable
 fun NavigationHost.NavigationGraphBuilder.composableRoute(
     route: Screens,
-    navModel: NavViewModel,
+    navModel: SideMenuViewModel,
     content: @Composable (screen: Screens) -> Unit
 ) {
     val routeName = route.getName()

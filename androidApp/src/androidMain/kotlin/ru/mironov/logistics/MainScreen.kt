@@ -65,7 +65,7 @@ fun MainScreen() {
 
         if (grantedRead && grantedWrite) {
             val navigator = Navigator()
-            NavRoot(navigator, ApplicationComponent.getVmFactory(),  backPressed)
+            NavRoot(navigator, ApplicationComponent.getVmFactory(), backPressed)
         } else {
             Box(
                 modifier = Modifier.fillMaxSize(),

@@ -19,7 +19,7 @@ import kotlin.reflect.KClass
 class ViewModelFactory(
     private val logger: Logger,
     private val splashVm: () -> SplashViewModel,
-    private val navVm: () -> NavViewModel,
+    private val navVm: () -> SideMenuViewModel,
     private val registerParcelDest: () -> RegisterParcelDestinationViewModel,
     private val registerParcelSender: () -> RegisterParcelSenderViewModel,
     private val registerResult: () -> RegisterResultViewModel,
@@ -53,7 +53,7 @@ class ViewModelFactory(
 
     private fun <T : AbsViewModel> instantiate(type: KClass<out AbsViewModel>): T  {
         return when (type.simpleName) {
-            NavViewModel::class.simpleName  -> navVm()
+            SideMenuViewModel::class.simpleName  -> navVm()
             SplashViewModel::class.simpleName  -> splashVm()
             RegisterParcelDestinationViewModel::class.simpleName  -> registerParcelDest()
             RegisterParcelSenderViewModel::class.simpleName  -> registerParcelSender()
