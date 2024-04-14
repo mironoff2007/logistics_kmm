@@ -15,12 +15,12 @@ import androidx.compose.ui.unit.dp
 import ru.mironov.common.res.ImageRes
 import ru.mironov.common.ui.getLocale
 import ui.getPainterResource
-import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
 fun SplashScreen(
-    navigationViewModel: NavViewModel,
+    navigator: Navigator,
     viewModel: SplashViewModel,
 ) {
     val goToNextScreen = viewModel.goToNextScreen.collectAsState(false)
@@ -30,7 +30,7 @@ fun SplashScreen(
         viewModel.onStartUp(locale)
     }
 
-    if (goToNextScreen.value) navigationViewModel.navigate(Screens.LoginScreen.getName())
+    if (goToNextScreen.value) navigator.navigate(Screens.LoginScreen.getName())
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center

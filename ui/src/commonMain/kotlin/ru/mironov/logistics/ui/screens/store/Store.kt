@@ -53,13 +53,14 @@ import ru.mironov.domain.model.City
 import ru.mironov.domain.model.Parcel
 import ru.mironov.common.ui.Spinner
 import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
 fun StoreScreen(
     openDrawer: () -> Job,
     vm: StoreViewModel,
-    navModel: NavViewModel,
+    navigator: Navigator,
     screen: Screens
 ) {
     Column(
@@ -85,7 +86,7 @@ fun StoreScreen(
 
             vm.navWithArg.Observe()
             vm.navWithArg.onEvent { arg ->
-                arg?.let { navModel.navigateWithArgs(Screens.ParcelData.getName(), it) }
+                arg?.let { navigator.navigateWithArgs(Screens.ParcelData.getName(), it) }
             }
 
             val click = fun(parcel: Parcel) {

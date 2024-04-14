@@ -4,7 +4,6 @@ import me.tatarka.inject.annotations.Inject
 import ru.mironov.common.Logger
 import ru.mironov.domain.di.AppScope
 import ru.mironov.domain.viewmodel.AbsViewModel
-import ru.mironov.logistics.ui.SyncViewModel
 import ru.mironov.logistics.ui.screens.login.LoginViewModel
 import ru.mironov.logistics.ui.screens.parceldata.ParcelDataViewModel
 import ru.mironov.logistics.ui.screens.registerparceldestination.RegisterParcelDestinationViewModel
@@ -21,7 +20,6 @@ class ViewModelFactory(
     private val logger: Logger,
     private val splashVm: () -> SplashViewModel,
     private val navVm: () -> NavViewModel,
-    private val syncVm: () -> SyncViewModel,
     private val registerParcelDest: () -> RegisterParcelDestinationViewModel,
     private val registerParcelSender: () -> RegisterParcelSenderViewModel,
     private val registerResult: () -> RegisterResultViewModel,
@@ -57,7 +55,6 @@ class ViewModelFactory(
         return when (type.simpleName) {
             NavViewModel::class.simpleName  -> navVm()
             SplashViewModel::class.simpleName  -> splashVm()
-            SyncViewModel::class.simpleName  -> syncVm()
             RegisterParcelDestinationViewModel::class.simpleName  -> registerParcelDest()
             RegisterParcelSenderViewModel::class.simpleName  -> registerParcelSender()
             RegisterResultViewModel::class.simpleName  -> registerResult()

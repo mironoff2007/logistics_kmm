@@ -23,6 +23,7 @@ import com.mironov.di.ApplicationComponent
 import com.mironov.localization.StringRes
 import ru.mironov.common.res.localizedString
 import ru.mironov.common.ui.theme.LogisticsTheme
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.theme.Main
 import ru.mironov.logistics.ui.theme.MainDark
 
@@ -63,7 +64,8 @@ fun MainScreen() {
         if (grantedWrite) requestRead(grantReadFlagSwitch)
 
         if (grantedRead && grantedWrite) {
-            NavRoot(ApplicationComponent.getVmFactory(),  backPressed)
+            val navigator = Navigator()
+            NavRoot(navigator, ApplicationComponent.getVmFactory(),  backPressed)
         } else {
             Box(
                 modifier = Modifier.fillMaxSize(),

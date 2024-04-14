@@ -27,7 +27,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
@@ -45,16 +44,15 @@ import ru.mironov.common.res.ImageRes
 import ru.mironov.common.res.localizedString
 import ru.mironov.common.util.ENTER_SYMBOL
 import ru.mironov.domain.viewmodel.State
-import ru.mironov.logistics.ui.navigation.NavViewModel
-import ru.mironov.logistics.ui.navigation.Screens
+import ru.mironov.logistics.ui.navigation.Navigator
 import ui.getPainterResource
 
-@OptIn(ExperimentalComposeUiApi::class)
 @Composable
 fun LoginScreen(
     openDrawer: () -> Job,
     vm: LoginViewModel,
-    navVm: NavViewModel
+    navigator: Navigator,
+    showMsg: (String) -> Unit
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -74,16 +72,12 @@ fun LoginScreen(
                 vm.onScreenComposed()
             }
 
-            val showMsg = fun(msg: String) {
-                navVm.showMsg(msg)
-            }
-
             val loading = remember { mutableStateOf(false) }
             vm.loginResult.Observe()
             vm.loginResult.onEvent { state ->
                 when (state) {
                     is State.Success -> {
-                        navVm.navigate(state.value.getName())
+                        navigator.navigate(state.value.getName())
                         loading.value = false
                     }
                     is State.Loading -> {

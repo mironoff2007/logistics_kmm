@@ -29,6 +29,7 @@ import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.Parcel
 import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 import util.DateTimeFormat
 
@@ -36,11 +37,11 @@ import util.DateTimeFormat
 fun ParcelDataScreen(
     openDrawer: () -> Job,
     vm: ParcelDataViewModel,
-    navModel: NavViewModel,
+    navigator: Navigator,
     backAction: (() -> Unit) -> Unit
 ) {
 
-    backAction.invoke { navModel.navigateBack() }
+    backAction.invoke { navigator.navigateBack() }
 
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colors.background),
@@ -56,7 +57,7 @@ fun ParcelDataScreen(
             onButtonClicked = { openDrawer() }
         )
         LaunchedEffect(Unit) {
-            val args = navModel.getArgs()
+            val args = navigator.getArgs()
             vm.onScreenOpened(args)
         }
 

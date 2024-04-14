@@ -28,7 +28,7 @@ import kotlinx.coroutines.Job
 import ru.mironov.common.navigation.TopBar
 import ru.mironov.common.res.localizedString
 import ru.mironov.domain.model.Parcel
-import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 import util.DateTimeFormat
 
@@ -37,23 +37,21 @@ fun RegisterResult(
     openDrawer: () -> Job,
     backAction: (() -> Unit) -> Unit,
     vm: RegisterResultViewModel,
-    navModel: NavViewModel
+    navigator: Navigator,
+    showMsg: (String) -> Unit
 ) {
 
-    backAction.invoke { navModel.navigateBack() }
+    backAction.invoke { navigator.navigateBack() }
 
     var result: Boolean? = null
     vm.result.Observe()
     vm.result.onEvent { result = it }
 
-    val showMsg = fun(msg: String) {
-        navModel.showMsg(msg)
-    }
 
     when (result) {
         true -> {
             showMsg.invoke(localizedString(StringRes.ParcelIsAdded))
-            navModel.navigate(Screens.RegisterSenderParcel.getName())
+            navigator.navigate(Screens.RegisterSenderParcel.getName())
         }
         else -> {}
     }
@@ -79,7 +77,7 @@ fun RegisterResult(
             val parcel = vm.parcel.collectAsState()
 
             LaunchedEffect(Unit) {
-                val arg = navModel.getArgs()
+                val arg = navigator.getArgs()
                 vm.onScreenOpened(arg ?: "")
             }
 

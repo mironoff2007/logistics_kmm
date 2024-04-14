@@ -7,7 +7,7 @@ import ru.mironov.domain.model.ParcelData
 import ru.mironov.common.ui.theme.LogisticsTheme
 
 @Composable
-fun RegisterParcelSenderWithDataPreview() {
+fun RegisterParcelSenderWithData() {
     val cities = listOf(City(1, "City"))
     LogisticsTheme {
         RegisterParcelSenderLayout(
@@ -19,7 +19,6 @@ fun RegisterParcelSenderWithDataPreview() {
             ),
             register = { },
             loading = false,
-            showMsg = {},
             cities = cities.toImmutableList(),
             updateValues = {},
         )
@@ -39,7 +38,6 @@ fun RegisterParcelSenderEmptyPreview() {
             ),
             register = { },
             loading = false,
-            showMsg = {},
             cities = cities.toImmutableList(),
             updateValues = {},
         )

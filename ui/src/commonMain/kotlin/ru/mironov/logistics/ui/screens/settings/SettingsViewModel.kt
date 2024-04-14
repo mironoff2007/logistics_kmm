@@ -36,6 +36,14 @@ class SettingsViewModel(
         }
     }
 
+    private fun enableLoggerIfEnabled() {
+        viewModelScope.launch {
+            val settings = prefs.load() ?: CommonSettings()
+            val enabled = settings.getBool(CommonSettings.LogsEnabled) ?: false
+            if (enabled) logger.enable()
+        }
+    }
+
     fun updateSetting(setting: Setting<out Any>, value: Any) {
         viewModelScope.launch {
             val commonSettings = prefs.load() ?: CommonSettings()
@@ -43,6 +51,7 @@ class SettingsViewModel(
             settingsUpdater.applyChanges(setting, value)
             prefs.save(commonSettings)
             getSettings()
+            enableLoggerIfEnabled()
         }
     }
 

@@ -32,13 +32,14 @@ import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
 import ru.mironov.common.ui.Spinner
 import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
 fun RegisterParcelSenderScreen(
     openDrawer: () -> Job,
     vm: RegisterParcelSenderViewModel,
-    navModel: NavViewModel
+    navigator: Navigator
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -63,12 +64,8 @@ fun RegisterParcelSenderScreen(
             vm.addParcel(senderParcelData)
         }
 
-        val showMsg = fun(msg: String) {
-            navModel.showMsg(msg)
-        }
-
         vm.navWithArg.onEvent {
-            navModel.navigateWithArgs(Screens.RegisterDestinationParcel.getName(), it)
+            navigator.navigateWithArgs(Screens.RegisterDestinationParcel.getName(), it)
         }
 
         val updateValues = fun(parcelData: ParcelData) {
@@ -89,7 +86,6 @@ fun RegisterParcelSenderScreen(
             initData,
             register,
             loading.value,
-            showMsg,
             cities.value.toImmutableList(),
             updateValues,
         )
@@ -101,7 +97,6 @@ fun RegisterParcelSenderLayout(
     initData: ParcelData,
     register: (ParcelData) -> Unit,
     loading: Boolean,
-    showMsg: (String) -> Unit,
     cities: ImmutableList<City>,
     updateValues: (ParcelData) -> Unit
 ) {

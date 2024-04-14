@@ -11,7 +11,6 @@ import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.material.rememberDrawerState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -34,9 +33,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.mironov.logistics.ui.SyncViewModel
 import ru.mironov.logistics.ui.navigation.Drawer
 import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 
 import ru.mironov.logistics.ui.navigation.Screens
 import ru.mironov.logistics.ui.navigation.ViewModelFactory
@@ -63,6 +62,7 @@ import ru.mironov.logistics.ui.screens.store.StoreViewModel
 
 @Composable
 fun NavRoot(
+    navigator: Navigator,
     factory: ViewModelFactory,
     backPressed: (() -> Unit) -> Unit
 ) {
@@ -71,17 +71,12 @@ fun NavRoot(
 
     MaterialTheme {
 
-        val syncViewModel = factory.provide<SyncViewModel>(type = SyncViewModel::class, keepForever =  true)
         val navViewModel = factory.provide<NavViewModel>(type = NavViewModel::class, keepForever =  true)
 
-        navViewModel.setNavController(navController)
-
-        LaunchedEffect(Unit) {
-            navViewModel.enableLoggerIfEnabled()
-        }
+        navigator.setNavController(navController)
 
         val allowedDestinations by navViewModel.allowedDestinations.collectAsState()
-        val showMsg by navViewModel.showMsg.collectAsState()
+        val showMsgFlag by navViewModel.showMsg.collectAsState()
 
         Surface(
             modifier = Modifier.background(color = MaterialTheme.colors.background),
@@ -122,14 +117,18 @@ fun NavRoot(
                     contentAlignment = Alignment.Center
                 ) {
 
+                    val showMsg = fun(msg: String) { navViewModel.showMsg(msg, 3000) }
+
                     CustomNavigationHost(
                         viewModelFactory = factory,
                         openDrawer = openDrawer,
                         navModel = navViewModel,
-                        backPressed = backPressed
+                        navigator = navigator,
+                        backPressed = backPressed,
+                        showMsg = showMsg
                     )
 
-                    showMsg?.let { msg -> Dialog(msg)  }
+                    showMsgFlag?.let { msg -> Dialog(msg)  }
                 }
             }
         }
@@ -148,71 +147,73 @@ fun customShape(drawerWidth: Float, height: Float) = object : Shape {
 fun CustomNavigationHost(
     openDrawer: () -> Job,
     viewModelFactory: ViewModelFactory,
+    navigator: Navigator,
     navModel: NavViewModel,
-    backPressed: (() -> Unit) -> Unit
+    backPressed: (() -> Unit) -> Unit,
+    showMsg: (String) -> Unit
 ) {
-    NavigationHost(navModel.navigationController) {
+    NavigationHost(navigator.navigationController) {
 
         composableRoute(Screens.SplashScreen, navModel) {
             val vm = viewModelFactory.provide<SplashViewModel>(SplashViewModel::class)
-            SplashScreen(navModel, vm)
+            SplashScreen(navigator, vm)
         }
         composableRoute(Screens.LoginScreen, navModel) {
             val vm: LoginViewModel = viewModelFactory.provide(LoginViewModel::class)
-            navModel.setStartDestination(it, vm)
-            LoginScreen(openDrawer, vm, navModel)
+            navigator.setStartDestination(it, vm)
+            LoginScreen(openDrawer, vm, navigator, showMsg)
         }
         composableRoute(Screens.LogoutScreen, navModel) {
             val vm: LoginViewModel = viewModelFactory.provide(LoginViewModel::class)
-            navModel.setStartDestination(it, vm)
+            navigator.setStartDestination(it, vm)
             vm.logout()
-            LoginScreen(openDrawer, vm, navModel)
+            LoginScreen(openDrawer, vm, navigator, showMsg)
         }
         composableRoute(Screens.RegisterSenderParcel, navModel) {
             val vm: RegisterParcelSenderViewModel = viewModelFactory.provide(RegisterParcelSenderViewModel::class)
-            navModel.setStartDestination(it, vm)
-            RegisterParcelSenderScreen(openDrawer, vm, navModel)
+            navigator.setStartDestination(it, vm)
+            RegisterParcelSenderScreen(openDrawer, vm, navigator)
         }
         composableRoute(Screens.RegisterDestinationParcel, navModel) {
             val vm: RegisterParcelDestinationViewModel = viewModelFactory.provide(RegisterParcelDestinationViewModel::class)
-            RegisterParcelDestinationScreen(openDrawer, vm, navModel, backPressed)
+            RegisterParcelDestinationScreen(openDrawer, vm, navigator, backPressed)
         }
         composableRoute(Screens.RegisterResult, navModel) {
             val vm: RegisterResultViewModel = viewModelFactory.provide(RegisterResultViewModel::class)
-            RegisterResult(openDrawer, backPressed, vm, navModel)
+            RegisterResult(openDrawer, backPressed, vm, navigator, showMsg)
         }
         composableRoute(Screens.CarCargo, navModel) { screen ->
             val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
-            navModel.setStartDestination(screen, vm)
-            StoreScreen(openDrawer, vm, navModel, screen)
+            navigator.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navigator, screen)
         }
         composableRoute(Screens.Warehouse, navModel) { screen ->
             val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
-            navModel.setStartDestination(screen, vm)
-            StoreScreen(openDrawer, vm, navModel, screen)
+            navigator.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navigator, screen)
         }
         composableRoute(Screens.BackPack, navModel) { screen ->
             val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
-            navModel.setStartDestination(screen, vm)
-            StoreScreen(openDrawer, vm, navModel, screen)
+            navigator.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navigator, screen)
         }
         composableRoute(Screens.GlobalSearch, navModel) { screen ->
             val vm: StoreViewModel = viewModelFactory.provide(StoreViewModel::class)
-            navModel.setStartDestination(screen, vm)
-            StoreScreen(openDrawer, vm, navModel, screen)
+            navigator.setStartDestination(screen, vm)
+            StoreScreen(openDrawer, vm, navigator, screen)
         }
         composableRoute(Screens.ParcelData, navModel) {
             val vm: ParcelDataViewModel = viewModelFactory.provide(ParcelDataViewModel::class)
-            ParcelDataScreen(openDrawer, vm, navModel, backPressed)
+            ParcelDataScreen(openDrawer, vm, navigator, backPressed)
         }
         composableRoute(Screens.SettingsScreen, navModel) {
             val vm: SettingsViewModel = viewModelFactory.provide(SettingsViewModel::class)
-            navModel.setStartDestination(it, vm)
+            navigator.setStartDestination(it, vm)
             SettingsScreen(openDrawer, vm)
         }
         composableRoute(Screens.SettingsScreenLoggedOut, navModel) {
             val vm: SettingsViewModel = viewModelFactory.provide(SettingsViewModel::class)
-            navModel.setStartDestination(it, vm)
+            navigator.setStartDestination(it, vm)
             SettingsScreen(openDrawer, vm)
         }
     }.build()

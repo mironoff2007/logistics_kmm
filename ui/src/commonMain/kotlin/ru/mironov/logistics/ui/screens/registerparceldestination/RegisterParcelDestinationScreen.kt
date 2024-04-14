@@ -32,25 +32,26 @@ import ru.mironov.common.ui.Spinner
 import ru.mironov.domain.model.City
 import ru.mironov.domain.model.ParcelData
 import ru.mironov.logistics.ui.navigation.NavViewModel
+import ru.mironov.logistics.ui.navigation.Navigator
 import ru.mironov.logistics.ui.navigation.Screens
 
 @Composable
 fun RegisterParcelDestinationScreen(
     openDrawer: () -> Job,
     vm: RegisterParcelDestinationViewModel,
-    navModel: NavViewModel,
+    navigator: Navigator,
     backAction: (() -> Unit) -> Unit
 ) {
-    backAction.invoke { navModel.navigateBack() }
+    backAction.invoke { navigator.navigateBack() }
 
     LaunchedEffect(Unit) {
-        val args = navModel.getArgs()
+        val args = navigator.getArgs()
         vm.onScreenOpened(args)
     }
 
     vm.navWithArg.Observe()
     vm.navWithArg.onEvent {
-        navModel.navigateWithArgs(Screens.RegisterResult.getName(), it)
+        navigator.navigateWithArgs(Screens.RegisterResult.getName(), it)
     }
 
     val goToNextScreenWithArg = fun(recipientData: ParcelData) {
