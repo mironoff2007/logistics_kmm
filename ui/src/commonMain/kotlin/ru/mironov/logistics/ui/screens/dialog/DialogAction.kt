@@ -10,7 +10,9 @@ class DialogAction {
 
     private val _show = MutableStateFlow<DialogData?>(null)
     val showFlow: StateFlow<DialogData?>
-        get() { return _show.asStateFlow() }
+        get() {
+            return _show.asStateFlow()
+        }
 
     fun show(dialogData: DialogData) {
         _show.tryEmit(dialogData)

@@ -126,8 +126,7 @@ fun NavRoot(
                         showMsg = dialogAction.value
                     )
 
-                    //todo localComposition provider for dialog action
-                    DialogScreen(showMsgFlag, dialogAction)
+                    DialogScreen(showMsgFlag, dialogAction.value)
                 }
             }
         }
